@@ -6,4 +6,9 @@ router.get('/', (req, res) => {
 
 // router.use('/game', require('./game.js'));
 
+
+
+router.use('/players', require('./players'));
+
+
 module.exports = router;
