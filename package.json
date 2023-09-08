@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server:dev": "nodemon ./server",
+    "start": "cd client && npm run build && cd .. && cd server && nodemon server.js",
     "start:dev": "cd client && npm run build && cd .. && cd server && nodemon server.js",
     "build": "cd client && npm run build"
   },
@@ -22,6 +23,7 @@
     "path": "^0.12.7"
   },
   "devDependencies": {
-    "prisma": "^5.2.0"
+    "prisma": "^5.2.0",
+    "react-router-dom": "^6.15.0"
   }
 }
