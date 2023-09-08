@@ -9,6 +9,7 @@ router.get('/', (req, res) => {
 
 
 router.use('/players', require('./players'));
+router.use('/avatars', require('./avatars'))
 
 
 module.exports = router;
