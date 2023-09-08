@@ -1,16 +1,16 @@
 import './App.css'
 import { Routes, Route } from "react-router-dom";
 import LogIn from './components/LoginPage'
+import Welcome from './components/Welcome';
 
 const App = () => {
 
   return (
     <>
-     <h1>Hello World</h1>
-
-     <Routes>
+      <Routes>
         <Route path="/login" element={<LogIn />}></Route>
-    </Routes>
+        <Route path="/" element={<Welcome />} />
+      </Routes>
     </>
   )
 }
