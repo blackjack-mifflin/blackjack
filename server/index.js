@@ -7,6 +7,7 @@ app.use(require("body-parser").json());
 
 app.use(morgan('dev'));
 
+app.use('/api', require('./api'))
 
 app.use(express.static(path.join(__dirname, '../client/dist')))
 
