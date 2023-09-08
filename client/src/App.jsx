@@ -1,16 +1,22 @@
 import './App.css'
 import { Routes, Route } from "react-router-dom";
-import LogIn from './components/LoginPage'
 import Welcome from './components/Welcome';
+import LogInPage from './components/LoginPage'
+import {Link} from 'react-router-dom'
+import SignUpPage from './components/SignUpPage';
+
 
 const App = () => {
 
   return (
     <>
-      <Routes>
-        <Route path="/login" element={<LogIn />}></Route>
+     <Link className='Nav' to='/Login'>Log In</Link>
+     <Routes>
         <Route path="/" element={<Welcome />} />
-      </Routes>
+        <Route path="/login" element={<LogInPage />}></Route>
+        <Route path="/SignUp" element={<SignUpPage />}></Route>
+    </Routes>
+
     </>
   )
 }

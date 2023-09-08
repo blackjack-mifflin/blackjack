@@ -19,7 +19,7 @@ model Avatar {
 
 model Player {
   id       Int    @id @unique @default(autoincrement())
-  username String @db.VarChar(30)
+  username String @unique @db.VarChar(30)
   password String @db.VarChar(255)
   balance  Int
   wins     Int

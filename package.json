@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server:dev": "nodemon ./server",
-    "start": "cd client && npm run build && cd .. && cd server && nodemon server.js",
-    "start:dev": "cd client && npm run build && cd .. && cd server && nodemon server.js",
+    "start": "npm i && cd client && npm i && npm run build && cd .. && cd server && nodemon server.js",
+    "start:dev": " npm i && cd client && npm i && npm run build && cd .. && cd server && nodemon server.js",
     "build": "cd client && npm run build"
   },
   "keywords": [],
