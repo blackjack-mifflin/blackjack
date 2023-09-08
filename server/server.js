@@ -6,6 +6,7 @@ const morgan = require('morgan')
 
 app.use(morgan('dev'));
 
+app.use('/api', require('./api'))
 
 app.use(express.static(path.join(__dirname, '../client/dist')))
 
