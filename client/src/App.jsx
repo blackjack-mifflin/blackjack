@@ -5,8 +5,6 @@ import LogInPage from './components/LoginPage'
 import { Link } from 'react-router-dom'
 import SignUpPage from './components/SignUpPage';
 import Profile from './pages/Profile'
-
-
 import Navbar from './components/NavBar';
 
 const App = () => {
