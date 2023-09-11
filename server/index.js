@@ -13,6 +13,9 @@ app.use(express.static(path.join(__dirname, '../client/dist')))
 app.get('/', (req, res ) => {
     res.sendFile(path.join(__dirname, '../client/dist/index.html' ))
 })
+app.get('/game', (req, res ) => {
+    res.sendFile(path.join(__dirname, '../client/dist/index.html' ))
+})
 
 app.use('/api', require('./api'));
 app.use('/auth', require('./auth'));

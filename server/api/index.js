@@ -4,6 +4,6 @@ router.get('/', (req, res) => {
   res.send('reached API router');
 });
 
-// router.use('/game', require('./game.js'));
+router.use('/game', require('./game.js'));
 
 module.exports = router;
