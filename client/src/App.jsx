@@ -15,15 +15,16 @@ const App = () => {
 
       <Navbar />
       <Routes>
-        <Route 
-          token={token} 
+        <Route
+          token={token}
           setToken={setToken}
-          path="/login" 
+          path="/login"
           element={<LogInPage />}
         />
-          <Route path="/" element={<Welcome />} />
-          <Route path="/SignUp" element={<SignUpPage />}></Route>
-          <Route path="/profile" element={<Profile />} />
+        <Route path="/" element={<Welcome />} />
+        <Route path="/SignUp" element={<SignUpPage />}></Route>
+        <Route path="/profile" element={<Profile />} />
+
       </Routes>
     </>
   )
