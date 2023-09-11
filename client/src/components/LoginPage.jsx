@@ -11,6 +11,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useState } from 'react';
 
 function Copyright(props) {
   return (
@@ -30,14 +31,19 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 const LogInPage = () => {
-  const handleSubmit = (event) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const getFormData = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const data =  new FormData(event.currentTarget);
+    console.log(data.get('email'))
+        setUsername(data.get('email'))
+        setPassword(data.get('password'))
   };
+
+  console.log(username)
+  console.log(password)
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -57,7 +63,7 @@ const LogInPage = () => {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={getFormData} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
