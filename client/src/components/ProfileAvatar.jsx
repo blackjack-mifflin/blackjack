@@ -7,7 +7,7 @@ const ProfileAvatar = () => {
     useEffect(() => {
         const fetchAvatar = async() => {
              //make sure to change 1 to ${avatarId}
-            const response = await fetch(`/api/avatars/1`)
+            const response = await fetch(`/api/avatars/2`)
             if (response.ok) {
                 const data = await response.json();
                 console.log("THIS IS DATA FROM AVATAR", data)
