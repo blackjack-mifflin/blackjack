@@ -11,6 +11,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 const Copyright = (props) =>{
   return (
@@ -28,14 +30,31 @@ const Copyright = (props) =>{
 const defaultTheme = createTheme();
 
 const SignUpPage = () => {
-  const handleSubmit = (event) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const getFormData = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      username: data.get('username'),
-      password: data.get('password'),
-    });
-  };
+        try {
+
+          const response = await fetch("/auth/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username: username, password: password }),
+          });
+          const data = await response.json();
+          
+          if (!response.ok) {
+            throw new Error(data.message || "Something went wrong");
+          }
+        } catch (err) {
+          console.log(err)
+        } 
+        navigate("/");
+      };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -55,7 +74,7 @@ const SignUpPage = () => {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" noValidate onSubmit={getFormData} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -66,6 +85,7 @@ const SignUpPage = () => {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -86,6 +106,9 @@ const SignUpPage = () => {
                   label="Username"
                   name="username"
                   autoComplete="username"
+                  onChange={(e) => {
+                    setUsername(e.target.value)
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -97,6 +120,9 @@ const SignUpPage = () => {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={(e) => {
+                    setPassword(e.target.value)
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>

@@ -10,7 +10,7 @@ const Navbar = () => {
                 <li><Link to="/multiplayer">Multiplayer</Link></li>
                 <li><Link to="/Sign Out">Sign Out</Link></li>
 
-                {/* Here I can put more navigation buttons - LATER ON! */}
+                {/* Here I can put more navigation buttons - LATER ON!! */}
             </ul>
         </nav>
     );
