@@ -74,6 +74,16 @@ const seed = async() => {
             avatarId: 4    
         }
     })
+    await prisma.player.create({
+        data: {
+            username: "tom",
+            password: await bcrypt.hash("tom", 10),
+            balance: 100,
+            wins: 0,
+            losses: 0,
+            avatarId: 3
+        }
+    })
     console.log("Successfully seeded")
 };
 

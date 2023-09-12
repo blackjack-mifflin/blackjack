@@ -12,6 +12,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+
 
 function Copyright(props) {
   return (
@@ -33,17 +35,30 @@ const defaultTheme = createTheme();
 const LogInPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const getFormData = (event) => {
+  const getFormData = async (event) => {
     event.preventDefault();
-    const data =  new FormData(event.currentTarget);
-    console.log(data.get('email'))
-        setUsername(data.get('email'))
-        setPassword(data.get('password'))
-  };
+        try {
 
-  console.log(username)
-  console.log(password)
+          const response = await fetch("/auth/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username: username, password: password }),
+          });
+          const data = await response.json();
+          
+          if (!response.ok) {
+            throw new Error(data.message || "Something went wrong");
+          }
+        } catch (err) {
+          console.log(err)
+        } 
+        navigate("/");
+      };
+
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -68,11 +83,14 @@ const LogInPage = () => {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="User Name"
+              name="username"
+              autoComplete="username"
               autoFocus
+              onChange={(e) => {
+                setUsername(e.target.value)
+              }}
             />
             <TextField
               margin="normal"
@@ -83,6 +101,9 @@ const LogInPage = () => {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={(e) => {
+                setPassword(e.target.value)
+              }}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
