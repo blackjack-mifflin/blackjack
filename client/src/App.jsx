@@ -3,9 +3,9 @@ import { Routes, Route } from "react-router-dom";
 import Welcome from './components/Welcome';
 import LogInPage from './components/LoginPage'
 import SignUpPage from './components/SignUpPage';
-import Profile from './components/ProfilePage'
+import Profile from './components/ProfilePage';
 import Navbar from './components/NavBar';
-import Games from './components/Game';
+import Game from './components/Game';
 import { useState } from "react";
 
 const App = () => {
@@ -22,11 +22,11 @@ const App = () => {
           path="/login"
           element={<LogInPage />}
         />
-        <Route path="/multiplayer" element={<Games />} />
+          <Route path="/" element={<Welcome />} />
+          <Route path="/SignUp" element={<SignUpPage />}></Route>
+          <Route path="/profile" element={<Profile token={token} />} />
+        <Route path="/game" element={<Game />} />
         <Route path="/" element={<Welcome />} />
-        <Route path="/SignUp" element={<SignUpPage />}></Route>
-        <Route path="/profile" element={<Profile />} />
-
       </Routes>
     </>
   )

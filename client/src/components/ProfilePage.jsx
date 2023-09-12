@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom";
-import AddButton from "../components/AddButton";
-import ProfileAvatar from "../components/ProfileAvatar";
+import AddButton from "./AddButton";
+import ProfileAvatar from "./ProfileAvatar";
+import ProfileEditForm from "./ProfileEditForm";
 
-const Profile = () => {
+const Profile = ({token}) => {
     const [playerInfo, setPlayerInfo] = useState(null);
+    const [isEditing, setIsEditing] = useState(false)
     const { playerId } = useParams();
 
     useEffect(() => {
         const fetchPlayer = async () => {
             //make sure to change 1 to ${playerId}
-            const response = await fetch(`/api/players/1`)
+            const response = await fetch(`/api/players/2`)
             if (response.ok) {
                 console.log("THIS IS RESPONSE", response)
                 const data = await response.json();
@@ -32,6 +34,32 @@ const Profile = () => {
         }))
     }
 
+    const editProfile = async (newUser, newPw) => {
+        try {
+            const response = await fetch(`/api/players/${playerId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    username: newUser,
+                    password: newPw
+                })
+            });
+            if(response.ok) {
+                setIsEditing(false)
+            } else {
+                console.error("Error updating profile")
+            }
+        } catch (error) {
+            console.error("Error updating profile", error)
+        }
+    }
+
+    const editButton = () => {
+        setIsEditing(!isEditing)
+    }
     return (
         <section id="profile-container">
             <h1>Profile Page</h1>
@@ -47,6 +75,11 @@ const Profile = () => {
                     <p>Loading...Info...</p>
                 )
             }
+            {isEditing ? (
+                <ProfileEditForm onSubmit={editProfile} />
+            ) : (
+                <button onClick={editButton}>Edit Username & PW</button>
+            )}
         </section>
     )
 }
