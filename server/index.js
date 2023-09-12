@@ -4,9 +4,23 @@ require('dotenv').config()
 const path = require('path')
 const morgan = require('morgan');
 app.use(require("body-parser").json());
+const jwt = require("jsonwebtoken");
 
 app.use(morgan('dev'));
 
+app.use((req, res, next) => {
+    const auth = req.headers.authorization;
+    const token = auth?.startsWith("Bearer") ? auth.slice(7) : null;
+    try {
+      const { id } = jwt.verify(token, process.env.JWT);
+      req.userID = id;
+    } catch (err) {
+      req.userID = null;
+    }
+    next();
+  });
+
+app.use('/api', require('./api'))
 
 app.use(express.static(path.join(__dirname, '../client/dist')))
 

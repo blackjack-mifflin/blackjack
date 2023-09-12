@@ -23,6 +23,10 @@ const Game = () => {
     console.log(card);
   });
 
+import React from "react";
+import { Link } from "react-router-dom";
+
+const Games = () => {
   return (
     <>
       <h1>Blackjack Mifflin</h1>
@@ -31,6 +35,22 @@ const Game = () => {
       <button onClick={socketHandler} value="stick">Stick</button>
     </>
   );
-}
+};
 
-export default Game;
+const multiplayer = () => {
+
+  const exitGame = () => {
+  };
+
+  return (
+    <div>
+      <h1>Multiplayer Game</h1>
+      <div>
+
+        <button onClick={exitGame}>Last Hand</button>
+      </div>
+    </div>
+  );
+};
+
+export default Games;

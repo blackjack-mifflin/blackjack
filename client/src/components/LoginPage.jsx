@@ -4,19 +4,20 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+import {Link} from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useState } from 'react';
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link className='Nav' to='https://github.com/blackjack-mifflin/blackjack'>
         Blackjack Game
       </Link>{' '}
       {new Date().getFullYear()}
@@ -29,15 +30,20 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-export default function LogIn() {
-  const handleSubmit = (event) => {
+const LogInPage = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const getFormData = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const data =  new FormData(event.currentTarget);
+    console.log(data.get('email'))
+        setUsername(data.get('email'))
+        setPassword(data.get('password'))
   };
+
+  console.log(username)
+  console.log(password)
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -57,7 +63,7 @@ export default function LogIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={getFormData} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -97,7 +103,7 @@ export default function LogIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link  className='Nav' to='/SignUp'>
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
@@ -109,3 +115,5 @@ export default function LogIn() {
     </ThemeProvider>
   );
 }
+
+export default LogInPage
