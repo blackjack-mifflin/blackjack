@@ -1,10 +1,10 @@
-const { PrismaClient } = require("@prisma/client");
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
 const express = require("express");
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 require("dotenv").config();
 
-const prisma = new PrismaClient();
 const router = express.Router();
 
 router.get('/', (req, res) => {
