@@ -5,7 +5,7 @@ import { io } from "socket.io-client";
 const Game = () => {
   const [isLastHand, setIsLastHand] = useState(false);
   const navigate = useNavigate();
-  const socket = io('http://localhost:8080');
+  const socket = io('http://localhost:3000');
 
   const lastHand = () => {
     console.log("move to home page");
