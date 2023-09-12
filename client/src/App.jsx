@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Welcome from './components/Welcome';
 import LogInPage from './components/LoginPage'
 import SignUpPage from './components/SignUpPage';
-import Profile from './pages/Profile'
+import Profile from './components/ProfilePage';
 import Navbar from './components/NavBar';
 import { useState } from "react";
 
@@ -23,7 +23,7 @@ const App = () => {
         />
           <Route path="/" element={<Welcome />} />
           <Route path="/SignUp" element={<SignUpPage />}></Route>
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={<Profile token={token} />} />
       </Routes>
     </>
   )
