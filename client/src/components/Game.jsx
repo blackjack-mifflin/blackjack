@@ -15,12 +15,15 @@ const Game = () => {
 
   const socketHandler = (e) => {
     const message = e.target.value;
-    console.log(`MESSAGE FROM CLIENT: ${message}`);
-    socket.emit('message', message);
+    console.log(`MOVE FROM CLIENT: ${message}`);
+    socket.emit('move', message);
   };
 
-  socket.on('new message', (msg) => {
-    console.log(`MESSAGE FROM SERVER: ${msg}`);
+  socket.on('card', (card) => {
+    console.log(`CARD FROM SERVER: ${card}`);
+  });
+  socket.on('player', (playerIdx) => {
+    console.log(`Current player at seat ${playerIdx}`);
   });
 
   return (
