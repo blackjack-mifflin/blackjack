@@ -14,11 +14,27 @@ const server = http.createServer(app);
 const {Server} = require('socket.io');
 const io = new Server(server);
 
+/* class Room {
+  constructor() {
+    this.id = 1;
+    this.deck = ['sA', 'dA', 'hA', 'cA'];
+    this.players = [];
+  }
+}
+const roomsArr = [];
+ */
 io.on('connection', (socket) => {
+  const deck = ['sA', 'dA', 'hA', 'cA'];
   console.log(`user connected! ${socket.id}`);
-  socket.on('message', (msg) => {
-    console.log(`MSG FROM CLIENT: ${msg}`);
-    socket.emit('new message', msg);
+  socket.on('move', (move) => {
+    if (move === 'hit') {
+      newCard = deck.pop();
+      io.emit('card', newCard);
+    } else if (move === 'stick') {
+      io.emit('player', 'move player pointer 1+');
+    }
+    console.log(`MOVE FROM CLIENT: ${move}`);
+    // socket.emit('new message', move);
     // socket.broadcast.emit | this sends message to everyone except for the socket message was received from
     // io.emit | this sends message to everyone including the socket message was received from
   })
