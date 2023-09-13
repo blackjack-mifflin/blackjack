@@ -12,7 +12,6 @@ const io = new Server(server);
 const cors = require('cors');
 app.use(cors());
 
-<<<<<<< HEAD
 /* class Room {
   constructor() {
     this.id = 1;
