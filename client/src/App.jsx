@@ -13,9 +13,9 @@ const App = () => {
 
   return (
     <>
-     <h1>Hello World</h1>
-     <Routes>
-    </Routes>
+      <h1>Hello World</h1>
+      <Routes>
+      </Routes>
 
       <Navbar />
       <Routes>
@@ -25,12 +25,18 @@ const App = () => {
           path="/login"
           element={<LogInPage />}
         />
-          <Route path="/" element={<Welcome />} />
-          <Route path="/SignUp" element={<SignUpPage />}></Route>
-          <Route path="/profile" element={<Profile token={token} />} />
+        <Route path="/" element={<Welcome />} />
+        <Route path="/SignUp" element={<SignUpPage />}></Route>
+        <Route path="/profile" element={<Profile token={token} />} />
         <Route path="/game" element={<Game />} />
         <Route path="/" element={<Welcome />} />
-      </Routes>
+<<<<<<< HEAD
+=======
+        <Route path="/SignUp" element={<SignUpPage />}></Route>
+        <Route path="/profile" element={<ProfilePage />} />
+
+>>>>>>> 30ebc95 (Game changes)
+      </Routes >
     </>
   )
 }
