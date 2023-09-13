@@ -14,9 +14,6 @@ const App = () => {
   return (
     <>
       <h1>Hello World</h1>
-      <Routes>
-      </Routes>
-
       <Navbar />
       <Routes>
         <Route
@@ -30,12 +27,6 @@ const App = () => {
         <Route path="/profile" element={<Profile token={token} />} />
         <Route path="/game" element={<Game />} />
         <Route path="/" element={<Welcome />} />
-<<<<<<< HEAD
-=======
-        <Route path="/SignUp" element={<SignUpPage />}></Route>
-        <Route path="/profile" element={<ProfilePage />} />
-
->>>>>>> 30ebc95 (Game changes)
       </Routes >
     </>
   )
