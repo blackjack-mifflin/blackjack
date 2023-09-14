@@ -12,6 +12,7 @@ const io = new Server(server);
 const cors = require('cors');
 app.use(cors());
 
+
 /* class Room {
   constructor() {
     this.id = 1;
@@ -21,9 +22,21 @@ app.use(cors());
 }
 const roomsArr = [];
  */
-io.on('connection', (socket) => {
+const newRoom = () => {
+  io.of("/create").adapter.on("create-room", (room) => {
+    console.log(`#2room ${room} was created`);
+    console.log(`#3user connected! ${socket.id}`);
+  });
+}
+const joinRoom = () => {
+  io.of("/").adapter.on("join-room", (room) => {
+      console.log(`#4socket ${socket.id} has joined room ${room}`);
+    });
+  }
+
+io.on('connection', async (socket) => {
   const deck = ['sA', 'dA', 'hA', 'cA'];
-  console.log(`user connected! ${socket.id}`);
+  console.log(`#1 user connected! ${socket.id}`);
   socket.on('move', (move) => {
     if (move === 'hit') {
       newCard = deck.pop();
@@ -64,7 +77,6 @@ app.get('/game', (req, res) => {
 
 app.use('/api', require('./api'));
 app.use('/auth', require('./auth'));
-
 
 server.listen(process.env.PORT, (error) => {
   if (!error) {

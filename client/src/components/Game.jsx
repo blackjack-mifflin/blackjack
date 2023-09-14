@@ -19,6 +19,12 @@ const Game = () => {
     socket.emit('move', message);
   };
 
+  const joinGame = (arg) => {
+    socket.on('create', () => {
+      console.log(`Create Room ${arg}`);
+    });
+  };
+
   socket.on('card', (card) => {
     console.log(`CARD FROM SERVER: ${card}`);
   });
@@ -29,7 +35,8 @@ const Game = () => {
   return (
     <>
       <h1>Blackjack Mifflin</h1>
-
+      <button onClick={joinGame}>Join A Game</button>
+        <br/>     
       <button onClick={lastHand}>Last Hand</button>
 
       <button onClick={socketHandler} value="hit">
