@@ -48,14 +48,17 @@ const Messages = () => {
             <h1 style={headingStyle}>Messages</h1>
             <div className="message-list">
                 <ul style={listStyle}>
-                    {messages.map((msg, index) => (
-                        <li key={index} style={messageStyle}>{msg}</li>
+                    {messages.map((data, index) => (
+                        <li key={index} style={messageStyle}>
+                            <strong>{data.name}:</strong> {data.message}
+                        </li>
                     ))}
                 </ul>
             </div>
         </div>
     );
 };
+
 
 export default Messages;
 

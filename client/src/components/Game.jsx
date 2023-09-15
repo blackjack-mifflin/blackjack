@@ -49,7 +49,7 @@ const Game = () => {
         <img
           src="https://i0.wp.com/mediachomp.com/wp-content/uploads/2022/02/the-office-cartoon-characters-15.jpg?resize=500%2C707&ssl=1"
           alt="The Office Cartoon Characters"
-          style={{ maxWidth: "100%", marginTop: "20px" }}
+          style={{ maxWidth: "100%", marginTop: "-350px" }}
         />
       </div>
     </>
