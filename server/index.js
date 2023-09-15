@@ -15,18 +15,17 @@ app.use(cors());
 
 io.on('connection', async (socket) => {
   const deck = ['sA', 'dA', 'hA', 'cA'];
+
   console.log(socket.rooms); // Set { <socket.id> }
   socket.join("room1");
   console.log(socket.rooms); // Set { <socket.id>, "room1" }\ç
   io.to("room1").emit('added', socket.room)
 
-  //REFACTORED ROBERTS CODE >>>
   console.log('a user has connected#2');
   socket.on('message', (msg) => {
     console.log(`MESSAGE: ${msg}`);
     io.emit('new message', msg);
   })
-  //<<<
 
   socket.on('move', (move) => {
     if (move === 'hit') {
