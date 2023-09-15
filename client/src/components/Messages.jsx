@@ -3,12 +3,10 @@ import { io } from 'socket.io-client';
 
 const Messages = () => {
     const [messages, setMessages] = useState([]);
-    const [inputMessage, setInputMessage] = useState('');
     const socket = io('/');
 
     useEffect(() => {
         socket.on('new message', (msg) => {
-
             setMessages((prevMessages) => [...prevMessages, msg]);
         });
         return () => {
@@ -16,32 +14,48 @@ const Messages = () => {
         };
     }, [socket]);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Send the message to the server
-        socket.emit('message', inputMessage);
-        setInputMessage('');
+    const messageWindowStyle = {
+        backgroundColor: '#f5f5f5',
+        border: '1px solid #ccc',
+        borderRadius: '5px',
+        padding: '20px',
+        maxWidth: '400px',
+        margin: '0 auto',
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    };
+
+    const headingStyle = {
+        fontSize: '24px',
+        marginBottom: '10px',
+        color: '#333',
+    };
+
+    const listStyle = {
+        listStyle: 'none',
+        padding: '0',
+    };
+
+    const messageStyle = {
+        backgroundColor: '#fff',
+        border: '1px solid #ccc',
+        borderRadius: '5px',
+        padding: '10px',
+        margin: '5px 0',
     };
 
     return (
-        <body>
-            {/* <h1>Web Socket Chat App</h1>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    value={inputMessage}
-                    onChange={(e) => setInputMessage(e.target.value)}
-                />
-                <button type="submit">Se
-                nd</button>
-            </form> */}
-            <ul>
-                {messages.map((msg, index) => (
-                    <ul key={index}>{msg}</ul>
-                ))}
-            </ul>
-        </body>
+        <div className="message-window" style={messageWindowStyle}>
+            <h1 style={headingStyle}>Messages</h1>
+            <div className="message-list">
+                <ul style={listStyle}>
+                    {messages.map((msg, index) => (
+                        <li key={index} style={messageStyle}>{msg}</li>
+                    ))}
+                </ul>
+            </div>
+        </div>
     );
 };
 
 export default Messages;
+

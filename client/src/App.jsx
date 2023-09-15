@@ -8,7 +8,7 @@ import Navbar from './components/NavBar';
 import Game from './components/Game';
 import { useState } from "react";
 import { io } from 'socket.io-client';
-import Messages from './components/Messages'; // Import the Messages component
+import Messages from './components/Messages';
 
 
 const App = () => {
@@ -26,9 +26,9 @@ const App = () => {
         <Route path="/SignUp" element={<SignUpPage />} />
         <Route path="/profile" element={<Profile token={token} />} />
         <Route path="/game" element={<Game />} />
-        <Route path="/" element={<Welcome socket={socket} />} /> {/* Pass the socket to Welcome */}
+        <Route path="/" element={<Welcome socket={socket} />} />
       </Routes>
-      <Messages socket={socket} /> {/* Pass the socket to Messages */}
+      <Messages socket={socket} />
     </>
   );
 };
