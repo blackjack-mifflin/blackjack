@@ -9,17 +9,6 @@ router.get('/', (req, res) => {
   res.send('reached game route');
 });
 
-
-//NOTE FROM TOM - I DON'T THINK WE NEED THIS CODE. I CAN'T TELL WHAT IT DOES
-// io.on('connection', (socket) => {
-//   console.log('a user has connected');
-//   socket.on('message', (msg) => {
-//     console.log(`MESSAGE: ${msg}`);
-//     io.emit('new message', msg);
-//   });
-// });
-
-
 const cardValues = {
   sA: {notBust:10, bust: 1},
   cA: 10,
