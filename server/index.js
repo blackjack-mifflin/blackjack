@@ -13,32 +13,38 @@ app.use(morgan('dev'));
 app.use(require("body-parser").json());
 app.use(cors());
 
-io.on('connection', async (socket) => {
+io.on('connection', (socket) => {
   const deck = ['sA', 'dA', 'hA', 'cA'];
 
-  console.log(socket.rooms); // Set { <socket.id> }
-  socket.join("room1");
-  console.log(socket.rooms); // Set { <socket.id>, "room1" }\ç
-  io.to("room1").emit('added', socket.room)
+    socket.on('join', (join) => {
+      const roomName = "room1"
+      console.log(socket.rooms)
+      socket.join(roomName);
+      console.log(socket.rooms)
+      io.to(roomName).emit('addedId', socket.id)
+      const roomId = socket.id
+      console.log(`Socket Connected to Room ID: ${roomId}`)
+      console.log(`Socket Connected to Room Name: ${roomName}`)
+      console.log(io.sockets.adapter.rooms.get('room1'))
+    })
+  
+    socket.on('message', (msg) => {
+      console.log(`MESSAGE: ${msg}`);
+      io.emit('new message', msg);
+    })
 
-  console.log('a user has connected#2');
-  socket.on('message', (msg) => {
-    console.log(`MESSAGE: ${msg}`);
-    io.emit('new message', msg);
-  })
-
-  socket.on('move', (move) => {
-    if (move === 'hit') {
-      newCard = deck.pop();
-      io.emit('card', newCard);
-    } else if (move === 'stick') {
-      io.emit('player', 'move player pointer 1+');
-    }
-    console.log(`MOVE FROM CLIENT: ${move}`);
-    // socket.emit('new message', move);
-    // socket.broadcast.emit | this sends message to everyone except for the socket message was received from
-    // io.emit | this sends message to everyone including the socket message was received from
-  })
+    socket.on('move', (move) => {
+      if (move === 'hit') {
+        newCard = deck.pop();
+        io.emit('card', newCard);
+      } else if (move === 'stick') {
+        io.emit('player', 'move player pointer 1+');
+      }
+      console.log(`MOVE FROM CLIENT: ${move}`);
+      // socket.emit('new message', move);
+      // socket.broadcast.emit | this sends message to everyone except for the socket message was received from
+      // io.emit | this sends message to everyone including the socket message was received from
+    })
 });
 
 app.use((req, res, next) => {

@@ -7,7 +7,7 @@ import Bet from "./Bet";
 const Game = () => {
   const [isLastHand, setIsLastHand] = useState(false);
   const navigate = useNavigate();
-  const socket = io("http://localhost:3000");
+  const socket = io("/");
   const [betSize, setBetSize] = useState(0);
   const [currentHandBet, setCurrentHandBet] = useState(0);
 
@@ -23,10 +23,13 @@ const Game = () => {
     socket.emit("move", message);
   };
 
-  socket.on('added', (arg) => {
-   console.log(`User Added to room`)
-   console.log(arg)
-  })
+  const joinGame =() => {
+    console.log(`User Added To Room (Frontend Message)`);
+    socket.emit("join");
+    socket.on('addedId', async (socketId) => {
+      console.log(`User added to Room ID: ${socketId} (From Backend)`)
+     })
+  };
 
   socket.on('card', (card) => {
     console.log(`CARD FROM SERVER: ${card}`);
@@ -39,7 +42,7 @@ const Game = () => {
     <>
       <h1>Blackjack Mifflin</h1>
       <PlayerStats currentHandBet={currentHandBet} />
-
+      <button onClick={joinGame}>Join Game</button>
       <button onClick={lastHand}>Last Hand</button>
 
       <button onClick={socketHandler} value="hit">
