@@ -1,20 +1,18 @@
-import '../App.css'; // Import your CSS file here
+import '../App.css';
 import React, { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 
 const Welcome = () => {
     const [messages, setMessages] = useState([]);
     const [inputMessage, setInputMessage] = useState('');
-    const socket = io('/'); // Connect to the WebSocket server
+    const socket = io('/');
 
     socket.on('new message', (msg) => {
-        // Update the messages when a new message is received
         setMessages((prevMessages) => [...prevMessages, msg]);
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Send the message to the server
         socket.emit('message', inputMessage);
         setInputMessage('');
     };
@@ -22,7 +20,6 @@ const Welcome = () => {
     return (
         <div className="welcome-container">
             <h1>Welcome to Blackjack Mifflin</h1>
-            <p>Get ready for the fun!</p>
             <form onSubmit={handleSubmit} className="message-form">
                 <input
                     type="text"
