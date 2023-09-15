@@ -15,6 +15,7 @@ app.use(cors());
 
 io.on('connection', async (socket) => {
   const deck = ['sA', 'dA', 'hA', 'cA'];
+
   console.log(socket.rooms); // Set { <socket.id> }
   socket.join("room1");
   console.log(socket.rooms); // Set { <socket.id>, "room1" }\ç
@@ -25,7 +26,7 @@ io.on('connection', async (socket) => {
   socket.on('message', (msg) => {
     console.log(`MESSAGE: ${msg}`);
     io.emit('new message', msg);
-  });
+  })
   //<<<
 
   socket.on('move', (move) => {
