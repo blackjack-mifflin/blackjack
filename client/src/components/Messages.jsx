@@ -55,23 +55,7 @@ const Messages = () => {
                 </ul>
             </div>
         </div>
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        socket.emit('message', inputMessage);
-        setInputMessage('');
-    };
-
-    return (
-        <body>
-            <ul>
-                {messages.map((msg, index) => (
-                    <ul key={index}>{msg}</ul>
-                ))}
-            </ul>
-        </body>
-
-    );
+    )
 };
 
 export default Messages;
