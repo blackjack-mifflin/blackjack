@@ -9,10 +9,38 @@ const server = http.createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(server);
 const cors = require('cors');
-
+app.use(morgan('dev'));
 app.use(require("body-parser").json());
 app.use(cors());
-app.use(morgan('dev'));
+
+io.on('connection', async (socket) => {
+  const deck = ['sA', 'dA', 'hA', 'cA'];
+  console.log(socket.rooms); // Set { <socket.id> }
+  socket.join("room1");
+  console.log(socket.rooms); // Set { <socket.id>, "room1" }\ç
+  io.to("room1").emit('added', socket.room)
+
+  //REFACTORED ROBERTS CODE >>>
+  console.log('a user has connected#2');
+  socket.on('message', (msg) => {
+    console.log(`MESSAGE: ${msg}`);
+    io.emit('new message', msg);
+  });
+  //<<<
+
+  socket.on('move', (move) => {
+    if (move === 'hit') {
+      newCard = deck.pop();
+      io.emit('card', newCard);
+    } else if (move === 'stick') {
+      io.emit('player', 'move player pointer 1+');
+    }
+    console.log(`MOVE FROM CLIENT: ${move}`);
+    // socket.emit('new message', move);
+    // socket.broadcast.emit | this sends message to everyone except for the socket message was received from
+    // io.emit | this sends message to everyone including the socket message was received from
+  })
+});
 
 app.use((req, res, next) => {
   const auth = req.headers.authorization;
@@ -32,32 +60,13 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
+app.use('/api', require('./api'));
+app.use('/auth', require('./auth'));
 
-io.on('connection', (socket) => {
-  console.log(`User connected! Socket ID: ${socket.id}`);
-
-  socket.on('disconnect', () => {
-    console.log(`User disconnected! Socket ID: ${socket.id}`);
-  });
-});
-
-// This part is the new code:
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
-});
-
-
-io.on('connection', (socket) => {
-  console.log('a user has connected');
-  socket.on('message', (msg) => {
-    console.log(`MESSAGE: ${msg}`);
-    io.emit('new message', msg);
-  });
-});
-
-
-// Start the Express server
-const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  console.log(`Server is listening on PORT ${PORT}`);
+server.listen(process.env.PORT, (error) => {
+  if (!error) {
+    console.log(`Server is listening on ${process.env.PORT}`);
+  } else {
+    console.log('Not Working');
+  }
 });
