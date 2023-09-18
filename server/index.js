@@ -25,7 +25,8 @@ io.on('connection', (socket) => {
       const roomId = socket.id
       console.log(`Socket Connected to Room ID: ${roomId}`)
       console.log(`Socket Connected to Room Name: ${roomName}`)
-      console.log(io.sockets.adapter.rooms.get('room1'))
+      console.log(io.sockets.adapter.rooms.get(roomName))
+      console.log(socket.rooms.length)
     })
   
     socket.on('message', (msg) => {
