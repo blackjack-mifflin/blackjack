@@ -1,7 +1,12 @@
 const requireUser = (req, res, next) => {
-    req.userId ? next() : res.status(401).send({ message: "User unauthorized" });
+  console.log(`this is require user`, req.userId);
+  if (req.userId) {
+    next();
+  } else {
+    res.status(401).send({ message: "User unauthorized" });
+  }
 };
 
 module.exports = {
-    requireUser,
-}
+  requireUser,
+};
