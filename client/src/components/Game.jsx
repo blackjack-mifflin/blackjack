@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import PlayerStats from "./PlayerStats";
 import Bet from "./Bet";
-import Welcome from './Welcome';
-
 
 const Game = () => {
   const [isLastHand, setIsLastHand] = useState(false);
@@ -47,8 +45,6 @@ const Game = () => {
       <button onClick={joinGame}>Join Game</button>
       <button onClick={lastHand}>Last Hand</button>
 
-      <Welcome />
-
       <button onClick={socketHandler} value="hit">
         Hit
       </button>
@@ -56,7 +52,6 @@ const Game = () => {
       <button onClick={socketHandler} value="stick">
         Stick
       </button>
-
       <Bet currentHandBet={currentHandBet} setCurrentHandBet={setCurrentHandBet} betSize={betSize} setBetSize={setBetSize} />
       <div style={{ textAlign: "center", marginBottom: "20px" }}>
         <img
@@ -70,4 +65,3 @@ const Game = () => {
 };
 
 export default Game;
-
