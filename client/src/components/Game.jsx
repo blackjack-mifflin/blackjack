@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import PlayerStats from "./PlayerStats";
 import Bet from "./Bet";
+import Welcome from './Welcome';
+
 
 const Game = () => {
   const [isLastHand, setIsLastHand] = useState(false);
@@ -23,12 +25,12 @@ const Game = () => {
     socket.emit("move", message);
   };
 
-  const joinGame =() => {
+  const joinGame = () => {
     console.log(`User Added To Room (Frontend Message)`);
     socket.emit("join");
     socket.on('addedId', async (socketId) => {
       console.log(`User added to Room ID: ${socketId} (From Backend)`)
-     })
+    })
   };
 
   socket.on('card', (card) => {
@@ -45,6 +47,8 @@ const Game = () => {
       <button onClick={joinGame}>Join Game</button>
       <button onClick={lastHand}>Last Hand</button>
 
+      <Welcome />
+
       <button onClick={socketHandler} value="hit">
         Hit
       </button>
@@ -52,12 +56,12 @@ const Game = () => {
       <button onClick={socketHandler} value="stick">
         Stick
       </button>
+
       <Bet currentHandBet={currentHandBet} setCurrentHandBet={setCurrentHandBet} betSize={betSize} setBetSize={setBetSize} />
       <div style={{ textAlign: "center", marginBottom: "20px" }}>
         <img
           src="https://i0.wp.com/mediachomp.com/wp-content/uploads/2022/02/the-office-cartoon-characters-15.jpg?resize=500%2C707&ssl=1"
           alt="The Office Cartoon Characters"
-          // style={{ maxWidth: "100%", marginTop: "20px" }}
           style={{ marginTop: '-500px' }}
         />
       </div>
@@ -66,3 +70,4 @@ const Game = () => {
 };
 
 export default Game;
+

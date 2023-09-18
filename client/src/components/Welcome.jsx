@@ -15,8 +15,6 @@ const Welcome = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        socket.emit('message', inputMessage);
-
 
         socket.emit('message', { name: inputName, message: inputMessage });
 
@@ -27,7 +25,6 @@ const Welcome = () => {
         <div className="welcome-container">
             <h1>Welcome to Blackjack Mifflin</h1>
             <form onSubmit={handleSubmit} className="message-form">
-
                 <input
                     type="text"
                     placeholder="Your Name"
@@ -38,15 +35,15 @@ const Welcome = () => {
 
                 <input
                     type="text"
+                    placeholder="Your Message"
                     value={inputMessage}
                     onChange={(e) => setInputMessage(e.target.value)}
                     className="message-input"
                 />
                 <button type="submit" className="message-button">Send</button>
-            </form >
-        </div >
+            </form>
+        </div>
     );
 };
 
 export default Welcome;
-
