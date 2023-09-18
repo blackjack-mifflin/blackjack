@@ -1,13 +1,13 @@
 import {useState, useEffect} from "react"
 import { useParams } from "react-router-dom";
 
-const ProfileAvatar = () => {
+const ProfileAvatar = ({playerInfo}) => {
     const [avatar, setAvatar] = useState(null)
-    const { avatarId } = useParams()
+    const avatarId = playerInfo.avatarId
     useEffect(() => {
         const fetchAvatar = async() => {
              //make sure to change 1 to ${avatarId}
-            const response = await fetch(`/api/avatars/2`)
+            const response = await fetch(`/api/avatars/${avatarId}`)
             if (response.ok) {
                 const data = await response.json();
                 console.log("THIS IS DATA FROM AVATAR", data)
