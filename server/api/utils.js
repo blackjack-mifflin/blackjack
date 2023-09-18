@@ -1,6 +1,9 @@
+const jwt = require("jsonwebtoken");
+
 const requireUser = (req, res, next) => {
-  console.log(`this is require user`, req.userId);
-  if (req.userId) {
+  const token = req.headers.authorization;
+  const userId = jwt.verify(token, process.env.JWT).id;
+  if (userId) {
     next();
   } else {
     res.status(401).send({ message: "User unauthorized" });

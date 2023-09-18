@@ -4,27 +4,37 @@ import AddButton from "./AddButton";
 import ProfileAvatar from "./ProfileAvatar";
 import ProfileEditForm from "./ProfileEditForm";
 
-const Profile = ({token}) => {
+const Profile = () => {
     const [playerInfo, setPlayerInfo] = useState(null);
     const [isEditing, setIsEditing] = useState(false)
-    const { playerId } = useParams();
+    const token = localStorage.getItem('token');
+    const id = localStorage.getItem('userId')
 
     useEffect(() => {
         const fetchPlayer = async () => {
-            //make sure to change 1 to ${playerId}
-            const response = await fetch(`/api/players/2`)
-            if (response.ok) {
-                console.log("THIS IS RESPONSE", response)
-                const data = await response.json();
-                setPlayerInfo(data)
-                console.log("THIS IS DATA FROM PROFILE.JSX", data)
-            } else {
-                console.error("Error fetching Player")
+            if (!token) {
+                console.error('Token not found in localStorage');
+                return;
             }
-            
+            try {
+                const response = await fetch(`/api/players/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log("THIS IS FROM PROFILE DATA LINE 27", data)
+                    setPlayerInfo(data)
+                } else {
+                    console.error("Error fetching Player!")
+                }
+            } catch (error) {
+                console.error("Error....", error)
+            }
         }
         fetchPlayer();
-    }, [playerId]);
+    }, []);
     
     const handleAddMoney = (amt) => {
         alert(`Adding $${amt} to the balance`)
@@ -36,7 +46,7 @@ const Profile = ({token}) => {
 
     const editProfile = async (newUser, newPw) => {
         try {
-            const response = await fetch(`/api/players/${playerId}`, {
+            const response = await fetch(`/api/players/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -68,7 +78,7 @@ const Profile = ({token}) => {
                         <h1>Welcome {playerInfo.username}</h1>
                         <p>Balance: ${playerInfo.balance}</p>
                         <p>Avatar ID: {playerInfo.avatarId}</p>
-                        <ProfileAvatar />
+                        <ProfileAvatar playerInfo={playerInfo}/>
                         <AddButton handleAddMoney={handleAddMoney}/>
                     </section>    
                 ) : (
