@@ -4,6 +4,7 @@ const http = require('http');
 const server = http.createServer(router);
 const {Server} = require('socket.io');
 const io = new Server(server);
+const {requireUser} = require('./utils');
 
 router.get('/', (req, res) => {
   res.send('reached game route');
