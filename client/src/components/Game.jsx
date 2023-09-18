@@ -26,8 +26,8 @@ const Game = () => {
   const joinGame =() => {
     console.log(`User Added To Room (Frontend Message)`);
     socket.emit("join");
-    socket.on('addedId', async (socketId) => {
-      console.log(`User added to Room ID: ${socketId} (From Backend)`)
+    socket.on('addedId', async (roomName) => {
+      console.log(`User added to ${roomName} (From Backend)`)
      })
   };
 
@@ -43,6 +43,7 @@ const Game = () => {
       <h1>Blackjack Mifflin</h1>
       <PlayerStats currentHandBet={currentHandBet} />
       <button onClick={joinGame}>Join Game</button>
+
       <button onClick={lastHand}>Last Hand</button>
 
       <button onClick={socketHandler} value="hit">

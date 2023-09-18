@@ -16,17 +16,32 @@ app.use(cors());
 io.on('connection', (socket) => {
   const deck = ['sA', 'dA', 'hA', 'cA'];
 
+
+  //console.logs to be deleted later, used for now to show actions in server terminal
     socket.on('join', (join) => {
-      const roomName = "room1"
-      console.log(socket.rooms)
+      let roomNum = 1;
+      let roomName = `Room ${roomNum}`;
+    if(!io.sockets.adapter.rooms.get(roomName)){
+      console.log('No Users in Room')
       socket.join(roomName);
-      console.log(socket.rooms)
-      io.to(roomName).emit('addedId', socket.id)
-      const roomId = socket.id
-      console.log(`Socket Connected to Room ID: ${roomId}`)
-      console.log(`Socket Connected to Room Name: ${roomName}`)
-      console.log(io.sockets.adapter.rooms.get(roomName))
-      console.log(socket.rooms.length)
+      io.to(roomName).emit('addedId', roomName)
+      console.log(`Added ${socket.id} to ${roomName}`)
+      console.log(`Room Num: ${roomNum}, Room Name: ${roomName}`)
+      } else if (io.sockets.adapter.rooms.get(roomName).size < 3){
+        socket.join(roomName);
+        console.log(`Added ${socket.id} to ${roomName}`)
+        console.log(`User joined ${roomName}`)
+        console.log(`Room Num: ${roomNum}, Room Name: ${roomName}`)
+        console.log(io.sockets.adapter.rooms.get(roomName).size)
+      } else {
+        roomNum ++
+        roomName = `Room ${roomNum}`
+        socket.join(roomName);
+        console.log(`Added ${socket.id} to ${roomName}`)
+        console.log(`User joined ${roomName}`)
+        console.log(`Room Num: ${roomNum}, Room Name: ${roomName}`)
+        console.log(io.sockets.adapter.rooms.get(roomName).size)
+      }
     })
   
     socket.on('message', (msg) => {
@@ -53,9 +68,9 @@ app.use((req, res, next) => {
   const token = auth?.startsWith("Bearer") ? auth.slice(7) : null;
   try {
     const { id } = jwt.verify(token, process.env.JWT);
-    req.userID = id;
+    req.userId = id;
   } catch (err) {
-    req.userID = null;
+    req.userId = null;
   }
   next();
 });
