@@ -4,6 +4,7 @@ import { io } from 'socket.io-client';
 
 const Welcome = () => {
     const [messages, setMessages] = useState([]);
+    const [inputName, setInputName] = useState('');
     const [inputMessage, setInputMessage] = useState('');
 
     const socket = io('/');
