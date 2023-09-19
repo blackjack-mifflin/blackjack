@@ -16,17 +16,24 @@ app.use(cors());
 io.on('connection', (socket) => {
   const deck = ['sA', 'dA', 'hA', 'cA'];
 
-  socket.on('join', (join) => {
-    const roomName = "room1"
-    console.log(socket.rooms)
+  const joinRoom = (roomName, roomNum) => {
+    if(!io.sockets.adapter.rooms.get(roomName)){
+    console.log('No Users in Room')
     socket.join(roomName);
-    console.log(socket.rooms)
-    io.to(roomName).emit('addedId', socket.id)
-    const roomId = socket.id
-    console.log(`Socket Connected to Room ID: ${roomId}`)
-    console.log(`Socket Connected to Room Name: ${roomName}`)
-    console.log(io.sockets.adapter.rooms.get('room1'))
-  })
+    io.to(roomName).emit('addedId', roomName)
+    console.log(`Added ${socket.id} to ${roomName}`)
+    console.log(io.sockets.adapter.rooms.get(roomName).size)
+    } else if (io.sockets.adapter.rooms.get(roomName).size < 3){
+      socket.join(roomName);
+      io.to(roomName).emit('addedId', roomName)
+      console.log(`Added ${socket.id} to ${roomName}`)
+      console.log(io.sockets.adapter.rooms.get(roomName).size)
+    } else {
+      roomNum ++
+      roomName = `Room${roomNum}`
+      joinRoom(roomName, roomNum)
+      }
+    }
 
   socket.on('message', ({ name, message }) => {
     console.log(`MESSAGE FROM ${name}: ${message}`);
