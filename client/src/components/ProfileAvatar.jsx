@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import '../App.css'
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
-import '../App.css'
 
 const ProfileAvatar = ({playerInfo}) => {
     const [avatar, setAvatar] = useState(null)
