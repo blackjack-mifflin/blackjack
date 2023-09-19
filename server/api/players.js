@@ -12,7 +12,7 @@ router.get("/", requireUser, async (req, res) => {
   }
 });
 
-router.get("/:id", requireUser, async (req, res) => {
+router.get("/:id", async (req, res) => {//add requireUser
   try {
     const results = await prisma.player.findUnique({
       where: {

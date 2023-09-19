@@ -24,7 +24,7 @@ const Game = () => {
   };
 
   const joinGame = () => {
-    console.log(`User Added To Room (Frontend Message)`);
+    console.log(`Adding User To Room (Frontend Message)`);
     socket.emit("join");
     socket.on('addedId', async (socketId) => {
       console.log(`User added to Room ID: ${socketId} (From Backend)`)
