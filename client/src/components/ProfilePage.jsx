@@ -21,8 +21,8 @@ const Profile = () => {
                         Authorization: `Bearer ${token}`
                     },
                 });
-                const data = await response.json();
                 if (response.ok) {
+                    const data = await response.json();
                     setPlayerInfo(data)
                 } else {
                     console.error("Error fetching Player!")
