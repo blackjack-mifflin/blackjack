@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react"
-import { useParams } from "react-router-dom";
 import AddButton from "./AddButton";
 import ProfileAvatar from "./ProfileAvatar";
 import ProfileEditForm from "./ProfileEditForm";
@@ -22,9 +21,8 @@ const Profile = () => {
                         Authorization: `Bearer ${token}`
                     },
                 });
+                const data = await response.json();
                 if (response.ok) {
-                    const data = await response.json();
-                    console.log("THIS IS FROM PROFILE DATA LINE 27", data)
                     setPlayerInfo(data)
                 } else {
                     console.error("Error fetching Player!")

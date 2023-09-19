@@ -12,7 +12,7 @@ const ProfileEditForm = ({onSubmit}) => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={onSubmit}>
             <div>
                 <label>New Username:</label>
                 <input 

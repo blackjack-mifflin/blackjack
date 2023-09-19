@@ -10,8 +10,6 @@ const ProfileAvatar = ({playerInfo}) => {
             const response = await fetch(`/api/avatars/${avatarId}`)
             if (response.ok) {
                 const data = await response.json();
-                console.log("THIS IS DATA FROM AVATAR", data)
-                console.log("THIS IS IMAGEURL FROM AVATAR", data.image_url)
                 setAvatar(data)
             } else {
                 console.error("Error fetching Avatar")
