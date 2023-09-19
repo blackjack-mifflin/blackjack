@@ -35,7 +35,7 @@ router.put("/:id", requireUser, async (req, res) => {
       where: {
         id: Number(req.params.id),
       },
-      body: req.body,
+      data: req.body,
     });
     if (player) {
       res.send(player);
