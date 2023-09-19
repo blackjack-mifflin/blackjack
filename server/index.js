@@ -16,32 +16,30 @@ app.use(cors());
 io.on('connection', (socket) => {
   const deck = ['sA', 'dA', 'hA', 'cA'];
 
-
-  //console.logs to be deleted later, used for now to show actions in server terminal
-    socket.on('join', (join) => {
-      let roomNum = 1;
-      let roomName = `Room ${roomNum}`;
-    if(!io.sockets.adapter.rooms.get(roomName)){
+  const joinRoom = (roomName, roomNum) => {
+      if(!io.sockets.adapter.rooms.get(roomName)){
       console.log('No Users in Room')
       socket.join(roomName);
       io.to(roomName).emit('addedId', roomName)
       console.log(`Added ${socket.id} to ${roomName}`)
-      console.log(`Room Num: ${roomNum}, Room Name: ${roomName}`)
+      console.log(io.sockets.adapter.rooms.get(roomName).size)
       } else if (io.sockets.adapter.rooms.get(roomName).size < 3){
         socket.join(roomName);
+        io.to(roomName).emit('addedId', roomName)
         console.log(`Added ${socket.id} to ${roomName}`)
-        console.log(`User joined ${roomName}`)
-        console.log(`Room Num: ${roomNum}, Room Name: ${roomName}`)
         console.log(io.sockets.adapter.rooms.get(roomName).size)
       } else {
         roomNum ++
-        roomName = `Room ${roomNum}`
-        socket.join(roomName);
-        console.log(`Added ${socket.id} to ${roomName}`)
-        console.log(`User joined ${roomName}`)
-        console.log(`Room Num: ${roomNum}, Room Name: ${roomName}`)
-        console.log(io.sockets.adapter.rooms.get(roomName).size)
+        roomName = `Room${roomNum}`
+        joinRoom(roomName, roomNum)
+        }
       }
+
+  //console.logs to be deleted later, used for now to show actions in server terminal
+    socket.on('join', (join) => {
+    let roomNum = 1;
+    let roomName = `Room${roomNum}`;
+      joinRoom(roomName, roomNum)
     })
   
     socket.on('message', (msg) => {
