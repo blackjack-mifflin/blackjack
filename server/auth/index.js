@@ -62,7 +62,8 @@ router.post("/register", async (req, res) => {
         }
     });
     console.log(newUser)
-    res.status(201).json({ message: 'User registered successfully', playerId: newUser.id });
+    const token = jwt.sign({id: newUser.id}, process.env.JWT)
+    res.status(201).json({ message: 'User registered successfully', token: token, userId: newUser.id });
 
   } catch (error) {
     res.status(500).json({ error: 'Something went wrong. Please try again.'});
