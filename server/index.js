@@ -13,15 +13,81 @@ app.use(morgan("dev"));
 app.use(require("body-parser").json());
 app.use(cors());
 
-app.get('/profile', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+app.get("/profile", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
 });
 
-io.on("connection", (socket) => {
-  const deck = ["sA", "dA", "hA", "cA"];
+newDeck = [
+  "sA",
+  "cA",
+  "hA",
+  "dA",
+  "sK",
+  "cK",
+  "hK",
+  "dK",
+  "sQ",
+  "cQ",
+  "hQ",
+  "dQ",
+  "sJ",
+  "cJ",
+  "hJ",
+  "dJ",
+  "sT",
+  "cT",
+  "hT",
+  "dT",
+  "s9",
+  "c9",
+  "h9",
+  "d9",
+  "s8",
+  "c8",
+  "h8",
+  "d8",
+  "s7",
+  "c7",
+  "h7",
+  "d7",
+  "s6",
+  "c6",
+  "h6",
+  "d6",
+  "s5",
+  "c5",
+  "h5",
+  "d5",
+  "s4",
+  "c4",
+  "h4",
+  "d4",
+  "s3",
+  "c3",
+  "h3",
+  "d3",
+  "s2",
+  "c2",
+  "h2",
+  "d2",
+];
+shuffle = (deck) => {
+  const newCards = [];
+  for (let i = 0; i < deck.length; i++) {
+    const j = Math.floor(Math.random() * deck.length);
+    const temp = deck[i];
+    deck[i] = deck[j];
+    deck[j] = temp;
+  }
+};
+const roomDecks = {};
 
+io.on("connection", (socket) => {
   const joinRoom = (roomName, roomNum) => {
     if (!io.sockets.adapter.rooms.get(roomName)) {
+      roomDecks.roomName = newDeck;
+      shuffle(roomDecks.roomName);
+      console.log(`${roomName} DECK: ${roomDecks.roomName}`);
       console.log("No Users in Room");
       socket.join(roomName);
       io.to(roomName).emit("addedId", roomName);
@@ -35,6 +101,9 @@ io.on("connection", (socket) => {
     } else {
       roomNum++;
       roomName = `Room${roomNum}`;
+      roomDecks.roomName = newDeck;
+      shuffle(roomDecks.roomName);
+      console.log(`${roomName} DECK: ${roomDecks.roomName}`);
       console.log(`NEW ROOM: ${roomNum}`);
       joinRoom(roomName, roomNum);
     }
