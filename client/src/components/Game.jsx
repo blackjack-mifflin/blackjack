@@ -23,12 +23,12 @@ const Game = () => {
     socket.emit("move", message);
   };
 
-  const joinGame =() => {
+  const joinGame = () => {
     console.log(`User Added To Room (Frontend Message)`);
     socket.emit("join");
     socket.on('addedId', async (socketId) => {
       console.log(`User added to Room ID: ${socketId} (From Backend)`)
-     })
+    })
   };
 
   socket.on('card', (card) => {
@@ -57,7 +57,6 @@ const Game = () => {
         <img
           src="https://i0.wp.com/mediachomp.com/wp-content/uploads/2022/02/the-office-cartoon-characters-15.jpg?resize=500%2C707&ssl=1"
           alt="The Office Cartoon Characters"
-          // style={{ maxWidth: "100%", marginTop: "20px" }}
           style={{ marginTop: '-500px' }}
         />
       </div>
