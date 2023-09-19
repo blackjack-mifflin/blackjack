@@ -2,6 +2,12 @@ import { useState, useEffect } from "react"
 import AddButton from "./AddButton";
 import ProfileAvatar from "./ProfileAvatar";
 import ProfileEditForm from "./ProfileEditForm";
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 const Profile = () => {
     const [playerInfo, setPlayerInfo] = useState(null);
@@ -69,26 +75,70 @@ const Profile = () => {
         setIsEditing(!isEditing)
     }
     return (
+        <>
         <section id="profile-container">
-            <h1>Profile Page</h1>
+            {playerInfo ? <ProfileAvatar playerInfo={playerInfo}/> : ''}
+            
             {playerInfo ? (
-                    <section>
-                        <h1>Welcome {playerInfo.username}</h1>
-                        <p>Balance: ${playerInfo.balance}</p>
-                        <p>Avatar ID: {playerInfo.avatarId}</p>
-                        <ProfileAvatar playerInfo={playerInfo}/>
-                        <AddButton handleAddMoney={handleAddMoney}/>
-                    </section>    
-                ) : (
-                    <p>Loading...Info...</p>
-                )
-            }
-            {isEditing ? (
-                <ProfileEditForm onSubmit={editProfile} />
-            ) : (
-                <button onClick={editButton}>Edit Username & PW</button>
-            )}
+            <section>
+                <h1>Welcome {playerInfo.username}</h1>
+                <p>Balance: ${playerInfo.balance}</p>
+                <p>Avatar ID: {playerInfo.avatarId}</p>
+                <AddButton handleAddMoney={handleAddMoney}/>
+            </section>) : (<p>Loading...Info...</p>)}
+
+            {isEditing ? (<ProfileEditForm onSubmit={editProfile} />) 
+            : (<button onClick={editButton}>Edit Username & PW</button>)}
         </section>
+
+        <section id="winLoss">
+            <h3>Winn Loss Ratio</h3>
+            <Card sx={{ maxWidth: 345 }}>
+            <CardMedia
+                sx={{ height: 140 }}
+                image='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQJ8GetVR49cT7CIjEcO0C_IOw4eR6ozYQ7A&usqp=CAU'
+            />
+            <CardContent>
+                <Typography gutterBottom variant="h5" component="span">
+                {playerInfo ? `Win/Loss Ratio: ${playerInfo.wins / playerInfo.losses}` : 'Sign in for more info'}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                {playerInfo ? `Winn/Loss Ratio: 0` : ''}<br/>
+                {playerInfo ? `Total Wins: ${playerInfo.wins}` : ''}<br/>
+                {playerInfo ? `Total Losses: ${playerInfo.losses}` : ''}
+                </Typography>
+            </CardContent>
+            <CardActions>
+                <Button href="https://twitter.com/intent/tweet" size="small">Share</Button>
+                <Button href="https://pages.cs.wisc.edu/~harron/" size="small">Learn More</Button>
+            </CardActions>
+            </Card>
+        </section>
+
+        <section id="winLoss">
+            <h3>Total Games Played</h3>
+            <Card sx={{ maxWidth: 345 }}>
+            <CardMedia
+                sx={{ height: 140 }}
+                image='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQJ8GetVR49cT7CIjEcO0C_IOw4eR6ozYQ7A&usqp=CAU'
+            />
+            <CardContent>
+                <Typography gutterBottom variant="h5" component="span">
+                {playerInfo ? `Total Games Played: ${playerInfo.losses + playerInfo.wins}` : ''}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                {playerInfo ? `Total Games Played` : ''}<br/>
+                </Typography>
+            </CardContent>
+            <CardActions>
+                <Button href="https://twitter.com/intent/tweet" size="small">Share</Button>
+                <Button href="https://pages.cs.wisc.edu/~harron/" size="small">Learn More</Button>
+            </CardActions>
+            </Card>
+        </section>
+
+
+        </>
     )
 }
 
