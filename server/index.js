@@ -96,10 +96,10 @@ class Room {
     }
   }
   addPlayer = () => {
-    playerCount ++;
+    this.playerCount ++;
   }
   removePlayer = () => {
-    playerCount --;
+    this.playerCount --;
   }
   hit = () => {
     this.playerCards[this.activePlayer].push(this.deck[this.activeCard]);
@@ -134,7 +134,9 @@ io.on("connection", (socket) => {
       console.log(io.sockets.adapter.rooms.get(roomName).size);
     } else if (io.sockets.adapter.rooms.get(roomName).size < 3) {
       socket.join(roomName);
+      rooms.roomName.addPlayer();
       io.to(roomName).emit("addedId", roomName);
+      console.log(`PLAYER COUNT: ${rooms.roomName.playerCount}`);
       console.log(`Added ${socket.id} to ${roomName}`);
       console.log(io.sockets.adapter.rooms.get(roomName).size);
     } else {
