@@ -109,7 +109,7 @@ class Room {
     this.activePlayer ++;
   }
 }
-const roomDecks = {};
+const rooms = {};
 const myRoom = new Room(1);
 myRoom.startHand();
 myRoom.hit();
@@ -122,10 +122,12 @@ console.log(`MY ROOM: ${JSON.stringify(myRoom)}`);
 io.on("connection", (socket) => {
   const joinRoom = (roomName, roomNum) => {
     if (!io.sockets.adapter.rooms.get(roomName)) {
-      roomDecks.roomName = newDeck;
-      shuffle(roomDecks.roomName);
-      console.log(`${roomName} DECK: ${roomDecks.roomName}`);
+      rooms.roomName = new Room(1);
+      rooms.roomName.startHand();
       console.log("No Users in Room");
+      console.log(`${roomName} DECK: ${rooms.roomName.deck}`);
+      console.log(`${roomName} DEALER: ${rooms.roomName.playerCards[0]}`)
+      console.log(`${roomName} PLAYER1: ${rooms.roomName.playerCards[1]}`)
       socket.join(roomName);
       io.to(roomName).emit("addedId", roomName);
       console.log(`Added ${socket.id} to ${roomName}`);
@@ -138,10 +140,10 @@ io.on("connection", (socket) => {
     } else {
       roomNum++;
       roomName = `Room${roomNum}`;
-      roomDecks.roomName = newDeck;
-      shuffle(roomDecks.roomName);
-      console.log(`${roomName} DECK: ${roomDecks.roomName}`);
+      rooms.roomName = new Room(1);
+      rooms.roomName.startHand();
       console.log(`NEW ROOM: ${roomNum}`);
+      console.log(`${roomName} DECK: ${rooms.roomName.deck}`);
       joinRoom(roomName, roomNum);
     }
   };
