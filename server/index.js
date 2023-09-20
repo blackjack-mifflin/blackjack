@@ -1,47 +1,134 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-require('dotenv').config();
-const path = require('path');
-const morgan = require('morgan');
+require("dotenv").config();
+const path = require("path");
+const morgan = require("morgan");
 const jwt = require("jsonwebtoken");
-const http = require('http');
+const http = require("http");
 const server = http.createServer(app);
-const { Server } = require('socket.io');
+const { Server } = require("socket.io");
 const io = new Server(server);
-const cors = require('cors');
-app.use(morgan('dev'));
+const cors = require("cors");
+app.use(morgan("dev"));
 app.use(require("body-parser").json());
 app.use(cors());
 
-io.on('connection', (socket) => {
-  const deck = ['sA', 'dA', 'hA', 'cA'];
+app.get("/profile", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+});
 
-  socket.on('join', (join) => {
-    const roomName = "room1"
-    console.log(socket.rooms)
-    socket.join(roomName);
-    console.log(socket.rooms)
-    io.to(roomName).emit('addedId', socket.id)
-    const roomId = socket.id
-    console.log(`Socket Connected to Room ID: ${roomId}`)
-    console.log(`Socket Connected to Room Name: ${roomName}`)
-    console.log(io.sockets.adapter.rooms.get('room1'))
-  })
+newDeck = [
+  "sA",
+  "cA",
+  "hA",
+  "dA",
+  "sK",
+  "cK",
+  "hK",
+  "dK",
+  "sQ",
+  "cQ",
+  "hQ",
+  "dQ",
+  "sJ",
+  "cJ",
+  "hJ",
+  "dJ",
+  "sT",
+  "cT",
+  "hT",
+  "dT",
+  "s9",
+  "c9",
+  "h9",
+  "d9",
+  "s8",
+  "c8",
+  "h8",
+  "d8",
+  "s7",
+  "c7",
+  "h7",
+  "d7",
+  "s6",
+  "c6",
+  "h6",
+  "d6",
+  "s5",
+  "c5",
+  "h5",
+  "d5",
+  "s4",
+  "c4",
+  "h4",
+  "d4",
+  "s3",
+  "c3",
+  "h3",
+  "d3",
+  "s2",
+  "c2",
+  "h2",
+  "d2",
+];
+shuffle = (deck) => {
+  const newCards = [];
+  for (let i = 0; i < deck.length; i++) {
+    const j = Math.floor(Math.random() * deck.length);
+    const temp = deck[i];
+    deck[i] = deck[j];
+    deck[j] = temp;
+  }
+};
+const roomDecks = {};
 
-  socket.on('message', ({ name, message }) => {
+io.on("connection", (socket) => {
+  const joinRoom = (roomName, roomNum) => {
+    if (!io.sockets.adapter.rooms.get(roomName)) {
+      roomDecks.roomName = newDeck;
+      shuffle(roomDecks.roomName);
+      console.log(`${roomName} DECK: ${roomDecks.roomName}`);
+      console.log("No Users in Room");
+      socket.join(roomName);
+      io.to(roomName).emit("addedId", roomName);
+      console.log(`Added ${socket.id} to ${roomName}`);
+      console.log(io.sockets.adapter.rooms.get(roomName).size);
+    } else if (io.sockets.adapter.rooms.get(roomName).size < 3) {
+      socket.join(roomName);
+      io.to(roomName).emit("addedId", roomName);
+      console.log(`Added ${socket.id} to ${roomName}`);
+      console.log(io.sockets.adapter.rooms.get(roomName).size);
+    } else {
+      roomNum++;
+      roomName = `Room${roomNum}`;
+      roomDecks.roomName = newDeck;
+      shuffle(roomDecks.roomName);
+      console.log(`${roomName} DECK: ${roomDecks.roomName}`);
+      console.log(`NEW ROOM: ${roomNum}`);
+      joinRoom(roomName, roomNum);
+    }
+  };
+
+  socket.on("join", (join) => {
+    let roomNum = 1;
+    let roomName = `Room${roomNum}`;
+    joinRoom(roomName, roomNum);
+  });
+
+  socket.on("message", ({ name, message }) => {
     console.log(`MESSAGE FROM ${name}: ${message}`);
-    io.emit('new message', { name, message });
-  })
+    io.emit("new message", { name, message });
+  });
 
-  socket.on('move', (move) => {
-    if (move === 'hit') {
+  socket.on("move", (move) => {
+    if (move === "hit") {
       newCard = deck.pop();
-      io.emit('card', newCard);
-    } else if (move === 'stick') {
-      io.emit('player', 'move player pointer 1+');
+      io.emit("card", newCard);
+    } else if (move === "stick") {
+      io.emit("player", "move player pointer 1+");
     }
     console.log(`MOVE FROM CLIENT: ${move}`);
-  })
+  });
 });
 
 app.use((req, res, next) => {
@@ -56,23 +143,23 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static(path.join(__dirname, '../client/dist')));
+app.use(express.static(path.join(__dirname, "../client/dist")));
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
 });
 
-app.get('/game', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+app.get("/game", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
 });
 
-app.use('/api', require('./api'));
-app.use('/auth', require('./auth'));
+app.use("/api", require("./api"));
+app.use("/auth", require("./auth"));
 
 server.listen(process.env.PORT, (error) => {
   if (!error) {
     console.log(`Server is listening on ${process.env.PORT}`);
   } else {
-    console.log('Not Working');
+    console.log("Not Working");
   }
 });
