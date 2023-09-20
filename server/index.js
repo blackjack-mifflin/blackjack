@@ -80,7 +80,44 @@ shuffle = (deck) => {
     deck[j] = temp;
   }
 };
+class Room {
+  constructor(playerCount) {
+    this.playerCount = playerCount;
+    this.deck = newDeck;
+    this.activePlayer = 0;
+    this.activeCard = 0;
+    this.playerCards = [];
+  }
+  startHand = () => {
+    shuffle(this.deck);
+    for (let i=0; i <= this.playerCount; i++) {
+      this.playerCards.push([this.deck[this.activeCard], this.deck[this.activeCard+1]]);
+      this.activeCard += 2;
+    }
+  }
+  addPlayer = () => {
+    playerCount ++;
+  }
+  removePlayer = () => {
+    playerCount --;
+  }
+  hit = () => {
+    this.playerCards[this.activePlayer].push(this.deck[this.activeCard]);
+    this.activeCard ++;
+  }
+  stick = () => {
+    this.activePlayer ++;
+  }
+}
 const roomDecks = {};
+const myRoom = new Room(1);
+myRoom.startHand();
+myRoom.hit();
+myRoom.stick();
+myRoom.hit();
+myRoom.hit();
+myRoom.hit();
+console.log(`MY ROOM: ${JSON.stringify(myRoom)}`);
 
 io.on("connection", (socket) => {
   const joinRoom = (roomName, roomNum) => {
