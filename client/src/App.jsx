@@ -14,18 +14,18 @@ import Messages from './components/Messages';
 const App = () => {
   const [token, setToken] = useState(null);
 
+
   const socket = io('/');
 
   return (
     <>
-      <Navbar />
+      <Navbar token={token} />
       <Routes>
-        <Route token={token} setToken={setToken} path="/login" element={<LogInPage />} />
-        <Route path="/" element={<Welcome socket={socket} />} />
+        <Route path="/" element={<Welcome />} />
+        <Route path="/Login" element={<LogInPage setToken={setToken} />} />
         <Route path="/SignUp" element={<SignUpPage />} />
-        <Route path="/profile" element={<Profile token={token} />} />
-        <Route path="/game" element={<Game />} />
-        <Route path="/" element={<Welcome socket={socket} />} />
+        <Route path="/Profile" element={<Profile />} />
+        <Route path="/Game" element={<Game />} />
       </Routes>
       <Messages socket={socket} />
     </>

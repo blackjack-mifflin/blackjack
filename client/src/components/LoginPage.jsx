@@ -36,7 +36,7 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-const LogInPage = () => {
+const LogInPage = ({ setToken }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -59,6 +59,7 @@ const LogInPage = () => {
       if (data.token) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("userId", data.id);
+        setToken(data.token);
       }
     } catch (err) {
       console.log(err);
