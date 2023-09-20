@@ -18,7 +18,6 @@ const App = () => {
 
   return (
     <>
-      <h1>Hello World</h1>
       <Navbar />
       <Routes>
         <Route token={token} setToken={setToken} path="/login" element={<LogInPage />} />

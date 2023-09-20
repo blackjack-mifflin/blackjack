@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
-const {requireUser} = require('./utils')
+const { requireUser } = require('./utils')
 
 router.get("/", requireUser, async (req, res) => {
   try {
@@ -12,7 +12,7 @@ router.get("/", requireUser, async (req, res) => {
   }
 });
 
-router.get("/:id", requireUser, async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const results = await prisma.player.findUnique({
       where: {
@@ -76,7 +76,7 @@ router.get("/bet/:id", requireUser, async (req, res) => {
       where: { id: Number(req.params.id) },
     });
     console.log(balance);
-    res.send({balance});
+    res.send({ balance });
   } catch (error) {
     res.send(error);
   }
