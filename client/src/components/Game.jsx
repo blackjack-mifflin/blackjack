@@ -41,7 +41,7 @@ const Game = () => {
   };
 
   socket.on("card", (card) => {
-    console.log(`CARD FROM SERVER: ${card}`);
+    console.log(`CARD FROM SERVER: ${JSON.stringify(card)}`);
   });
 
   socket.on("player", (playerIdx) => {

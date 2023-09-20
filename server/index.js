@@ -130,6 +130,8 @@ io.on("connection", (socket) => {
       console.log(`${roomName} PLAYER1: ${rooms.roomName.playerCards[1]}`)
       socket.join(roomName);
       io.to(roomName).emit("addedId", roomName);
+      // io.to(roomName).emit("card", {'dealer': [rooms.roomName.playerCards[0][0]]})
+      io.to(roomName).emit("card", {'player1': rooms.roomName.playerCards[1]})
       console.log(`Added ${socket.id} to ${roomName}`);
       console.log(io.sockets.adapter.rooms.get(roomName).size);
     } else if (io.sockets.adapter.rooms.get(roomName).size < 3) {
@@ -147,6 +149,8 @@ io.on("connection", (socket) => {
       console.log(`NEW ROOM: ${roomNum}`);
       console.log(`${roomName} DECK: ${rooms.roomName.deck}`);
       joinRoom(roomName, roomNum);
+      // io.to(roomName).emit("card", {'dealer': [rooms.roomName.playerCards[0][0]]})
+      io.to(roomName).emit("card", {'player1': rooms.roomName.playerCards[1]})
     }
   };
 
