@@ -1,5 +1,8 @@
 import {useState, useEffect} from "react"
 import { useParams } from "react-router-dom";
+import '../App.css'
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
 
 const ProfileAvatar = ({playerInfo}) => {
     const [avatar, setAvatar] = useState(null)
@@ -19,9 +22,19 @@ const ProfileAvatar = ({playerInfo}) => {
     }, [avatarId])
 
     return (
-        <section>
-            {avatar && <img src={avatar.image_url} alt="Avatar" />}
-        </section>
+        <>
+            {/* <section id='profilePic'>
+                {avatar && <img src={avatar.image_url} alt="Avatar" />}
+            </section> */}
+
+            <Stack direction="row" spacing={2} id='profilePic'>
+            <Avatar
+            alt="Remy Sharp"
+            src={avatar ? avatar.image_url : ''}
+            sx={{ width: 250, height: 250 }}
+            />
+            </Stack>
+        </>
     )
 }
 
