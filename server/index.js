@@ -16,60 +16,63 @@ app.use(cors());
 app.get("/profile", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/dist/index.html"));
 });
+app.get("/profile/paymentform", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+});
 
 newDeck = [
-  "spades_ace",
-  "clubs_ace",
-  "hearts_ace",
-  "diamonds_ace",
-  "spades_king",
-  "clubs_king",
-  "hearts_king",
-  "diamonds_king",
-  "spades_queen",
-  "clubs_queen",
-  "hearts_queen",
-  "diamonds_queen",
-  "spades_jack",
-  "clubs_jack",
-  "hearts_jack",
-  "diamonds_jack",
-  "spades_10",
-  "clubs_10",
-  "hearts_10",
-  "diamonds_10",
-  "spades_9",
-  "clubs_9",
-  "hearts_9",
-  "diamonds_9",
-  "spades_8",
-  "clubs_8",
-  "hearts_8",
-  "diamonds_8",
-  "spades_7",
-  "clubs_7",
-  "hearts_7",
-  "diamonds_7",
-  "spades_6",
-  "clubs_6",
-  "hearts_6",
-  "diamonds_6",
-  "spades_5",
-  "clubs_5",
-  "hearts_5",
-  "diamonds_5",
-  "spades_4",
-  "clubs_4",
-  "hearts_4",
-  "diamonds_4",
-  "spades_3",
-  "clubs_3",
-  "hearts_3",
-  "diamonds_3",
-  "spades_2",
-  "clubs_2",
-  "hearts_2",
-  "diamonds_2",
+  { spades_ace: 11 },
+  { clubs_ace: 11 },
+  { hearts_ace: 11 },
+  { diamonds_ace: 11 },
+  { spades_king: 10 },
+  { clubs_king: 10 },
+  { hearts_king: 10 },
+  { diamonds_king: 10 },
+  { spades_queen: 10 },
+  { clubs_queen: 10 },
+  { hearts_queen: 10 },
+  { diamonds_queen: 10 },
+  { spades_jack: 10 },
+  { clubs_jack: 10 },
+  { hearts_jack: 10 },
+  { diamonds_jack: 10 },
+  { spades_10: 10 },
+  { clubs_10: 10 },
+  { hearts_10: 10 },
+  { diamonds_10: 10 },
+  { spades_9: 9 },
+  { clubs_9: 9 },
+  { hearts_9: 9 },
+  { diamonds_9: 9 },
+  { spades_8: 8 },
+  { clubs_8: 8 },
+  { hearts_8: 8 },
+  { diamonds_8: 8 },
+  { spades_7: 7 },
+  { clubs_7: 7 },
+  { hearts_7: 7 },
+  { diamonds_7: 7 },
+  { spades_6: 6 },
+  { clubs_6: 6 },
+  { hearts_6: 6 },
+  { diamonds_6: 6 },
+  { spades_5: 5 },
+  { clubs_5: 5 },
+  { hearts_5: 5 },
+  { diamonds_5: 5 },
+  { spades_4: 4 },
+  { clubs_4: 4 },
+  { hearts_4: 4 },
+  { diamonds_4: 4 },
+  { spades_3: 3 },
+  { clubs_3: 3 },
+  { hearts_3: 3 },
+  { diamonds_3: 3 },
+  { spades_2: 2 },
+  { clubs_2: 2 },
+  { hearts_2: 2 },
+  { diamonds_2: 2 },
 ];
 shuffle = (deck) => {
   const newCards = [];
@@ -81,43 +84,71 @@ shuffle = (deck) => {
   }
 };
 class Room {
-  constructor(playerCount=1) {
+  constructor(playerCount = 1) {
     this.playerCount = playerCount;
     this.deck = newDeck;
-    this.activePlayer = 0;
+    this.activePlayer = 1;
     this.activeCard = 0;
     this.playerCards = [];
   }
   startHand = () => {
     shuffle(this.deck);
-    for (let i=0; i <= this.playerCount; i++) {
-      this.playerCards.push([this.deck[this.activeCard], this.deck[this.activeCard+1]]);
+    for (let i = 0; i <= this.playerCount; i++) {
+      this.playerCards.push([
+        this.deck[this.activeCard],
+        this.deck[this.activeCard + 1],
+      ]);
       this.activeCard += 2;
     }
-  }
+  };
   addPlayer = () => {
-    this.playerCount ++;
-  }
+    this.playerCount++;
+  };
   removePlayer = () => {
-    this.playerCount --;
-  }
+    this.playerCount--;
+  };
   hit = () => {
     this.playerCards[this.activePlayer].push(this.deck[this.activeCard]);
-    this.activeCard ++;
-  }
+    const newCard =
+      this.playerCards[this.activePlayer][
+        this.playerCards[this.activePlayer].length - 1
+      ];
+    this.activeCard++;
+    let handSum = 0;
+    this.playerCards[this.activePlayer].forEach(
+      (card) => (handSum += Number(Object.values(card)))
+    );
+    console.log(`VALUES FROM HIT: ${JSON.stringify(handSum)}`);
+    if (handSum >= 21) {
+      this.activePlayer++;
+    }
+    return newCard;
+  };
   stick = () => {
-    this.activePlayer ++;
-  }
+    this.activePlayer++;
+  };
+  getDataPreDealer = () => {
+    const data = {
+      dealer: [this.playerCards[0][0]],
+      player1: this.playerCards[1],
+      player2: this.playerCards[2],
+      player3: this.playerCards[3],
+      activePlayer: this.activePlayer,
+    };
+    return data;
+  };
+  getDataWithDealer = () => {
+    const data = {
+      dealer: this.playerCards[0],
+      player1: this.playerCards[1],
+      player2: this.playerCards[2],
+      player3: this.playerCards[3],
+      activePlayer: this.activePlayer,
+    };
+    return data;
+  };
 }
 const rooms = {};
-const myRoom = new Room(1);
-myRoom.startHand();
-myRoom.hit();
-myRoom.stick();
-myRoom.hit();
-myRoom.hit();
-myRoom.hit();
-console.log(`MY ROOM: ${JSON.stringify(myRoom)}`);
 
 io.on("connection", (socket) => {
   const joinRoom = (roomName, roomNum) => {
@@ -126,12 +157,11 @@ io.on("connection", (socket) => {
       rooms.roomName.startHand();
       console.log("No Users in Room");
       console.log(`${roomName} DECK: ${rooms.roomName.deck}`);
-      console.log(`${roomName} DEALER: ${rooms.roomName.playerCards[0]}`)
-      console.log(`${roomName} PLAYER1: ${rooms.roomName.playerCards[1]}`)
+      console.log(`${roomName} DEALER: ${rooms.roomName.playerCards[0]}`);
+      console.log(`${roomName} PLAYER1: ${rooms.roomName.playerCards[1]}`);
       socket.join(roomName);
       io.to(roomName).emit("addedId", roomName);
-      io.to(roomName).emit("card", {'dealer': [rooms.roomName.playerCards[0][0]]})
-      io.to(roomName).emit("card", {'player1': rooms.roomName.playerCards[1]})
+      io.emit("card", rooms.roomName.getDataPreDealer());
       console.log(`Added ${socket.id} to ${roomName}`);
       console.log(io.sockets.adapter.rooms.get(roomName).size);
     } else if (io.sockets.adapter.rooms.get(roomName).size < 3) {
@@ -149,8 +179,7 @@ io.on("connection", (socket) => {
       console.log(`NEW ROOM: ${roomNum}`);
       console.log(`${roomName} DECK: ${rooms.roomName.deck}`);
       joinRoom(roomName, roomNum);
-      io.to(roomName).emit("card", {'dealer': [rooms.roomName.playerCards[0][0]]})
-      io.to(roomName).emit("card", {'player1': rooms.roomName.playerCards[1]})
+      io.emit("card", rooms.roomName.getDataPreDealer());
     }
   };
 
@@ -167,10 +196,13 @@ io.on("connection", (socket) => {
 
   socket.on("move", (move) => {
     if (move === "hit") {
-      newCard = deck.pop();
-      io.emit("card", newCard);
+      const newCard = {};
+      newCard[`Player${rooms.roomName.activePlayer}`] = rooms.roomName.hit();
+      console.log(`NEW CARD FROM HIT: ${newCard}`);
+      io.emit("card", rooms.roomName.getDataPreDealer());
     } else if (move === "stick") {
-      io.emit("player", "move player pointer 1+");
+      rooms.roomName.activePlayer++;
+      io.emit("card", rooms.roomName.getDataPreDealer());
     }
     console.log(`MOVE FROM CLIENT: ${move}`);
   });
