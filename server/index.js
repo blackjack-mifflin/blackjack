@@ -74,15 +74,6 @@ newDeck = [
   { hearts_2: 2 },
   { diamonds_2: 2 },
 ];
-shuffle = (deck) => {
-  const newCards = [];
-  for (let i = 0; i < deck.length; i++) {
-    const j = Math.floor(Math.random() * deck.length);
-    const temp = deck[i];
-    deck[i] = deck[j];
-    deck[j] = temp;
-  }
-};
 class Room {
   constructor(playerCount = 1) {
     this.playerCount = playerCount;
@@ -91,8 +82,17 @@ class Room {
     this.activeCard = 0;
     this.playerCards = [];
   }
+  shuffle = (deck) => {
+    const newCards = [];
+    for (let i = 0; i < deck.length; i++) {
+      const j = Math.floor(Math.random() * deck.length);
+      const temp = deck[i];
+      deck[i] = deck[j];
+      deck[j] = temp;
+    }
+  };
   startHand = () => {
-    shuffle(this.deck);
+    this.shuffle(this.deck);
     for (let i = 0; i <= this.playerCount; i++) {
       this.playerCards.push([
         this.deck[this.activeCard],
@@ -126,6 +126,24 @@ class Room {
   };
   stick = () => {
     this.activePlayer++;
+    if (this.activePlayer > this.playerCount) {
+      this.dealerPlay();
+    }
+  };
+  dealerPlay = () => {
+    io.emit("card", rooms.roomName.getDataWithDealer());
+    let dealerSum = 0;
+    this.playerCards[0].forEach(
+      (card) => (dealerSum += Number(Object.values(card)))
+    );
+    while (dealerSum < 17) {
+      this.playerCards[0].push(this.deck[this.activeCard]);
+      this.activeCard++;
+      io.emit("card", rooms.roomName.getDataWithDealer());
+      this.playerCards[0].forEach(
+        (card) => (dealerSum += Number(Object.values(card)))
+      );
+    }
   };
   getDataPreDealer = () => {
     const data = {
@@ -200,9 +218,15 @@ io.on("connection", (socket) => {
       newCard[`Player${rooms.roomName.activePlayer}`] = rooms.roomName.hit();
       console.log(`NEW CARD FROM HIT: ${newCard}`);
       io.emit("card", rooms.roomName.getDataPreDealer());
+      if (rooms.roomName.activePlayer > rooms.roomName.playerCount) {
+        rooms.roomName.dealerPlay();
+      }
     } else if (move === "stick") {
       rooms.roomName.activePlayer++;
       io.emit("card", rooms.roomName.getDataPreDealer());
+      if (rooms.roomName.activePlayer > rooms.roomName.playerCount) {
+        rooms.roomName.dealerPlay();
+      }
     }
     console.log(`MOVE FROM CLIENT: ${move}`);
   });
