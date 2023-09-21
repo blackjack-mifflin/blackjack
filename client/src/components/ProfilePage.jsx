@@ -40,14 +40,6 @@ const Profile = () => {
         }
         fetchPlayer();
     }, []);
-    
-    const handleAddMoney = (amt) => {
-        alert(`Adding $${amt} to the balance`)
-        setPlayerInfo((oldBalance) => ({
-            ...oldBalance,
-            balance: oldBalance.balance + amt
-        }))
-    }
 
     const editProfile = async (newUser, newPw) => {
         try {
@@ -81,12 +73,12 @@ const Profile = () => {
             <div 
                 id="profile-photo">{playerInfo ? <ProfileAvatar playerInfo={playerInfo}/> : ''}
             </div>
-            <div><AddButton handleAddMoney={handleAddMoney} playerInfo={playerInfo}/></div> 
+            <div><AddButton playerInfo={playerInfo}/></div> 
             {isEditing ? (<ProfileEditForm onSubmit={editProfile} />) 
             : (<div><button onClick={editButton}>Edit Username & PW</button></div>)}
 
 
-            <Card sx={{ maxWidth: 750 }}>
+            <Card sx={{ maxWidth: 1000 }}>
             <CardMedia
                 sx={{ height: 200 }}
                 image='https://client.dragongaming.com/wp-content/uploads/2021/01/blackjack-logo.jpg.png'
@@ -105,7 +97,7 @@ const Profile = () => {
             </CardActions>
 
             </Card>
-            <Card sx={{ maxWidth: 750 }}>
+            <Card sx={{ maxWidth: 1000 }}>
             <CardMedia
                 sx={{ height: 200 }}
                 image='https://client.dragongaming.com/wp-content/uploads/2021/01/blackjack-logo.jpg.png'
