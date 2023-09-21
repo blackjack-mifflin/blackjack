@@ -16,6 +16,9 @@ app.use(cors());
 app.get("/profile", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/dist/index.html"));
 });
+app.get("/profile/paymentform", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+});
 
 newDeck = [
   "spades_ace",

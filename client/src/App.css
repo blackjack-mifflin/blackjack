@@ -128,9 +128,16 @@
     border-radius: 5px;
     padding: 10px;
     margin: 5px 0;
+}
 
-    #profilePic {
-        height: 25px;
-        width: 12px;
-        margin-left: 65%;
-    }
+#profilePic {
+    height: 25px;
+    width: 12px;
+    margin-left: 65%;
+}
+
+#profile-photo{
+    margin-right: 10%;
+    margin-left: 55%;
+    margin-top: 5px;
+}

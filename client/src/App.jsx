@@ -9,10 +9,12 @@ import Game from './components/Game';
 import { useState } from "react";
 import { io } from 'socket.io-client';
 import Messages from './components/Messages';
+import PaymentForm from './components/PaymentForm';
 
 
 const App = () => {
   const [token, setToken] = useState(null);
+  const [playerInfo, setPlayerInfo] = useState(null);
 
 
   const socket = io('/');
@@ -21,11 +23,12 @@ const App = () => {
     <>
       <Navbar token={token} />
       <Routes>
-        <Route path="/" element={<Welcome />} />
+        <Route path="/" element={<Welcome />} playerInfo={playerInfo}/>
         <Route path="/Login" element={<LogInPage setToken={setToken} />} />
         <Route path="/SignUp" element={<SignUpPage />} />
-        <Route path="/Profile" element={<Profile />} />
+        <Route path="/Profile" element={<Profile setPlayerInfo={setPlayerInfo}/>} />
         <Route path="/Game" element={<Game />} />
+        <Route path="/profile/paymentform" element={<PaymentForm />} />
       </Routes>
       <Messages socket={socket} />
     </>

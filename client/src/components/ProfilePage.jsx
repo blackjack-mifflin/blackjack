@@ -8,6 +8,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import '../App.css'
 
 const Profile = () => {
     const [playerInfo, setPlayerInfo] = useState(null);
@@ -76,68 +77,48 @@ const Profile = () => {
     }
     return (
         <>
-        <section id="profile-container">
-            {playerInfo ? <ProfileAvatar playerInfo={playerInfo}/> : ''}
-            
-            {playerInfo ? (
-            <section>
-                <h1>Welcome {playerInfo.username}</h1>
-                <p>Balance: ${playerInfo.balance}</p>
-                <p>Avatar ID: {playerInfo.avatarId}</p>
-                <AddButton handleAddMoney={handleAddMoney}/>
-            </section>) : (<p>Loading...Info...</p>)}
-
+            <h2>Current Balance: {playerInfo ? playerInfo.balance : ''}</h2>
+            <div 
+                id="profile-photo">{playerInfo ? <ProfileAvatar playerInfo={playerInfo}/> : ''}
+            </div>
+            <div><AddButton handleAddMoney={handleAddMoney} playerInfo={playerInfo}/></div> 
             {isEditing ? (<ProfileEditForm onSubmit={editProfile} />) 
-            : (<button onClick={editButton}>Edit Username & PW</button>)}
-        </section>
+            : (<div><button onClick={editButton}>Edit Username & PW</button></div>)}
 
-        <section id="winLoss">
-            <h3>Winn Loss Ratio</h3>
-            <Card sx={{ maxWidth: 345 }}>
+
+            <Card sx={{ maxWidth: 750 }}>
             <CardMedia
-                sx={{ height: 140 }}
-                image='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQJ8GetVR49cT7CIjEcO0C_IOw4eR6ozYQ7A&usqp=CAU'
+                sx={{ height: 200 }}
+                image='https://client.dragongaming.com/wp-content/uploads/2021/01/blackjack-logo.jpg.png'
             />
             <CardContent>
-                <Typography gutterBottom variant="h5" component="span">
-                {playerInfo ? `Win/Loss Ratio: ${playerInfo.wins / playerInfo.losses}` : 'Sign in for more info'}
+                <Typography gutterBottom variant="h5" component="div">
+                {playerInfo ? `Win/Loss Ratio: %${playerInfo.wins / playerInfo.losses}` : 'Sign in for more info'}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                {playerInfo ? `Winn/Loss Ratio: 0` : ''}<br/>
                 {playerInfo ? `Total Wins: ${playerInfo.wins}` : ''}<br/>
                 {playerInfo ? `Total Losses: ${playerInfo.losses}` : ''}
                 </Typography>
             </CardContent>
             <CardActions>
                 <Button href="https://twitter.com/intent/tweet" size="small">Share</Button>
-                <Button href="https://pages.cs.wisc.edu/~harron/" size="small">Learn More</Button>
             </CardActions>
-            </Card>
-        </section>
 
-        <section id="winLoss">
-            <h3>Total Games Played</h3>
-            <Card sx={{ maxWidth: 345 }}>
+            </Card>
+            <Card sx={{ maxWidth: 750 }}>
             <CardMedia
-                sx={{ height: 140 }}
-                image='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQJ8GetVR49cT7CIjEcO0C_IOw4eR6ozYQ7A&usqp=CAU'
+                sx={{ height: 200 }}
+                image='https://client.dragongaming.com/wp-content/uploads/2021/01/blackjack-logo.jpg.png'
             />
             <CardContent>
-                <Typography gutterBottom variant="h5" component="span">
-                {playerInfo ? `Total Games Played: ${playerInfo.losses + playerInfo.wins}` : ''}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                {playerInfo ? `Total Games Played` : ''}<br/>
+                <Typography gutterBottom variant="h5" component="div">
+                {playerInfo ? `Total Games Played: ${playerInfo.losses + playerInfo.wins}` : 'Sign in for more info'}
                 </Typography>
             </CardContent>
             <CardActions>
                 <Button href="https://twitter.com/intent/tweet" size="small">Share</Button>
-                <Button href="https://pages.cs.wisc.edu/~harron/" size="small">Learn More</Button>
             </CardActions>
             </Card>
-        </section>
-
-
         </>
     )
 }
