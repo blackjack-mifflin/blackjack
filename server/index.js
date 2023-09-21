@@ -166,7 +166,8 @@ io.on("connection", (socket) => {
       console.log(`NEW CARD FROM HIT: ${newCard}`);
       io.emit("card", newCard);
     } else if (move === "stick") {
-      io.emit("player", "move player pointer 1+");
+      rooms.roomName.activePlayer ++;
+      io.emit("player", JSON.stringify({activePlayer: rooms.roomName.activePlayer}));
     }
     console.log(`MOVE FROM CLIENT: ${move}`);
   });
