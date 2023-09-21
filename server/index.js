@@ -84,7 +84,7 @@ class Room {
   constructor(playerCount=1) {
     this.playerCount = playerCount;
     this.deck = newDeck;
-    this.activePlayer = 0;
+    this.activePlayer = 1;
     this.activeCard = 0;
     this.playerCards = [];
   }
@@ -103,21 +103,15 @@ class Room {
   }
   hit = () => {
     this.playerCards[this.activePlayer].push(this.deck[this.activeCard]);
+    const newCard = this.playerCards[this.activePlayer][this.playerCards[this.activePlayer].length-1]
     this.activeCard ++;
+    return newCard;
   }
   stick = () => {
     this.activePlayer ++;
   }
 }
 const rooms = {};
-const myRoom = new Room(1);
-myRoom.startHand();
-myRoom.hit();
-myRoom.stick();
-myRoom.hit();
-myRoom.hit();
-myRoom.hit();
-console.log(`MY ROOM: ${JSON.stringify(myRoom)}`);
 
 io.on("connection", (socket) => {
   const joinRoom = (roomName, roomNum) => {
@@ -167,7 +161,9 @@ io.on("connection", (socket) => {
 
   socket.on("move", (move) => {
     if (move === "hit") {
-      newCard = deck.pop();
+      const newCard = {};
+      newCard[`Player${rooms.roomName.activePlayer}`] = rooms.roomName.hit();
+      console.log(`NEW CARD FROM HIT: ${newCard}`);
       io.emit("card", newCard);
     } else if (move === "stick") {
       io.emit("player", "move player pointer 1+");
