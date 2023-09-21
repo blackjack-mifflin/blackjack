@@ -82,4 +82,26 @@ router.get("/bet/:id", async (req, res) => {
   }
 });
 
+router.put("/add/:id", async (req, res) => {
+  try {
+    const { balance } = await prisma.player.findUnique({
+      select: { balance: true },
+      where: { id: Number(req.params.id) },
+    });
+    const player = await prisma.player.update({
+      where: {
+        id: Number(req.params.id),
+      },
+      data: { balance: balance + Number(req.body.balance) },
+    });
+    if (player) {
+      res.send(player);
+    } else {
+      res.send({ error: "Error finding balance" });
+    }
+  } catch (error) {
+    res.send(error);
+  }
+});
+
 module.exports = router;
