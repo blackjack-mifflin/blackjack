@@ -81,7 +81,7 @@ shuffle = (deck) => {
   }
 };
 class Room {
-  constructor(playerCount=1) {
+  constructor(playerCount = 1) {
     this.playerCount = playerCount;
     this.deck = newDeck;
     this.activePlayer = 1;
@@ -90,26 +90,52 @@ class Room {
   }
   startHand = () => {
     shuffle(this.deck);
-    for (let i=0; i <= this.playerCount; i++) {
-      this.playerCards.push([this.deck[this.activeCard], this.deck[this.activeCard+1]]);
+    for (let i = 0; i <= this.playerCount; i++) {
+      this.playerCards.push([
+        this.deck[this.activeCard],
+        this.deck[this.activeCard + 1],
+      ]);
       this.activeCard += 2;
     }
-  }
+  };
   addPlayer = () => {
-    this.playerCount ++;
-  }
+    this.playerCount++;
+  };
   removePlayer = () => {
-    this.playerCount --;
-  }
+    this.playerCount--;
+  };
   hit = () => {
     this.playerCards[this.activePlayer].push(this.deck[this.activeCard]);
-    const newCard = this.playerCards[this.activePlayer][this.playerCards[this.activePlayer].length-1]
-    this.activeCard ++;
+    const newCard =
+      this.playerCards[this.activePlayer][
+        this.playerCards[this.activePlayer].length - 1
+      ];
+    this.activeCard++;
     return newCard;
-  }
+  };
   stick = () => {
-    this.activePlayer ++;
-  }
+    this.activePlayer++;
+  };
+  getDataPreDealer = () => {
+    const data = {
+      dealer: [this.playerCards[0][0]],
+      player1: this.playerCards[1],
+      player2: this.playerCards[2],
+      player3: this.playerCards[3],
+      activePlayer: this.activePlayer,
+    };
+    return data;
+  };
+  getDataWithDealer = () => {
+    const data = {
+      dealer: this.playerCards[0],
+      player1: this.playerCards[1],
+      player2: this.playerCards[2],
+      player3: this.playerCards[3],
+      activePlayer: this.activePlayer,
+    };
+    return data;
+  };
 }
 const rooms = {};
 
@@ -120,12 +146,11 @@ io.on("connection", (socket) => {
       rooms.roomName.startHand();
       console.log("No Users in Room");
       console.log(`${roomName} DECK: ${rooms.roomName.deck}`);
-      console.log(`${roomName} DEALER: ${rooms.roomName.playerCards[0]}`)
-      console.log(`${roomName} PLAYER1: ${rooms.roomName.playerCards[1]}`)
+      console.log(`${roomName} DEALER: ${rooms.roomName.playerCards[0]}`);
+      console.log(`${roomName} PLAYER1: ${rooms.roomName.playerCards[1]}`);
       socket.join(roomName);
       io.to(roomName).emit("addedId", roomName);
-      io.to(roomName).emit("card", {'dealer': [rooms.roomName.playerCards[0][0]]})
-      io.to(roomName).emit("card", {'player1': rooms.roomName.playerCards[1]})
+      io.emit("card", rooms.roomName.getDataPreDealer());
       console.log(`Added ${socket.id} to ${roomName}`);
       console.log(io.sockets.adapter.rooms.get(roomName).size);
     } else if (io.sockets.adapter.rooms.get(roomName).size < 3) {
@@ -143,8 +168,7 @@ io.on("connection", (socket) => {
       console.log(`NEW ROOM: ${roomNum}`);
       console.log(`${roomName} DECK: ${rooms.roomName.deck}`);
       joinRoom(roomName, roomNum);
-      io.to(roomName).emit("card", {'dealer': [rooms.roomName.playerCards[0][0]]})
-      io.to(roomName).emit("card", {'player1': rooms.roomName.playerCards[1]})
+      io.emit("card", rooms.roomName.getDataPreDealer());
     }
   };
 
@@ -164,10 +188,10 @@ io.on("connection", (socket) => {
       const newCard = {};
       newCard[`Player${rooms.roomName.activePlayer}`] = rooms.roomName.hit();
       console.log(`NEW CARD FROM HIT: ${newCard}`);
-      io.emit("card", newCard);
+      io.emit("card", rooms.roomName.getDataPreDealer());
     } else if (move === "stick") {
-      rooms.roomName.activePlayer ++;
-      io.emit("player", JSON.stringify({activePlayer: rooms.roomName.activePlayer}));
+      rooms.roomName.activePlayer++;
+      io.emit("card", rooms.roomName.getDataPreDealer());
     }
     console.log(`MOVE FROM CLIENT: ${move}`);
   });
