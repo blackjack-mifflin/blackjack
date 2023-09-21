@@ -15,13 +15,12 @@ const Welcome = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         socket.emit('message', { name: inputName, message: inputMessage });
-
         setInputMessage('');
     };
 
     return (
+        <>
         <div className="welcome-container">
             <h1>Welcome to Blackjack Mifflin</h1>
             <form onSubmit={handleSubmit} className="message-form">
@@ -43,6 +42,7 @@ const Welcome = () => {
                 <button type="submit" className="message-button">Send</button>
             </form>
         </div>
+        </>
     );
 };
 

@@ -83,7 +83,6 @@ const Profile = () => {
             <section>
                 <h1>Welcome {playerInfo.username}</h1>
                 <p>Balance: ${playerInfo.balance}</p>
-                <p>Avatar ID: {playerInfo.avatarId}</p>
                 <AddButton handleAddMoney={handleAddMoney}/>
             </section>) : (<p>Loading...Info...</p>)}
 
@@ -92,7 +91,6 @@ const Profile = () => {
         </section>
 
         <section id="winLoss">
-            <h3>Winn Loss Ratio</h3>
             <Card sx={{ maxWidth: 345 }}>
             <CardMedia
                 sx={{ height: 140 }}
@@ -100,10 +98,9 @@ const Profile = () => {
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="span">
-                {playerInfo ? `Win/Loss Ratio: ${playerInfo.wins / playerInfo.losses}` : 'Sign in for more info'}
+                {playerInfo ? `Win/Loss Ratio: %${playerInfo.wins / playerInfo.losses}` : 'Sign in for more info'}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                {playerInfo ? `Winn/Loss Ratio: 0` : ''}<br/>
                 {playerInfo ? `Total Wins: ${playerInfo.wins}` : ''}<br/>
                 {playerInfo ? `Total Losses: ${playerInfo.losses}` : ''}
                 </Typography>
@@ -116,7 +113,6 @@ const Profile = () => {
         </section>
 
         <section id="winLoss">
-            <h3>Total Games Played</h3>
             <Card sx={{ maxWidth: 345 }}>
             <CardMedia
                 sx={{ height: 140 }}
@@ -124,10 +120,7 @@ const Profile = () => {
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="span">
-                {playerInfo ? `Total Games Played: ${playerInfo.losses + playerInfo.wins}` : ''}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                {playerInfo ? `Total Games Played` : ''}<br/>
+                {playerInfo ? `Total Games Played: ${playerInfo.losses + playerInfo.wins}` : 'Sign in for more info'}
                 </Typography>
             </CardContent>
             <CardActions>
