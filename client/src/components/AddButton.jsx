@@ -10,59 +10,32 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import { useNavigate } from 'react-router-dom';
-// const AddButton = ({ handleAddMoney }) => {
-//     const [selectAmt, setSelectAmt] = useState(null);
 
-//     const handleClick = () => {
-//         if (selectAmt !== null) {
-//             handleAddMoney(parseInt(selectAmt, 10));
-//             setSelectAmt(null)
-//         }
-//     };
-
-//     return (
-//         <section>
-//             <button onClick={() => handleAddMoney(10)}>Add $10</button>
-//             <button onClick={() => handleAddMoney(20)}>Add $20</button>
-//             <button onClick={() => handleAddMoney(50)}>Add $50</button>
-//             <button onClick={() => handleAddMoney(100)}>Add $100</button>
-//                 <input 
-//                     type="number"
-//                     placeholder="Custom Amount"
-//                     value={selectAmt}
-//                     onChange={(e) => setSelectAmt(e.target.value)}
-//                 />
-//             <button onClick={handleClick}>Add Custom</button>
-//         </section>
-//     )
-// }
-
-// export default AddButton
-
-const SplitButton = (playerInfo) => {
+const AddButton = ({playerInfo}) => {
   const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
     const [selectedIndex, setSelectedIndex] = React.useState(0);
         const options = [
             `${!selectedIndex ? 'Increase Balance' : ''}`,
-            `${!selectedIndex ? '$5' : 'Add $5'}`,
-            `${!selectedIndex ? '$10' : 'Add $10'}`,
-            `${!selectedIndex ? '$15' : 'Add $15'}`,
-            `${!selectedIndex ? '$20' : 'Add $20'}`,
-            `${!selectedIndex ? '$25' : 'Add $25'}`,
-            `${!selectedIndex ? '$50' : 'Add $50'}`,
-            `${!selectedIndex ? '$100' : 'Add $100'}`
+            `${!selectedIndex ? 5 : 5}`,
+            `${!selectedIndex ? 10 : 10}`,
+            `${!selectedIndex ? 15 : 15}`,
+            `${!selectedIndex ? 20 : 20}`,
+            `${!selectedIndex ? 25 : 25}`,
+            `${!selectedIndex ? 50 : 50}`,
+            `${!selectedIndex ? 100 : 100}`
         ];
 
         const addHandler = async () => {
           console.log('Player')
-          console.log(playerInfo.id)
-          const id = playerInfo.id;
+          console.log(playerInfo)
+        
+          const id = 5
           const response = await fetch(`/api/players/add/${id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ balance: 0 + 1 }),
+            body: JSON.stringify({ balance: 0 + options[selectedIndex] }),
           });
           const result = await response.json();
           console.log(result);
@@ -74,7 +47,7 @@ const SplitButton = (playerInfo) => {
     } else if(confirm(`You selected ${options[selectedIndex]}. Proceed?`)){
       console.log('working')
       setSelectedIndex(0)
-      addHandler()
+      addHandler(selectedIndex)
       navigate('/profile/paymentform')
     } else {
         console.log('not working')
@@ -155,4 +128,4 @@ const SplitButton = (playerInfo) => {
   );
 }
 
-export default SplitButton
+export default AddButton
