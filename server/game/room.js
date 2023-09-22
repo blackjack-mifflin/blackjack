@@ -110,27 +110,6 @@ class Room {
     console.log(`PLAYER VALUES FROM HIT: ${JSON.stringify(handSum)}`);
     if(handSum >= 21){
       this.stick();
-      
-    console.log(`Dealers Cards: ${Object.values(this.playerCards[0])}`)
-    console.log(`Players Cards: ${Object.values(this.playerCards[1])}`)
-    let dealer = Object.values(this.playerCards[0])
-    let player = Object.values(this.playerCards[1])
-    
-    for(let i = 0; i < dealer.length; i++){
-      dealerTotal += Number(Object.values(dealer[i]))
-    }
-    for(let i = 0; i < player.length; i++){
-      playerTotal += Number(Object.values(player[i]))
-    }
-    console.log(dealerTotal)
-    console.log(playerTotal)
-    console.log(this.playerCards)
-    if(dealerTotal === 21 && playerTotal === 21 || dealerTotal >= 22 && playerTotal >= 22){
-      console.log('Tie')
-    } else if(dealerTotal <= 21 && playerTotal <= 21){
-      console.log('Hit or Stay?')
-    } else if (dealerTotal >= 22 && playerTotal <= 21){
-      console.log('dealer busts')
     
       const playerWin = async (event) => {
         event.preventDefault();
