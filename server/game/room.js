@@ -108,6 +108,9 @@ class Room {
       (card) => (handSum += Number(Object.values(card)))
     );
     console.log(`PLAYER VALUES FROM HIT: ${JSON.stringify(handSum)}`);
+    if(handSum >= 21){
+      this.stick();
+      
     console.log(`Dealers Cards: ${Object.values(this.playerCards[0])}`)
     console.log(`Players Cards: ${Object.values(this.playerCards[1])}`)
     let dealer = Object.values(this.playerCards[0])
@@ -144,7 +147,8 @@ class Room {
       console.log('player busts')
     }
     return newCard;
-  };
+  }};
+  
   stick = () => {
     this.activePlayer++;
     if (this.activePlayer > this.playerCountCurrentHand) {
