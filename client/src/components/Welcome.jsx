@@ -10,14 +10,14 @@ const Welcome = (playerInfo) => {
     console.log('test')
     return(
         <>
-         <Card sx={{ maxWidth: 1000 }}>
+         <Card id="welcome-card" sx={{ maxWidth: 750 }}>
             <CardMedia
-                sx={{ height: 140 }}
-                image='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQJ8GetVR49cT7CIjEcO0C_IOw4eR6ozYQ7A&usqp=CAU'
+                sx={{ height: 200 }}
+                image='https://i0.wp.com/www.thexboxhub.com/wp-content/uploads/2023/07/eyestetix-studio-m0EzHtexapU-unsplash.jpg?w=640&ssl=1'
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="span">
-                {playerInfo ? `Win/Loss Ratio: %${playerInfo.wins / playerInfo.losses}` : 'Sign in for more info'}
+                {playerInfo ? `House Win Loss Ratio: ` : 'Sign in for more info'}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                 {playerInfo ? `Total Wins: ${playerInfo.wins}` : ''}<br/>

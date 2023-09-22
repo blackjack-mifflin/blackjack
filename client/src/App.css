@@ -8,7 +8,6 @@
     border-radius: 5px;
     padding: 10px;
     max-width: 500px !important;
-    /* In case you want to increase the length you can do it here... */
     margin: 0 auto;
 }
 
@@ -100,10 +99,8 @@
 
 .navbar-links a:hover {
     color: #9c6753;
-    /* Change color on hover */
 }
 
-/* Style for the "Sign Out" link */
 .navbar-links a:last-child:hover {
     background-color: #ff4500;
     padding: 8px 16px;
@@ -130,14 +127,14 @@
     margin: 5px 0;
 }
 
-#profilePic {
-    height: 25px;
-    width: 12px;
-    margin-left: 65%;
+#welcome-card{
+    margin-left: 25%;
 }
 
-#profile-photo{
-    margin-right: 10%;
-    margin-left: 55%;
-    margin-top: 5px;
+#stats {
+    margin-left: 35%;
+}
+
+#profile-money{
+    margin-left: 65%;
 }
