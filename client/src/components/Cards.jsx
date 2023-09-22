@@ -1,43 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { io } from 'socket.io-client';
-
 
 const Cards = ({ cardData }) => {
-  const [playerHand, setPlayerHand] = useState([]);
-  const [dealerHand, setDealerHand] = useState([]);
+  const [player1, setplayer1] = useState([]);
+  const [player2, setplayer2] = useState([]);
+  const [player3, setplayer3] = useState([]);
+  const [dealer, setDealer] = useState([]);
+  const [activePlayer, setactivePlayer] = useState(1);
 
-  // useEffect(() => {
-  //   const socket = io('/');
-  //   console.log(`Socket connected`, socket.connected);
+  useEffect(() => {
+    setDealer(cardData.dealer);
+    console.log(`DEALER DATA FROM CARDS.JS: ${dealer}`);
+  }, [cardData]);
 
-  //   socket.on('card', (data) => {
-  //     const { playerName, cards } = data;
 
-  //     if (playerName === 'player1') {
-  //       setPlayerHand((prevHand) => [...prevHand, ...cards]);
-  //     } else if (playerName === 'dealer') {
-  //       setDealerHand((prevHand) => [...prevHand, ...cards]);
-  //     }
-  //   });
-  // }, []);
 
-  console.log(`CARD DATA FROM CARDS.JSX: ${JSON.stringify(cardData.dealer)}`);
+
+  console.log(`CARD DATA FROM CARDS.JSX: ${dealer}`);
 
   return (
     <>
       <h1>Player's Hand</h1>
-      <div id="dealer">
-        <div className="player-hand">
-          {playerHand.map((card, index) => (
-            <img key={index} src={`images/${card}.png`} alt={`Player Card ${index}`} />
-          ))}
-        </div>
-        <div className="dealer-hand">
-          {dealerHand.map((card, index) => (
-            <img key={index} src={`images/${card}.png`} alt={`Dealer Card ${index}`} />
-          ))}
-        </div>
-      </div>
+      <p> {JSON.stringify(dealer)} </p>
     </>
   );
 };
