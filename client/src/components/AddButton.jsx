@@ -10,12 +10,14 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import { useNavigate } from 'react-router-dom';
+import '../App.css'
 
 const AddButton = ({playerInfo}) => {
   const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
     const [selectedIndex, setSelectedIndex] = React.useState(0);
+
         const options = [
             `${!selectedIndex ? 'Increase Balance' : ''}`,
             `${!selectedIndex ? 5 : 5}`,
@@ -41,6 +43,7 @@ const AddButton = ({playerInfo}) => {
           console.log(result);
         };
 
+
   const handleClick = () => {
     if(selectedIndex === 0){
       alert('Please select an amount to add ')
@@ -53,7 +56,7 @@ const AddButton = ({playerInfo}) => {
         console.log('not working')
         setSelectedIndex(0)
     }
-  };
+  }
 
   const handleMenuItemClick = (event, index) => {
     setSelectedIndex(index);
@@ -63,6 +66,7 @@ const AddButton = ({playerInfo}) => {
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
+
 
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
@@ -111,7 +115,7 @@ const AddButton = ({playerInfo}) => {
                   {options.map((option, index) => (
                     <MenuItem
                       key={option}
-                    //   disabled={index === 2}
+                      disabled={index === 0}
                       selected={index === selectedIndex}
                       onClick={(event) => handleMenuItemClick(event, index)}
                     >
@@ -124,8 +128,8 @@ const AddButton = ({playerInfo}) => {
           </Grow>
         )}
       </Popper>
-    </React.Fragment>
-  );
+      </React.Fragment>
+    );
 }
 
 export default AddButton

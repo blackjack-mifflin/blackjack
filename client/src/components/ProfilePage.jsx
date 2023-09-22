@@ -70,15 +70,10 @@ const Profile = () => {
     return (
         <>
             <h2>Current Balance: {playerInfo ? playerInfo.balance : ''}</h2>
-            <div 
-                id="profile-photo">{playerInfo ? <ProfileAvatar playerInfo={playerInfo}/> : ''}
-            </div>
             <div><AddButton playerInfo={playerInfo}/></div> 
-            {isEditing ? (<ProfileEditForm onSubmit={editProfile} />) 
-            : (<div><button onClick={editButton}>Edit Username & PW</button></div>)}
+            <div id="profile-photo">{playerInfo ? <ProfileAvatar playerInfo={playerInfo}/> : ''}</div>
 
-
-            <Card sx={{ maxWidth: 1000 }}>
+            <Card sx={{ maxWidth: 750 }} id="stats">
             <CardMedia
                 sx={{ height: 200 }}
                 image='https://client.dragongaming.com/wp-content/uploads/2021/01/blackjack-logo.jpg.png'
@@ -97,10 +92,11 @@ const Profile = () => {
             </CardActions>
 
             </Card>
-            <Card sx={{ maxWidth: 1000 }}>
+            <br/>
+            <br/>
+            <Card sx={{ maxWidth: 750 }} id="stats">
             <CardMedia
-                sx={{ height: 200 }}
-                image='https://client.dragongaming.com/wp-content/uploads/2021/01/blackjack-logo.jpg.png'
+                sx={{ height: 50 }}
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
@@ -111,6 +107,10 @@ const Profile = () => {
                 <Button href="https://twitter.com/intent/tweet" size="small">Share</Button>
             </CardActions>
             </Card>
+            <br/>
+
+            {isEditing ? (<ProfileEditForm onSubmit={editProfile} />) 
+            : (<div><button onClick={editButton}>Edit Username & PW</button></div>)}
         </>
     )
 }

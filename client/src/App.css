@@ -137,7 +137,13 @@
 }
 
 #profile-photo{
-    margin-right: 10%;
-    margin-left: 55%;
+    margin-left: 5%;
     margin-top: 5px;
+}
+#welcome-card{
+    margin-left: 25%;
+}
+
+#stats {
+    margin-left: 25%;
 }
