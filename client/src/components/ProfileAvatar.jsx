@@ -1,5 +1,4 @@
 import {useState, useEffect} from "react"
-import { useParams } from "react-router-dom";
 import '../App.css'
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
@@ -9,7 +8,6 @@ const ProfileAvatar = ({playerInfo}) => {
     const avatarId = playerInfo.avatarId
     useEffect(() => {
         const fetchAvatar = async() => {
-             //make sure to change 1 to ${avatarId}
             const response = await fetch(`/api/avatars/${avatarId}`)
             if (response.ok) {
                 const data = await response.json();
@@ -19,15 +17,11 @@ const ProfileAvatar = ({playerInfo}) => {
             }
         }
         fetchAvatar();
-    }, [avatarId])
+    }, [avatarId]);
 
     return (
         <>
-            {/* <section id='profilePic'>
-                {avatar && <img src={avatar.image_url} alt="Avatar" />}
-            </section> */}
-
-            <Stack direction="row" spacing={2} id='profilePic'>
+            <Stack direction="row" spacing={2}>
             <Avatar
             alt="Remy Sharp"
             src={avatar ? avatar.image_url : ''}

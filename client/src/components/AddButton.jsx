@@ -1,4 +1,3 @@
-// import {useState} from "react"
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -10,48 +9,42 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import { useNavigate } from 'react-router-dom';
+import '../App.css';
 
 const AddButton = ({playerInfo}) => {
   const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
     const [selectedIndex, setSelectedIndex] = React.useState(0);
-        const options = [
-            `${!selectedIndex ? 'Increase Balance' : ''}`,
-            `${!selectedIndex ? 5 : 5}`,
-            `${!selectedIndex ? 10 : 10}`,
-            `${!selectedIndex ? 15 : 15}`,
-            `${!selectedIndex ? 20 : 20}`,
-            `${!selectedIndex ? 25 : 25}`,
-            `${!selectedIndex ? 50 : 50}`,
-            `${!selectedIndex ? 100 : 100}`
-        ];
 
-        const addHandler = async () => {
-          console.log('Player')
-          console.log(playerInfo)
-        
-          const id = 5
-          const response = await fetch(`/api/players/add/${id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ balance: 0 + options[selectedIndex] }),
-          });
-          const result = await response.json();
-          console.log(result);
-        };
+    const options = [
+        `${!selectedIndex ? 'Increase Balance' : ''}`,
+        5, 10, 20, 25, 50, 100
+    ];
+ 
+    const addHandler = async () => {
+      const id = playerInfo.id;
+      const response = await fetch(`/api/players/add/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ balance: 0 + options[selectedIndex] }),
+      });
+      const result = await response.json();
+      console.log(result);
+    };
+   
+
 
   const handleClick = () => {
     if(selectedIndex === 0){
-      alert('Please select an amount to add ')
+      alert('Please select an amount to add ');
     } else if(confirm(`You selected ${options[selectedIndex]}. Proceed?`)){
-      console.log('working')
-      setSelectedIndex(0)
-      addHandler(selectedIndex)
-      navigate('/profile/paymentform')
+      console.log('working');
+      setSelectedIndex(0);
+      addHandler(selectedIndex);
+      navigate('/profile/paymentform');
     } else {
-        console.log('not working')
-        setSelectedIndex(0)
+        setSelectedIndex(0);
     }
   };
 
@@ -63,6 +56,7 @@ const AddButton = ({playerInfo}) => {
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
+
 
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
@@ -111,7 +105,7 @@ const AddButton = ({playerInfo}) => {
                   {options.map((option, index) => (
                     <MenuItem
                       key={option}
-                    //   disabled={index === 2}
+                      disabled={index === 0}
                       selected={index === selectedIndex}
                       onClick={(event) => handleMenuItemClick(event, index)}
                     >
@@ -122,10 +116,10 @@ const AddButton = ({playerInfo}) => {
               </ClickAwayListener>
             </Paper>
           </Grow>
-        )}
+        )};
       </Popper>
-    </React.Fragment>
-  );
+      </React.Fragment>
+    );
 }
 
 export default AddButton
