@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
+const bcrypt = require('bcrypt');
 const { requireUser } = require('./utils')
 
 router.get("/", async (req, res) => {
@@ -31,11 +32,16 @@ router.get("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   try {
+    const {username, password} = req.body
+    const hashPw = await bcrypt.hash(password, 10)
     const player = await prisma.player.update({
       where: {
         id: Number(req.params.id),
       },
-      data: req.body,
+      data: {
+        username: username,
+        password: hashPw
+      }
     });
     if (player) {
       res.send(player);
