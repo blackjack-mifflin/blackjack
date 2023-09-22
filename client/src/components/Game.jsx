@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import PlayerStats from "./PlayerStats";
 import Bet from "./Bet";
+import Messages from "./Messages";
 
 const Game = () => {
   const [isLastHand, setIsLastHand] = useState(false);
@@ -138,6 +139,7 @@ const Game = () => {
           </button>
         </div>
       </div >
+      <Messages />
     </>
   );
 };

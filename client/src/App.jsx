@@ -8,7 +8,6 @@ import Navbar from './components/NavBar';
 import Game from './components/Game';
 import { useState } from "react";
 import { io } from 'socket.io-client';
-import Messages from './components/Messages';
 import PaymentForm from './components/PaymentForm';
 
 
@@ -30,7 +29,6 @@ const App = () => {
         <Route path="/Game" element={<Game />} />
         <Route path="/profile/paymentform" element={<PaymentForm />} />
       </Routes>
-      <Messages socket={socket} />
     </>
   );
 };
