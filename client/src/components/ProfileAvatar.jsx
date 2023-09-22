@@ -17,7 +17,7 @@ const ProfileAvatar = ({playerInfo}) => {
             }
         }
         fetchAvatar();
-    }, [avatarId])
+    }, [avatarId]);
 
     return (
         <>
