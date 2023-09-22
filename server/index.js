@@ -60,6 +60,7 @@ io.on("connection", (socket) => {
     io.emit("new message", { name, message });
   });
 
+
   socket.on("move", (move) => {
     if (move === "hit") {
       const newCard = {};

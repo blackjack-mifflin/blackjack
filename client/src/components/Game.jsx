@@ -45,11 +45,20 @@ const Game = () => {
 
   socket.on("card", (card) => {
     setCardData(card);
+    console.log(`Dealers Cards: ${JSON.stringify(card.dealer)}`);
+    if(card.player1){
+      console.log(`Players # of Cards: ${JSON.stringify(card.player1.length)}`);
+    }
+
     console.log(`CARD FROM SERVER: ${JSON.stringify(card)}`);
   });
 
   socket.on("player", (playerIdx) => {
     console.log(`Current player at seat ${playerIdx}`);
+  });
+
+  socket.on("playerScore", (score) => {
+    console.log(`CURRENT SCORE OF PLAYER ${score}`);
   });
 
   const headingStyle = {
