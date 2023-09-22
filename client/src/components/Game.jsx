@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import PlayerStats from "./PlayerStats";
 import Bet from "./Bet";
+import Cards from "./Cards";
 
 const Game = () => {
   const [isLastHand, setIsLastHand] = useState(false);
@@ -13,6 +14,7 @@ const Game = () => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
   const [userName, setUserName] = useState("");
+  const [cardData, setCardData] = useState({});
 
   const lastHand = () => {
     console.log("move to home page");
@@ -41,6 +43,7 @@ const Game = () => {
   };
 
   socket.on("card", (card) => {
+    setCardData(card);
     console.log(`CARD FROM SERVER: ${JSON.stringify(card)}`);
   });
 
@@ -91,6 +94,8 @@ const Game = () => {
       <button onClick={socketHandler} value="stick">
         Stick
       </button>
+      <Cards cardData={cardData} />
+
       <Bet
         currentHandBet={currentHandBet}
         setCurrentHandBet={setCurrentHandBet}
@@ -106,7 +111,7 @@ const Game = () => {
       </div>
 
       <div className="message-window">
-        {/* <h1 style={headingStyle}>Messages!!</h1> */}
+
 
         <input
           type="text"
@@ -117,13 +122,6 @@ const Game = () => {
         />
         <div className="message-list">
 
-          {/* <ul style={listStyle}>
-            {messages.map((msg, index) => (
-              <li key={index} style={messageStyle}>
-                <strong>{msg.name}:</strong> {msg.message}
-              </li>
-            ))}
-          </ul> */}
         </div>
         <div className="message-form">
           <input
