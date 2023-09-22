@@ -69,9 +69,12 @@ const Profile = () => {
     }
     return (
         <>
+        <div id="profile-photo">{playerInfo ? <ProfileAvatar playerInfo={playerInfo}/> : ''}
+        </div>
             <h2>Current Balance: {playerInfo ? playerInfo.balance : ''}</h2>
-            <div><AddButton playerInfo={playerInfo}/></div> 
-            <div id="profile-photo">{playerInfo ? <ProfileAvatar playerInfo={playerInfo}/> : ''}</div>
+            <AddButton playerInfo={playerInfo}/>
+            {isEditing ? (<ProfileEditForm onSubmit={editProfile} />) 
+            : (<div><button onClick={editButton}>Edit Username & PW</button></div>)}
 
             <Card sx={{ maxWidth: 750 }} id="stats">
             <CardMedia
@@ -96,7 +99,7 @@ const Profile = () => {
             <br/>
             <Card sx={{ maxWidth: 750 }} id="stats">
             <CardMedia
-                sx={{ height: 50 }}
+                sx={{ height: 25 }}
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
@@ -107,10 +110,6 @@ const Profile = () => {
                 <Button href="https://twitter.com/intent/tweet" size="small">Share</Button>
             </CardActions>
             </Card>
-            <br/>
-
-            {isEditing ? (<ProfileEditForm onSubmit={editProfile} />) 
-            : (<div><button onClick={editButton}>Edit Username & PW</button></div>)}
         </>
     )
 }

@@ -1,4 +1,3 @@
-// import {useState} from "react"
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -18,30 +17,22 @@ const AddButton = ({playerInfo}) => {
     const anchorRef = React.useRef(null);
     const [selectedIndex, setSelectedIndex] = React.useState(0);
 
-        const options = [
-            `${!selectedIndex ? 'Increase Balance' : ''}`,
-            `${!selectedIndex ? 5 : 5}`,
-            `${!selectedIndex ? 10 : 10}`,
-            `${!selectedIndex ? 15 : 15}`,
-            `${!selectedIndex ? 20 : 20}`,
-            `${!selectedIndex ? 25 : 25}`,
-            `${!selectedIndex ? 50 : 50}`,
-            `${!selectedIndex ? 100 : 100}`
-        ];
-
-        const addHandler = async () => {
-          console.log('Player')
-          console.log(playerInfo)
-        
-          const id = 5
-          const response = await fetch(`/api/players/add/${id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ balance: 0 + options[selectedIndex] }),
-          });
-          const result = await response.json();
-          console.log(result);
-        };
+    const options = [
+        `${!selectedIndex ? 'Increase Balance' : ''}`,
+        5, 10, 20, 25, 50, 100
+    ];
+ 
+    const addHandler = async () => {
+      const id = playerInfo.id
+      const response = await fetch(`/api/players/add/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ balance: 0 + options[selectedIndex] }),
+      });
+      const result = await response.json();
+      console.log(result);
+    }
+   
 
 
   const handleClick = () => {
