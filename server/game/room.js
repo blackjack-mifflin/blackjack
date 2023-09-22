@@ -148,7 +148,7 @@ class Room {
     }
     return newCard;
   }};
-  
+
   stick = () => {
     this.activePlayer++;
     if (this.activePlayer > this.playerCountCurrentHand) {
@@ -156,8 +156,6 @@ class Room {
     }
   };
   dealerPlay = () => {
-    let dealerTotal = 0;
-    let playerTotal = 0;
     let dealerSum = 0;
     this.playerCards[0].forEach(
       (card) => (dealerSum += Number(Object.values(card)))
@@ -170,29 +168,7 @@ class Room {
       );
       console.log(`DEALER VALUES FROM HIT: ${JSON.stringify(dealerSum)}`);
     }
-    console.log(`Dealers Cards: ${Object.values(this.playerCards[0])}`)
-    console.log(`Players Cards: ${Object.values(this.playerCards[1])}`)
-    console.log()
-    let dealer = Object.values(this.playerCards[0])
-    let player = Object.values(this.playerCards[1])
-    
-    for(let i = 0; i < dealer.length; i++){
-      dealerTotal += Number(Object.values(dealer[i]))
-    }
-    for(let i = 0; i < player.length; i++){
-      playerTotal += Number(Object.values(player[i]))
-    }
-    console.log(dealerTotal)
-    console.log(playerTotal)
-    if(dealerTotal === 21 && playerTotal === 21){
-      console.log('Tie')
-    } else if(dealerTotal <= 21 && playerTotal <= 21){
-      console.log('Another hit?')
-    } else if (dealerTotal > 22){
-      console.log('dealer busts')
-    } else if( playerTotal > 22 ){
-      console.log('player busts')
-    }
+    this.gameWinner()
   };
   getDataPreDealer = () => {
     const data = {
@@ -216,7 +192,30 @@ class Room {
   };
 
   gameWinner =async () => {
-  
-}
-}
+    let dealerTotal = 0;
+    let playerTotal = 0;
+    console.log(`Dealers Cards: ${Object.values(this.playerCards[0])}`)
+    console.log(`Players Cards: ${Object.values(this.playerCards[1])}`)
+    console.log()
+    let dealer = Object.values(this.playerCards[0])
+    let player = Object.values(this.playerCards[1])
+    
+    for(let i = 0; i < dealer.length; i++){
+      dealerTotal += Number(Object.values(dealer[i]))
+    }
+    for(let i = 0; i < player.length; i++){
+      playerTotal += Number(Object.values(player[i]))
+    }
+    console.log(dealerTotal)
+    console.log(playerTotal)
+    if(dealerTotal === 21 && playerTotal === 21){
+      console.log('Tie')
+    } else if(dealerTotal <= 21 && playerTotal <= 21){
+      console.log('Another hit?')
+    } else if (dealerTotal > 22){
+      console.log('dealer busts')
+    } else if( playerTotal > 22 ){
+      console.log('player busts')
+    }
+}}
 module.exports = Room;
