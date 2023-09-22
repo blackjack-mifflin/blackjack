@@ -16,13 +16,6 @@ app.use(cors());
 
 const rooms = {};
 
-app.get("/profile", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
-});
-app.get("/profile/paymentform", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
-});
-
 io.on("connection", (socket) => {
   const joinRoom = (roomName, roomNum) => {
     if (!io.sockets.adapter.rooms.get(roomName)) {
@@ -41,7 +34,7 @@ io.on("connection", (socket) => {
       socket.join(roomName);
       rooms.roomName.addPlayer();
       io.to(roomName).emit("addedId", roomName);
-      console.log(`PLAYER COUNT: ${rooms.roomName.playerCount}`);
+      console.log(`PLAYER COUNT: ${rooms.roomName.playerCountCurrentHand}`);
       console.log(`Added ${socket.id} to ${roomName}`);
       console.log(io.sockets.adapter.rooms.get(roomName).size);
     } else {
@@ -73,16 +66,22 @@ io.on("connection", (socket) => {
       newCard[`Player${rooms.roomName.activePlayer}`] = rooms.roomName.hit();
       console.log(`NEW CARD FROM HIT: ${newCard}`);
       io.emit("card", rooms.roomName.getDataPreDealer());
-      if (rooms.roomName.activePlayer > rooms.roomName.playerCount) {
+      if (rooms.roomName.activePlayer > rooms.roomName.playerCountCurrentHand) {
         rooms.roomName.dealerPlay();
         io.emit("card", rooms.roomName.getDataWithDealer());
+        rooms.roomName.startHand();
+        io.emit("player", 'NEW GAME!!') //DELETE
+        io.emit("card", rooms.roomName.getDataPreDealer());
       }
     } else if (move === "stick") {
       rooms.roomName.activePlayer++;
       io.emit("card", rooms.roomName.getDataPreDealer());
-      if (rooms.roomName.activePlayer > rooms.roomName.playerCount) {
+      if (rooms.roomName.activePlayer > rooms.roomName.playerCountCurrentHand) {
         rooms.roomName.dealerPlay();
         io.emit("card", rooms.roomName.getDataWithDealer());
+        rooms.roomName.startHand();
+        io.emit("player", 'NEW GAME!!') //DELETE
+        io.emit("card", rooms.roomName.getDataPreDealer());
       }
     }
     console.log(`MOVE FROM CLIENT: ${move}`);
@@ -104,6 +103,13 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
 app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+});
+
+app.get("/profile", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+});
+app.get("/profile/paymentform", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/dist/index.html"));
 });
 

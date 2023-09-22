@@ -55,7 +55,8 @@ const newDeck = [
 
 class Room {
   constructor(playerCount = 1) {
-    this.playerCount = playerCount;
+    this.playerCountCurrentHand = playerCount;
+    this.playerCountNextHand = this.playerCountCurrentHand
     this.deck = newDeck;
     this.activePlayer = 1;
     this.activeCard = 0;
@@ -71,8 +72,12 @@ class Room {
     }
   };
   startHand = () => {
+    this.activePlayer = 1;
+    this.activeCard = 0;
     this.shuffle(this.deck);
-    for (let i = 0; i <= this.playerCount; i++) {
+    this.playerCards = [];
+    this.playerCountCurrentHand = this.playerCountNextHand
+    for (let i = 0; i <= this.playerCountCurrentHand; i++) {
       this.playerCards.push([
         this.deck[this.activeCard],
         this.deck[this.activeCard + 1],
@@ -81,10 +86,10 @@ class Room {
     }
   };
   addPlayer = () => {
-    this.playerCount++;
+    this.playerCountNextHand++;
   };
   removePlayer = () => {
-    this.playerCount--;
+    this.playerCountNextHand--;
   };
   hit = () => {
     this.playerCards[this.activePlayer].push(this.deck[this.activeCard]);
@@ -99,13 +104,13 @@ class Room {
     );
     console.log(`VALUES FROM HIT: ${JSON.stringify(handSum)}`);
     if (handSum >= 21) {
-      this.activePlayer++;
+      this.stick();
     }
     return newCard;
   };
   stick = () => {
     this.activePlayer++;
-    if (this.activePlayer > this.playerCount) {
+    if (this.activePlayer > this.playerCountCurrentHand) {
       this.dealerPlay();
     }
   };
