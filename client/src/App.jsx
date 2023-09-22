@@ -21,7 +21,7 @@ const App = () => {
 
   return (
     <>
-      <Navbar token={token} />
+      <Navbar token={token} setToken={setToken}/>
       <Routes>
         <Route path="/" element={<Welcome />} playerInfo={playerInfo}/>
         <Route path="/Login" element={<LogInPage setToken={setToken} />} />

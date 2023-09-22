@@ -1,14 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 const Navbar = ({ token, setToken }) => {
+    const navigate = useNavigate();
 
-
-    const signoutHandler = () => {
-
+    const signoutHandler = (e) => {
+        e.preventDefault();
         localStorage.removeItem("token");
         localStorage.removeItem("userId");
-
         setToken(null);
-
+        navigate("/")
     }
     return (
         <>
