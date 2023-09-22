@@ -8,13 +8,13 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import '../App.css'
+import '../App.css';
 
 const Profile = () => {
     const [playerInfo, setPlayerInfo] = useState(null);
-    const [isEditing, setIsEditing] = useState(false)
+    const [isEditing, setIsEditing] = useState(false);
     const token = localStorage.getItem('token');
-    const id = localStorage.getItem('userId')
+    const id = localStorage.getItem('userId');
 
     useEffect(() => {
         const fetchPlayer = async () => {
@@ -30,12 +30,12 @@ const Profile = () => {
                 });
                 if (response.ok) {
                     const data = await response.json();
-                    setPlayerInfo(data)
+                    setPlayerInfo(data);
                 } else {
-                    console.error("Error fetching Player!")
+                    console.error("Error fetching Player!");
                 }
             } catch (error) {
-                console.error("Error....", error)
+                console.error("Error....", error);
             }
         }
         fetchPlayer();
@@ -55,17 +55,17 @@ const Profile = () => {
                 })
             });
             if(response.ok) {
-                setIsEditing(false)
+                setIsEditing(false);
             } else {
-                console.error("Error updating profile")
+                console.error("Error updating profile");
             }
         } catch (error) {
-            console.error("Error updating profile", error)
+            console.error("Error updating profile", error);
         }
     }
 
     const editButton = () => {
-        setIsEditing(!isEditing)
+        setIsEditing(!isEditing);
     }
     return (
         <>

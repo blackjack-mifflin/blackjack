@@ -9,7 +9,7 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import { useNavigate } from 'react-router-dom';
-import '../App.css'
+import '../App.css';
 
 const AddButton = ({playerInfo}) => {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const AddButton = ({playerInfo}) => {
     ];
  
     const addHandler = async () => {
-      const id = playerInfo.id
+      const id = playerInfo.id;
       const response = await fetch(`/api/players/add/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -37,17 +37,16 @@ const AddButton = ({playerInfo}) => {
 
   const handleClick = () => {
     if(selectedIndex === 0){
-      alert('Please select an amount to add ')
+      alert('Please select an amount to add ');
     } else if(confirm(`You selected ${options[selectedIndex]}. Proceed?`)){
-      console.log('working')
-      setSelectedIndex(0)
-      addHandler(selectedIndex)
-      navigate('/profile/paymentform')
+      console.log('working');
+      setSelectedIndex(0);
+      addHandler(selectedIndex);
+      navigate('/profile/paymentform');
     } else {
-        console.log('not working')
-        setSelectedIndex(0)
+        setSelectedIndex(0);
     }
-  }
+  };
 
   const handleMenuItemClick = (event, index) => {
     setSelectedIndex(index);
@@ -117,7 +116,7 @@ const AddButton = ({playerInfo}) => {
               </ClickAwayListener>
             </Paper>
           </Grow>
-        )}
+        )};
       </Popper>
       </React.Fragment>
     );
