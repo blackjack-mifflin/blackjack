@@ -75,14 +75,6 @@ newDeck = [
   { hearts_2: 2 },
   { diamonds_2: 2 },
 ];
-class Room {
-  constructor(playerCount = 1) {
-    this.playerCount = playerCount;
-    this.deck = newDeck;
-    this.activePlayer = 1;
-    this.activeCard = 0;
-    this.playerCards = [];
-  }
   shuffle = (deck) => {
     const newCards = [];
     for (let i = 0; i < deck.length; i++) {
@@ -119,7 +111,7 @@ class Room {
     this.playerCards[this.activePlayer].forEach(
       (card) => (handSum += Number(Object.values(card)))
     );
-    console.log(`VALUES FROM HIT: ${JSON.stringify(handSum)}`);
+    console.log(`Player VALUES FROM HIT: ${JSON.stringify(handSum)}`);
     if (handSum >= 21) {
       this.activePlayer++;
     } 
@@ -166,7 +158,7 @@ class Room {
     };
     return data;
   };
-}
+
 const rooms = {};
 
 io.on("connection", (socket) => {

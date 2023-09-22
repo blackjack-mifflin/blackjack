@@ -47,14 +47,11 @@ const Game = () => {
 
     setCardData(card);
     console.log(`Dealers Cards: ${JSON.stringify(card.dealer)}`);
-    console.log(`Dealers Cards Length: ${JSON.stringify(card.dealer.length)}`);
-    let dealerCardLength = card.dealer.length
-
     if(card.player1){
       console.log(`Players # of Cards: ${JSON.stringify(card.player1.length)}`);
     }
     console.log(`CARD FROM SERVER: ${JSON.stringify(card)}`);
-    console.log(`Players Cards: ${JSON.stringify(Object.values(card.player1))}`)
+    console.log(`Players Cards: ${JSON.stringify(Object.values(card.player1[0]))}`)
   });
 
   socket.on("player", (playerIdx) => {

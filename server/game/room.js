@@ -102,7 +102,7 @@ class Room {
     this.playerCards[this.activePlayer].forEach(
       (card) => (handSum += Number(Object.values(card)))
     );
-    console.log(`VALUES FROM HIT: ${JSON.stringify(handSum)}`);
+    console.log(`PLAYER VALUES FROM HIT: ${JSON.stringify(handSum)}`);
     if (handSum >= 21) {
       this.stick();
     }
@@ -119,6 +119,7 @@ class Room {
     this.playerCards[0].forEach(
       (card) => (dealerSum += Number(Object.values(card)))
     );
+    console.log(`DEALER VALUES FROM HIT: ${JSON.stringify(dealerSum)}`);
     while (dealerSum < 17) {
       this.playerCards[0].push(this.deck[this.activeCard]);
       this.activeCard++;
