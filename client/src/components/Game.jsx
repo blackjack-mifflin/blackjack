@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import PlayerStats from "./PlayerStats";
 import Bet from "./Bet";
+import Messages from "./Messages";
 import Cards from "./Cards";
 
 const Game = () => {
@@ -136,6 +137,7 @@ const Game = () => {
           </button>
         </div>
       </div >
+      <Messages />
     </>
   );
 };

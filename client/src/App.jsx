@@ -8,7 +8,6 @@ import Navbar from './components/NavBar';
 import Game from './components/Game';
 import { useState } from "react";
 import { io } from 'socket.io-client';
-import Messages from './components/Messages';
 import PaymentForm from './components/PaymentForm';
 
 
@@ -21,7 +20,7 @@ const App = () => {
 
   return (
     <>
-      <Navbar token={token} />
+      <Navbar token={token} setToken={setToken}/>
       <Routes>
         <Route path="/" element={<Welcome />} playerInfo={playerInfo}/>
         <Route path="/Login" element={<LogInPage setToken={setToken} />} />
@@ -30,7 +29,6 @@ const App = () => {
         <Route path="/Game" element={<Game />} />
         <Route path="/profile/paymentform" element={<PaymentForm />} />
       </Routes>
-      <Messages socket={socket} />
     </>
   );
 };

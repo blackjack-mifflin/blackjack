@@ -5,7 +5,8 @@ const PlayerStats = ({currentHandBet}) => {
   const [playerWins, setPlayerWins] = useState(0);
   const [playerLosses, setPlayerLosses] = useState(0);
   const [playerRatio, setPlayerRatio] = useState(0.0);
-  const playerId = 1;
+  const playerId = localStorage.getItem('userId')
+  console.log("THIS IS PLAYERID FROM PLAYERSTATS", playerId)
   console.log(`CURRENT HAND BET: ${currentHandBet}`);
 
   useEffect(() => {
