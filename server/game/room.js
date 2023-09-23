@@ -182,7 +182,7 @@ class Room {
     } else if(dealerTotal > 21 && playerTotal > 21){
       console.log('tie')
     } else if(dealerTotal < 21 && playerTotal < 21){
-      console.log('Another hit?')
+      console.log('Hit Again?')
     } else if (dealerTotal >= 22){
       console.log('dealer busts')
     } else if( playerTotal >= 22 ){
@@ -221,12 +221,14 @@ stickWin = async () => {
     console.log('dealer busts')
   } else if( playerTotal >= 22 ){
     console.log('player busts')
-  } else if( playerTotal <= 21 && playerTotal > dealerTotal){
+  } else if( playerTotal <= 21 && playerTotal > dealerTotal && dealerTotal >= 17){
     console.log('Player wins')
-  } else if( dealerTotal <= 21 && dealerTotal > playerTotal){
+  } else if( dealerTotal <= 21 && dealerTotal > playerTotal && dealerTotal > 17){
     console.log('Dealer wins')
   } else if( playerTotal === dealerTotal){
     console.log('tie')
+  } else if( playerTotal <= 21 && dealerTotal <= 17){
+    console.log('Hit Again?')
   }
 }
 
