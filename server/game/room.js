@@ -1,6 +1,3 @@
-const io = require('socket.io-client');
-const socket = io('/');
-
 const newDeck = [
   { spades_ace: 11 },
   { clubs_ace: 11 },
@@ -181,7 +178,7 @@ class Room {
       console.log('Tie')
     } else if(dealerTotal > 21 && playerTotal > 21){
       console.log('tie')
-    } else if(dealerTotal < 21 && playerTotal < 21){
+    } else if(dealerTotal < 21 && playerTotal < 21 && dealerTotal >= 17){
       console.log('Hit Again?')
     } else if (dealerTotal >= 22){
       console.log('dealer busts')
@@ -214,24 +211,23 @@ stickWin = async () => {
   console.log(dealerTotal)
   console.log(playerTotal)
   if(dealerTotal === 21 && playerTotal === 21){
-    console.log('Tie')
+    console.log('Tie2')
   } else if(dealerTotal > 21 && playerTotal > 21){
-    console.log('tie')
+    console.log('tie2')
   } else if (dealerTotal >= 22){
-    console.log('dealer busts')
+    console.log('dealer busts2')
   } else if( playerTotal >= 22 ){
-    console.log('player busts')
+    console.log('player busts2')
   } else if( playerTotal <= 21 && playerTotal > dealerTotal && dealerTotal >= 17){
-    console.log('Player wins')
+    console.log('Player wins2')
   } else if( dealerTotal <= 21 && dealerTotal > playerTotal && dealerTotal > 17){
-    console.log('Dealer wins')
+    console.log('Dealer wins2')
   } else if( playerTotal === dealerTotal){
-    console.log('tie')
-  } else if( playerTotal <= 21 && dealerTotal <= 17){
-    console.log('Hit Again?')
+    console.log('tie2')
+  } else if( playerTotal < 21 && dealerTotal >= 17){
+    console.log('Hit Again2?')
   }
 }
-
 
 };
 module.exports = Room;
