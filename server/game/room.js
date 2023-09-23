@@ -1,6 +1,3 @@
-const io = require('socket.io-client');
-const socket = io('/');
-
 const newDeck = [
   { spades_ace: 11 },
   { clubs_ace: 11 },
@@ -75,6 +72,8 @@ class Room {
     }
   };
   startHand = () => {
+    let dealerTotal = 0;
+    let playerTotal = 0;
     this.activePlayer = 1;
     this.activeCard = 0;
     this.shuffle(this.deck);
@@ -108,43 +107,14 @@ class Room {
       (card) => (handSum += Number(Object.values(card)))
     );
     console.log(`PLAYER VALUES FROM HIT: ${JSON.stringify(handSum)}`);
-    console.log(`Dealers Cards: ${Object.values(this.playerCards[0])}`)
-    console.log(`Players Cards: ${Object.values(this.playerCards[1])}`)
-    let dealer = Object.values(this.playerCards[0])
-    let player = Object.values(this.playerCards[1])
-    
-    for(let i = 0; i < dealer.length; i++){
-      dealerTotal += Number(Object.values(dealer[i]))
+    if(handSum >= 21){
+      this.stick();
     }
-    for(let i = 0; i < player.length; i++){
-      playerTotal += Number(Object.values(player[i]))
-    }
-    console.log(dealerTotal)
-    console.log(playerTotal)
-    console.log(this.playerCards)
-    if(dealerTotal === 21 && playerTotal === 21 || dealerTotal >= 22 && playerTotal >= 22){
-      console.log('Tie')
-    } else if(dealerTotal <= 21 && playerTotal <= 21){
-      console.log('Hit or Stay?')
-    } else if (dealerTotal >= 22 && playerTotal <= 21){
-      console.log('dealer busts')
-    
-      const playerWin = async (event) => {
-        event.preventDefault();
-        const response = await fetch(`/bet/${id}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ balance: 0 + playerTotal }),
-        });
-        const result = await response.json();
-        console.log(result);
-      };
-  
-    } else if( playerTotal >= 22 && dealerTotal <= 21){
-      console.log('player busts')
-    }
+
+    this.gameWin()
     return newCard;
   };
+
   stick = () => {
     this.activePlayer++;
     if (this.activePlayer > this.playerCountCurrentHand) {
@@ -152,8 +122,6 @@ class Room {
     }
   };
   dealerPlay = () => {
-    let dealerTotal = 0;
-    let playerTotal = 0;
     let dealerSum = 0;
     this.playerCards[0].forEach(
       (card) => (dealerSum += Number(Object.values(card)))
@@ -166,32 +134,10 @@ class Room {
       );
       console.log(`DEALER VALUES FROM HIT: ${JSON.stringify(dealerSum)}`);
     }
-    console.log(`Dealers Cards: ${Object.values(this.playerCards[0])}`)
-    console.log(`Players Cards: ${Object.values(this.playerCards[1])}`)
-    console.log()
-    let dealer = Object.values(this.playerCards[0])
-    let player = Object.values(this.playerCards[1])
-    
-    for(let i = 0; i < dealer.length; i++){
-      dealerTotal += Number(Object.values(dealer[i]))
-    }
-    for(let i = 0; i < player.length; i++){
-      playerTotal += Number(Object.values(player[i]))
-    }
-    console.log(dealerTotal)
-    console.log(playerTotal)
-    if(dealerTotal === 21 && playerTotal === 21){
-      console.log('Tie')
-    } else if(dealerTotal <= 21 && playerTotal <= 21){
-      console.log('Another hit?')
-    } else if (dealerTotal > 22){
-      console.log('dealer busts')
-    } else if( playerTotal > 22 ){
-      console.log('player busts')
-    }
+    this.stickWin()
   };
   getDataPreDealer = () => {
-    const data = {
+        const data = {
       dealer: [this.playerCards[0][0]],
       player1: this.playerCards[1],
       player2: this.playerCards[2],
@@ -211,8 +157,77 @@ class Room {
     return data;
   };
 
-  gameWinner =async () => {
+  gameWin = async () => {
+    let dealerTotal = 0;
+    let playerTotal = 0;
+    console.log(`Dealers Cards: ${Object.values(this.playerCards[0])}`)
+    console.log(`Players Cards: ${Object.values(this.playerCards[1])}`)
+    console.log()
+    let dealer = Object.values(this.playerCards[0])
+    let player = Object.values(this.playerCards[1])
+    
+    for(let i = 0; i < dealer.length; i++){
+      dealerTotal += Number(Object.values(dealer[i]))
+    }
+    for(let i = 0; i < player.length; i++){
+      playerTotal += Number(Object.values(player[i]))
+    }
+    console.log(dealerTotal)
+    console.log(playerTotal)
+    if(dealerTotal === 21 && playerTotal === 21){
+      console.log('Tie')
+    } else if(dealerTotal > 21 && playerTotal > 21){
+      console.log('tie')
+    } else if(dealerTotal < 21 && playerTotal < 21 && dealerTotal >= 17){
+      console.log('Hit Again?')
+    } else if (dealerTotal >= 22){
+      console.log('dealer busts')
+    } else if( playerTotal >= 22 ){
+      console.log('player busts')
+    } else if( playerTotal <= 21 && playerTotal > dealerTotal){
+      console.log('Player wins')
+    } else if( dealerTotal <= 21 && dealerTotal > playerTotal){
+      console.log('Dealer wins')
+    } else if( playerTotal === dealerTotal){
+      console.log('tie')
+    }
+}
+
+stickWin = async () => {
+  let dealerTotal = 0;
+  let playerTotal = 0;
+  console.log(`Dealers Cards: ${Object.values(this.playerCards[0])}`)
+  console.log(`Players Cards: ${Object.values(this.playerCards[1])}`)
+  console.log()
+  let dealer = Object.values(this.playerCards[0])
+  let player = Object.values(this.playerCards[1])
   
+  for(let i = 0; i < dealer.length; i++){
+    dealerTotal += Number(Object.values(dealer[i]))
+  }
+  for(let i = 0; i < player.length; i++){
+    playerTotal += Number(Object.values(player[i]))
+  }
+  console.log(dealerTotal)
+  console.log(playerTotal)
+  if(dealerTotal === 21 && playerTotal === 21){
+    console.log('Tie2')
+  } else if(dealerTotal > 21 && playerTotal > 21){
+    console.log('tie2')
+  } else if (dealerTotal >= 22){
+    console.log('dealer busts2')
+  } else if( playerTotal >= 22 ){
+    console.log('player busts2')
+  } else if( playerTotal <= 21 && playerTotal > dealerTotal && dealerTotal >= 17){
+    console.log('Player wins2')
+  } else if( dealerTotal <= 21 && dealerTotal > playerTotal && dealerTotal > 17){
+    console.log('Dealer wins2')
+  } else if( playerTotal === dealerTotal){
+    console.log('tie2')
+  } else if( playerTotal < 21 && dealerTotal >= 17){
+    console.log('Hit Again2?')
+  }
 }
-}
+
+};
 module.exports = Room;

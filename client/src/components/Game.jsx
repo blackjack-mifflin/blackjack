@@ -61,25 +61,6 @@ const Game = () => {
     console.log(`CURRENT SCORE OF PLAYER ${score}`);
   });
 
-  const headingStyle = {
-    fontSize: '24px',
-    marginBottom: '10px',
-    color: '#333',
-  };
-
-  const listStyle = {
-    listStyle: 'none',
-    padding: '0',
-  };
-
-  const messageStyle = {
-    backgroundColor: '#fff',
-    border: '1px solid #ccc',
-    borderRadius: '5px',
-    padding: '10px',
-    margin: '5px 0',
-  };
-
   useEffect(() => {
     socket.on("new message", (msg) => {
       setMessages((prevMessages) => [...prevMessages, msg]);

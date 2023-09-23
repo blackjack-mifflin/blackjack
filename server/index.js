@@ -65,7 +65,7 @@ io.on("connection", (socket) => {
     if (move === "hit") {
       const newCard = {};
       newCard[`Player${rooms.roomName.activePlayer}`] = rooms.roomName.hit();
-      console.log(`NEW CARD FROM HIT: ${newCard}`);
+      console.log(`NEW CARD FROM HIT: ${JSON.stringify(newCard)}`);
       io.emit("card", rooms.roomName.getDataPreDealer());
       if (rooms.roomName.activePlayer > rooms.roomName.playerCountCurrentHand) {
         rooms.roomName.dealerPlay();

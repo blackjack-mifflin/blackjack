@@ -7,16 +7,12 @@ import Profile from './components/ProfilePage';
 import Navbar from './components/NavBar';
 import Game from './components/Game';
 import { useState } from "react";
-import { io } from 'socket.io-client';
 import PaymentForm from './components/PaymentForm';
 
 
 const App = () => {
   const [token, setToken] = useState(null);
   const [playerInfo, setPlayerInfo] = useState(null);
-
-
-  const socket = io('/');
 
   return (
     <>
