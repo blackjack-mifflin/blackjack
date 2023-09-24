@@ -70,7 +70,6 @@ const Cards = ({ cardData }) => {
         player3.map((card) => {
           return (
             <>
-              <h1>Player 3</h1>
               <img
                 key={Object.keys(card)}
                 src={`https://tekeye.uk/playing_cards/images/svg_playing_cards/fronts/${Object.keys(
