@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 const Cards = ({ cardData }) => {
   const [player1, setPlayer1] = useState([]);
@@ -9,48 +9,80 @@ const Cards = ({ cardData }) => {
 
   useEffect(() => {
     setDealer(cardData.dealer);
-    console.log(`DEALER DATA FROM CARDS.JS: ${JSON.stringify(dealer)}`);
-  }, [cardData]);
-
-  useEffect(() => {
     setPlayer1(cardData.player1);
-    console.log(`PLAYER1 DATA FROM CARDS.JS: ${JSON.stringify(player1)}`);
-  }, [cardData]);
-
-  useEffect(() => {
     if (cardData.player2) {
       setPlayer2(cardData.player2);
-      console.log(`PLAYER2 DATA FROM CARDS.JS: ${JSON.stringify(player2)}`);
     }
-  }, [cardData]);
-
-  useEffect(() => {
     if (cardData.player3) {
       setPlayer3(cardData.player3);
-      console.log(`PLAYER3 DATA FROM CARDS.JS: ${JSON.stringify(player3)}`);
     }
+    setActivePlayer(cardData.activePlayer);
   }, [cardData]);
-
-  console.log(`CARD DATA FROM CARDS.JSX: ${JSON.stringify(dealer)}`);
 
   return (
     <>
-      <h1>Dealer's Hand</h1>
-      <p> {JSON.stringify(dealer)} </p>
-      <h1>Player 1 Hand</h1>
-      <p> {JSON.stringify(player1)} </p>
-      {cardData.player2 && (
-        <>
-          <h1>Player 2's Hand</h1>
-          <p> {JSON.stringify(player2)} </p>
-        </>
-      )}
-      {cardData.player3 && (
-        <>
-          <h1>Player 3's Hand</h1>
-          <p> {JSON.stringify(player3)} </p>
-        </>
-      )}
+      {dealer && <h3>Dealer</h3>}
+      {dealer &&
+        dealer.map((card) => {
+          return (
+            <>
+              <img
+                key={Object.keys(card)}
+                src={`https://tekeye.uk/playing_cards/images/svg_playing_cards/fronts/${Object.keys(
+                  card
+                )}.svg`}
+                alt={Object.keys(card)}
+              />
+            </>
+          );
+        })}
+      {player1 && <h3>Player 1</h3>}
+      {player1 &&
+        player1.map((card) => {
+          return (
+            <>
+              <img
+                key={Object.keys(card)}
+                src={`https://tekeye.uk/playing_cards/images/svg_playing_cards/fronts/${Object.keys(
+                  card
+                )}.svg`}
+                alt={Object.keys(card)}
+              />
+            </>
+          );
+        })}
+      {player2 && <h3>Player 2</h3>}
+      {player2 &&
+        player2.map((card) => {
+          return (
+            <>
+              <h1>Player 2</h1>
+              <img
+                key={Object.keys(card)}
+                src={`https://tekeye.uk/playing_cards/images/svg_playing_cards/fronts/${Object.keys(
+                  card
+                )}.svg`}
+                alt={Object.keys(card)}
+              />
+            </>
+          );
+        })}
+      {player3 && <h3>Player 3</h3>}
+      {player3 &&
+        player3.map((card) => {
+          return (
+            <>
+              <h1>Player 3</h1>
+              <img
+                key={Object.keys(card)}
+                src={`https://tekeye.uk/playing_cards/images/svg_playing_cards/fronts/${Object.keys(
+                  card
+                )}.svg`}
+                alt={Object.keys(card)}
+              />
+            </>
+          );
+        })}
     </>
   );
 };
