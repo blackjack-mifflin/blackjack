@@ -27,6 +27,7 @@ const Game = () => {
     const message = e.target.value;
     console.log(`MOVE FROM CLIENT: ${message}`);
     socket.emit("move", message);
+    socket.emit("score")
   };
 
   const sendMessage = () => {
@@ -57,9 +58,6 @@ const Game = () => {
     console.log(`Current player at seat ${playerIdx}`);
   });
 
-  socket.on("playerScore", (score) => {
-    console.log(`CURRENT SCORE OF PLAYER ${score}`);
-  });
 
   useEffect(() => {
     socket.on("new message", (msg) => {

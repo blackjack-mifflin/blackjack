@@ -87,7 +87,13 @@ io.on("connection", (socket) => {
     }
     console.log(`MOVE FROM CLIENT: ${move}`);
   });
+
+  socket.on("score", (score) => {
+    console.log("TOMS SCORE")
+    io.emit('winLoss', rooms.roomName.getDataWithDealer())
+  })
 });
+
 
 app.use((req, res, next) => {
   const auth = req.headers.authorization;

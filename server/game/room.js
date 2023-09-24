@@ -110,8 +110,6 @@ class Room {
     if(handSum >= 21){
       this.stick();
     }
-
-    this.gameWin()
     return newCard;
   };
 
@@ -134,7 +132,6 @@ class Room {
       );
       console.log(`DEALER VALUES FROM HIT: ${JSON.stringify(dealerSum)}`);
     }
-    this.stickWin()
   };
   getDataPreDealer = () => {
         const data = {
@@ -178,9 +175,7 @@ class Room {
       console.log('Tie')
     } else if(dealerTotal > 21 && playerTotal > 21){
       console.log('tie')
-    } else if(dealerTotal < 21 && playerTotal < 21 && dealerTotal >= 17){
-      console.log('Hit Again?')
-    } else if (dealerTotal >= 22){
+    }  else if (dealerTotal >= 22){
       console.log('dealer busts')
     } else if( playerTotal >= 22 ){
       console.log('player busts')
@@ -224,8 +219,6 @@ stickWin = async () => {
     console.log('Dealer wins2')
   } else if( playerTotal === dealerTotal){
     console.log('tie2')
-  } else if( playerTotal < 21 && dealerTotal >= 17){
-    console.log('Hit Again2?')
   }
 }
 
