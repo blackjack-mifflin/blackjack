@@ -60,7 +60,6 @@ io.on("connection", (socket) => {
     io.emit("new message", { name, message });
   });
 
-
   socket.on("move", (move) => {
     if (move === "hit") {
       const newCard = {};
@@ -70,10 +69,15 @@ io.on("connection", (socket) => {
       if (rooms.roomName.activePlayer > rooms.roomName.playerCountCurrentHand) {
         rooms.roomName.dealerPlay();
         io.emit("card", rooms.roomName.getDataWithDealer());
-        rooms.roomName.winLoss()
-        io.emit("result", rooms.roomName.winLossArr)
-        rooms.roomName.startHand();
-        io.emit("player", 'NEW GAME!!') //DELETE
+        rooms.roomName.winLoss();
+        io.emit("result", rooms.roomName.winLossArr);
+        setTimeout(() => {
+          rooms.roomName.startHand();
+          io.emit("result", {});
+          io.emit("player", "NEW GAME!!"); //DELETE
+          io.emit("card", rooms.roomName.getDataPreDealer());
+        }, 3000);
+        io.emit("player", "NEW GAME!!"); //DELETE
         io.emit("card", rooms.roomName.getDataPreDealer());
       }
     } else if (move === "stick") {
@@ -82,16 +86,18 @@ io.on("connection", (socket) => {
       if (rooms.roomName.activePlayer > rooms.roomName.playerCountCurrentHand) {
         rooms.roomName.dealerPlay();
         io.emit("card", rooms.roomName.getDataWithDealer());
-        rooms.roomName.winLoss()
-        io.emit("result", rooms.roomName.winLossArr)
-        rooms.roomName.startHand();
-        io.emit("player", 'NEW GAME!!') //DELETE
-        io.emit("card", rooms.roomName.getDataPreDealer());
+        rooms.roomName.winLoss();
+        io.emit("result", rooms.roomName.winLossArr);
+        setTimeout(() => {
+          rooms.roomName.startHand();
+          io.emit("result", {});
+          io.emit("player", "NEW GAME!!"); //DELETE
+          io.emit("card", rooms.roomName.getDataPreDealer());
+        }, 3000);
       }
     }
     console.log(`MOVE FROM CLIENT: ${move}`);
   });
-
 });
 
 app.use((req, res, next) => {

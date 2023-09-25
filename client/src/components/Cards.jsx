@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const Cards = ({ cardData }) => {
+const Cards = ({ cardData, winLossData }) => {
   const [player1, setPlayer1] = useState([]);
   const [player2, setPlayer2] = useState([]);
   const [player3, setPlayer3] = useState([]);
@@ -37,6 +37,7 @@ const Cards = ({ cardData }) => {
           );
         })}
       {player1 && <h3>Player 1</h3>}
+      <p>{winLossData.player1}</p>
       {player1 &&
         player1.map((card) => {
           return (
@@ -51,7 +52,8 @@ const Cards = ({ cardData }) => {
             </>
           );
         })}
-      {player2 && <h3>Player 2</h3>}
+      {cardData.player2 && <h3>Player 2</h3>}
+      <p>{winLossData.player1}</p>
       {player2 &&
         player2.map((card) => {
           return (
@@ -66,6 +68,8 @@ const Cards = ({ cardData }) => {
             </>
           );
         })}
+      {cardData.player3 && <h3>Player 3</h3>}
+      <p>{winLossData.player1}</p>
       {player3 &&
         player3.map((card) => {
           return (
