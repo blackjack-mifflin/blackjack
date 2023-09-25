@@ -53,6 +53,7 @@ const Game = () => {
     console.log(`CARD FROM SERVER: ${JSON.stringify(card)}`);
   });
 
+
   socket.on("player", (playerIdx) => {
     console.log(`Current player at seat ${playerIdx}`);
   });
@@ -60,6 +61,10 @@ const Game = () => {
   socket.on("playerScore", (score) => {
     console.log(`CURRENT SCORE OF PLAYER ${score}`);
   });
+
+  socket.on("result", (data) => {
+    console.log(`RESULT WITH: ${JSON.stringify(data)}`)
+  })
 
   useEffect(() => {
     socket.on("new message", (msg) => {

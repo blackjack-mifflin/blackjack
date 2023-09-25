@@ -70,6 +70,8 @@ io.on("connection", (socket) => {
       if (rooms.roomName.activePlayer > rooms.roomName.playerCountCurrentHand) {
         rooms.roomName.dealerPlay();
         io.emit("card", rooms.roomName.getDataWithDealer());
+        rooms.roomName.winLoss()
+        io.emit("result", rooms.roomName.winLossArr)
         rooms.roomName.startHand();
         io.emit("player", 'NEW GAME!!') //DELETE
         io.emit("card", rooms.roomName.getDataPreDealer());
@@ -80,6 +82,8 @@ io.on("connection", (socket) => {
       if (rooms.roomName.activePlayer > rooms.roomName.playerCountCurrentHand) {
         rooms.roomName.dealerPlay();
         io.emit("card", rooms.roomName.getDataWithDealer());
+        rooms.roomName.winLoss()
+        io.emit("result", rooms.roomName.winLossArr)
         rooms.roomName.startHand();
         io.emit("player", 'NEW GAME!!') //DELETE
         io.emit("card", rooms.roomName.getDataPreDealer());
@@ -87,6 +91,7 @@ io.on("connection", (socket) => {
     }
     console.log(`MOVE FROM CLIENT: ${move}`);
   });
+
 });
 
 app.use((req, res, next) => {
