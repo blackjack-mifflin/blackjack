@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
-const PlayerStats = ({currentHandBet}) => {
-  const [playerBalance, setPlayerBalance] = useState(0);
+const PlayerStats = ({currentHandBet, playerBalance, setPlayerBalance}) => {
   const [playerWins, setPlayerWins] = useState(0);
   const [playerLosses, setPlayerLosses] = useState(0);
   const [playerRatio, setPlayerRatio] = useState(0.0);

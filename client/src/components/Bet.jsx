@@ -1,13 +1,12 @@
-const Bet = ({currentHandBet, setCurrentHandBet, betSize, setBetSize}) => {
+const Bet = ({currentHandBet, setCurrentHandBet, betSize, setBetSize, id, playerBalance}) => {
 
   const betHandler = async (e) => {
     e.preventDefault();
     setCurrentHandBet(betSize);
-    const id = 1;
     const response = await fetch(`/api/players/bet/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ balance: 0 - betSize }),
+      body: JSON.stringify({ balance: playerBalance - betSize }),
     });
     const result = await response.json();
     console.log(result);

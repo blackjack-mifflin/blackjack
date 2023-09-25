@@ -5,8 +5,10 @@ import PlayerStats from "./PlayerStats";
 import Bet from "./Bet";
 import Messages from "./Messages";
 import Cards from "./Cards";
+import betHandler from './Bet'
 
 const Game = () => {
+  const [playerBalance, setPlayerBalance] = useState(0);
   const [isLastHand, setIsLastHand] = useState(false);
   const navigate = useNavigate();
   const socket = io("/");
@@ -90,16 +92,29 @@ const Game = () => {
   });
 
   useEffect(() => {
-      const callAPI = () => {
+      const callAPI = async () => {
         console.log(`USE: ${JSON.stringify(winLossData)}`)
         console.log(Object.values(winLossData))
         if(Object.values(winLossData)[playerSeat-1] === "loss"){
           addLoss()
         } else if (Object.values(winLossData)[playerSeat-1] === "win"){
+          const response = await fetch(`/api/players/bet/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ balance: playerBalance + (2*betSize) }),
+          });
+          const result = await response.json();
+          console.log(result);      
           addWin()
         }
       } 
       callAPI()
+      console.log(`WINLOSS DATA: ${JSON.stringify(Object.keys(winLossData).length)}`)
+      if(Object.keys(winLossData).length === 0) {
+        console.log(`CURRENT BET: ${currentHandBet}   BET SIZE: ${betSize}`);
+        betHandler(currentHandBet);
+        setCurrentHandBet(betSize);
+      }
   }, [winLossData]);
 
 
@@ -121,7 +136,7 @@ const Game = () => {
   return (
     <>
       <h1>Blackjack Mifflin</h1>
-      <PlayerStats currentHandBet={currentHandBet} />
+      <PlayerStats currentHandBet={currentHandBet} playerBalance={playerBalance} setPlayerBalance={setPlayerBalance} />
       <button onClick={joinGame}>Join Game</button>
       <button onClick={lastHand}>Last Hand</button>
 
@@ -139,6 +154,8 @@ const Game = () => {
         setCurrentHandBet={setCurrentHandBet}
         betSize={betSize}
         setBetSize={setBetSize}
+        id={id}
+        playerBalance={playerBalance}
       />
       <div style={{ textAlign: "center", marginBottom: "20px" }}>
         <img

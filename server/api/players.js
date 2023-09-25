@@ -55,15 +55,16 @@ router.put("/:id", async (req, res) => {
 
 router.put("/bet/:id", async (req, res) => {
   try {
-    const { balance } = await prisma.player.findUnique({
-      select: { balance: true },
-      where: { id: Number(req.params.id) },
-    });
+    // const { balance } = await prisma.player.findUnique({
+    //   select: { balance: true },
+    //   where: { id: Number(req.params.id) },
+    // });
+    const balance = req.body.balance;
     const player = await prisma.player.update({
       where: {
         id: Number(req.params.id),
       },
-      data: { balance: balance + Number(req.body.balance) },
+      data: { balance: balance },
     });
     if (player) {
       res.send(player);
@@ -98,7 +99,7 @@ router.put("/add/:id", async (req, res) => {
       where: {
         id: Number(req.params.id),
       },
-      data: { balance: balance + Number(req.body.balance) },
+      data: { balance: balance },
     });
     if (player) {
       res.send(player);
