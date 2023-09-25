@@ -36,7 +36,7 @@ const Cards = ({ cardData, winLossData }) => {
             </>
           );
         })}
-      {player1 && <h3>Player 1</h3>}
+      {player1 && <h3>Player 1 {activePlayer === 1 && <i>active</i>}</h3>}
       <p>{winLossData.player1}</p>
       {player1 &&
         player1.map((card) => {
@@ -52,7 +52,7 @@ const Cards = ({ cardData, winLossData }) => {
             </>
           );
         })}
-      {cardData.player2 && <h3>Player 2</h3>}
+      {cardData.player2 && <h3>Player 2 {activePlayer === 2 && <i>active</i>}</h3>}
       <p>{winLossData.player1}</p>
       {player2 &&
         player2.map((card) => {
@@ -68,7 +68,7 @@ const Cards = ({ cardData, winLossData }) => {
             </>
           );
         })}
-      {cardData.player3 && <h3>Player 3</h3>}
+      {cardData.player3 && <h3>Player 3 {activePlayer === 3 && <i>active</i>}</h3>}
       <p>{winLossData.player1}</p>
       {player3 &&
         player3.map((card) => {
