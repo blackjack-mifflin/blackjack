@@ -46,13 +46,12 @@ const Game = () => {
   socket.on("card", (card) => {
     setCardData(card);
     console.log(`Dealers Cards: ${JSON.stringify(card.dealer)}`);
-    if(card.player1){
+    if (card.player1) {
       console.log(`Players # of Cards: ${JSON.stringify(card.player1.length)}`);
     }
 
     console.log(`CARD FROM SERVER: ${JSON.stringify(card)}`);
   });
-
 
   socket.on("player", (playerIdx) => {
     console.log(`Current player at seat ${playerIdx}`);
@@ -63,8 +62,8 @@ const Game = () => {
   });
 
   socket.on("result", (data) => {
-    console.log(`RESULT WITH: ${JSON.stringify(data)}`)
-  })
+    console.log(`RESULT WITH: ${JSON.stringify(data)}`);
+  });
 
   useEffect(() => {
     socket.on("new message", (msg) => {
@@ -76,18 +75,64 @@ const Game = () => {
     };
   }, [socket]);
 
-  return (
-    <>
-      <h1>Blackjack Mifflin</h1>
-      <PlayerStats currentHandBet={currentHandBet} />
-      <button onClick={joinGame}>Join Game</button>
-      <button onClick={lastHand}>Last Hand</button>
+  const backgroundStyle = {
+    backgroundImage: `url('https://t4.ftcdn.net/jpg/03/20/86/93/240_F_320869363_2xgd64uUdIrJ9hAJqaHzGCZeK6qgSVdL.jpg')`,
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundAttachment: "fixed",
+    height: "100vh",
+    overflowY: "auto",
+  };
 
-      <button onClick={socketHandler} value="hit">
+  const titleStyle = {
+    fontSize: "36px",
+    fontWeight: "bold",
+    color: "#ffffff",
+    marginBottom: "20px",
+    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
+  };
+
+  const buttonStyle = {
+    padding: "10px 20px",
+    backgroundColor: "#007bff",
+    color: "#fff",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    margin: "5px",
+  };
+
+  const inputStyle = {
+    padding: "10px",
+    border: "1px solid #ccc",
+    borderRadius: "5px",
+    marginBottom: "10px",
+  };
+
+  return (
+    <div className="welcome-container" style={backgroundStyle}>
+      <h1 style={titleStyle}>Blackjack Mifflin</h1>
+      <PlayerStats currentHandBet={currentHandBet} />
+      <button style={buttonStyle} onClick={joinGame}>
+        Join Game
+      </button>
+      <button style={buttonStyle} onClick={lastHand}>
+        Last Hand
+      </button>
+
+      <button
+        style={buttonStyle}
+        onClick={socketHandler}
+        value="hit"
+      >
         Hit
       </button>
 
-      <button onClick={socketHandler} value="stick">
+      <button
+        style={buttonStyle}
+        onClick={socketHandler}
+        value="stick"
+      >
         Stick
       </button>
       <Cards cardData={cardData} />
@@ -98,42 +143,34 @@ const Game = () => {
         betSize={betSize}
         setBetSize={setBetSize}
       />
-      <div style={{ textAlign: "center", marginBottom: "20px" }}>
-        <img
-          src="https://i0.wp.com/mediachomp.com/wp-content/uploads/2022/02/the-office-cartoon-characters-15.jpg?resize=500%2C707&ssl=1"
-          alt="The Office Cartoon Characters"
-          style={{ maxWidth: "17%", marginTop: "-220px" }}
-        />
-      </div>
 
       <div className="message-window">
-
-
         <input
           type="text"
           placeholder="Your Name"
           value={userName}
           onChange={(e) => setUserName(e.target.value)}
-          className="name-input"
+          style={inputStyle}
         />
-        <div className="message-list">
-
-        </div>
+        <div className="message-list"></div>
         <div className="message-form">
           <input
             type="text"
             placeholder="Your Message"
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
-            className="message-input"
+            style={inputStyle}
           />
-          <button onClick={sendMessage} className="message-button">
+          <button
+            style={buttonStyle}
+            onClick={sendMessage}
+          >
             Send
           </button>
         </div>
-      </div >
+      </div>
       <Messages />
-    </>
+    </div>
   );
 };
 
