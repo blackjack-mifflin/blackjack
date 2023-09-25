@@ -14,6 +14,7 @@
 .message-list {
     list-style: none;
     padding: 0;
+    color: black;
 }
 
 .message-item {
@@ -138,3 +139,18 @@
 #profile-money {
     margin-left: 65%;
 }
+
+body {
+    background-image: url('https://t4.ftcdn.net/jpg/03/20/86/93/240_F_320869363_2xgd64uUdIrJ9hAJqaHzGCZeK6qgSVdL.jpg');
+    background-size: "cover";
+    background-repeat: "no-repeat";
+    background-attachment: "fixed";
+    overflow-y: "auto";
+    color: white
+  };
+
+main {
+    background-color: white;
+    height: 100px;
+    width: 100px;
+  }

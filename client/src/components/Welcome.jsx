@@ -15,14 +15,11 @@ const Welcome = (playerInfo) => {
                     sx={{ height: 200 }}
                     image='https://i0.wp.com/www.thexboxhub.com/wp-content/uploads/2023/07/eyestetix-studio-m0EzHtexapU-unsplash.jpg?w=640&ssl=1'
                 />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="span">
-                        {playerInfo ? `House Win Loss Ratio: ` : 'Sign in for more info'}
+                <CardContent style={{textAlign: "center"}}>
+                    <Typography gutterBottom variant="h5" component="span" style={{backgroundColor: "white"}}>
+                        {playerInfo ? `Welcome to BlackJack Mifflin` : 'Sign in for more info'}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        {playerInfo ? `Total Wins: ${playerInfo.wins}` : ''}<br />
-                        {playerInfo ? `Total Losses: ${playerInfo.losses}` : ''}
-                    </Typography>
+
                 </CardContent>
                 <CardActions>
                     <Button href="https://twitter.com/intent/tweet" size="small">Share</Button>

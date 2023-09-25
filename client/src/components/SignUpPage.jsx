@@ -32,7 +32,13 @@ const Copyright = (props) => {
   );
 };
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme({
+  typography: {
+    fontFamily: [
+      '-times-new-roman'
+    ].join(','),
+  },
+});
 
 const SignUpPage = () => {
   const [username, setUsername] = useState("");
@@ -65,6 +71,8 @@ const SignUpPage = () => {
   };
 
   return (
+    <>
+     <div style={{backgroundColor: "white"}}>
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -164,6 +172,8 @@ const SignUpPage = () => {
         <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
+    </div>
+    </>
   );
 };
 export default SignUpPage;

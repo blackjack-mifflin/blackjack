@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import PlayerStats from "./PlayerStats";
-import Bet from "./Bet";
+// import Bet from "./Bet";
 import Messages from "./Messages";
 import Cards from "./Cards";
 
@@ -10,7 +10,7 @@ const Game = () => {
   const [isLastHand, setIsLastHand] = useState(false);
   const navigate = useNavigate();
   const socket = io("/");
-  const [betSize, setBetSize] = useState(0);
+  // const [betSize, setBetSize] = useState(0);
   const [currentHandBet, setCurrentHandBet] = useState(0);
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
@@ -180,12 +180,12 @@ const Game = () => {
       </button>
       <Cards cardData={cardData} winLossData={winLossData} />
 
-      <Bet
+      {/* <Bet
         currentHandBet={currentHandBet}
         setCurrentHandBet={setCurrentHandBet}
         betSize={betSize}
         setBetSize={setBetSize}
-      />
+      /> */}
 
       <div className="message-window">
         <input
