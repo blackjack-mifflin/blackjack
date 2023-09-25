@@ -120,7 +120,7 @@ router.put("/add/wins/:id", async (req, res) => {
       where: {
         id: Number(req.params.id),
       },
-      data: { wins: wins + Number(req.body.wins) },
+      data: { wins: wins + 1 },
     });
     if (player) {
       res.send(player);
@@ -143,7 +143,7 @@ router.put("/add/losses/:id", async (req, res) => {
       where: {
         id: Number(req.params.id),
       },
-      data: { losses: losses + Number(req.body.losses) },
+      data: { losses: losses + 1 },
     });
     if (player) {
       res.send(player);
