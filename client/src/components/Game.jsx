@@ -93,43 +93,9 @@ const Game = () => {
     console.log(`CURRENT SCORE OF PLAYER ${score}`);
   });
 
-
-  useEffect(() => {
   socket.on("result", (data) => {
     setWinLossData(data);
     console.log(`RESULT WITH: ${JSON.stringify(data)}`)
-    console.log(`RESULT WITH: ${Object.values(data)}`)
-
-    if(Object.values(data) === 'win'){
-      socket.emit("win")
-      console.log('WINNNER')
-      return () => {
-        socket.off("new message");
-      };
-    } else if(Object.values(data) == 'loss'){
-      socket.emit("loss")
-      console.log('LOOSER')
-      return () => {
-        socket.off("new message");
-      };
-    }
-  }, [socket]);
-
-
-  })
-  socket.on("resultAPI", (data) => {
-    console.log(`RESULT WITH: ${JSON.stringify(data)}`)
-
-    console.log(`RESULT WITH: ${Object.values(data)}`)
-
-    if(Object.values(data) === 'win'){
-      socket.emit("win")
-      console.log('WINNNER')
-  
-    } else if(Object.values(data) === 'loss'){
-      socket.emit("loss")
-      console.log('LOOSER')
-    }
 
   })
 
