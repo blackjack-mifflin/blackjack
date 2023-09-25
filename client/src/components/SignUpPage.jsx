@@ -71,6 +71,8 @@ const SignUpPage = () => {
   };
 
   return (
+    <>
+     <div style={{backgroundColor: "white"}}>
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -170,6 +172,8 @@ const SignUpPage = () => {
         <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
+    </div>
+    </>
   );
 };
 export default SignUpPage;

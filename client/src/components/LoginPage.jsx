@@ -13,6 +13,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { colors } from "@mui/material";
 
 function Copyright(props) {
   return (
@@ -35,11 +36,7 @@ function Copyright(props) {
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme({
-  typography: {
-    fontFamily: [
-      '-times-new-roman'
-    ].join(','),
-  },
+  typography: {fontFamily: ['-times-new-roman'].join(','),}
 });
 
 const LogInPage = ({ setToken }) => {
@@ -74,6 +71,8 @@ const LogInPage = ({ setToken }) => {
   };
 
   return (
+    <>
+    <div style={{backgroundColor: "white"}}>
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -152,6 +151,8 @@ const LogInPage = ({ setToken }) => {
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
+    </div>
+    </>
   );
 };
 
