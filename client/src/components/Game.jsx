@@ -17,6 +17,7 @@ const Game = () => {
   const [userName, setUserName] = useState("");
   const [cardData, setCardData] = useState({});
   const [winLossData, setWinLossData] = useState({});
+  const id = localStorage.getItem('userId');
 
   const lastHand = () => {
     console.log("move to home page");
@@ -53,6 +54,37 @@ const Game = () => {
 
     console.log(`CARD FROM SERVER: ${JSON.stringify(card)}`);
   });
+
+  socket.on("win", (score) => {
+    console.log(score)
+
+    const addHandler = async () => {
+      const response = await fetch(`/api/players/add/wins/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ wins: 0 + 1 }),
+      });
+      const result = await response.json();
+      console.log(result);
+    };
+    addHandler()
+  });
+
+ socket.on("loss", (score) => {
+    console.log(score)
+
+    const addHandler = async () => {
+      const response = await fetch(`/api/players/add/loss/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ losses: 0 + 1 }),
+      });
+      const result = await response.json();
+      console.log(result);
+    };
+    addHandler()
+  });
+
 
 
   socket.on("player", (playerIdx) => {
