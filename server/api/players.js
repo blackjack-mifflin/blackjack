@@ -110,7 +110,7 @@ router.put("/add/:id", async (req, res) => {
   }
 });
 
-router.put("/add/win/:id", async (req, res) => {
+router.put("/add/wins/:id", async (req, res) => {
   try {
     const { wins } = await prisma.player.findUnique({
       select: { wins: true },
@@ -120,7 +120,7 @@ router.put("/add/win/:id", async (req, res) => {
       where: {
         id: Number(req.params.id),
       },
-      data: { wins: wins + Number(req.body.balance) },
+      data: { wins: wins + Number(req.body.wins) },
     });
     if (player) {
       res.send(player);
@@ -133,7 +133,7 @@ router.put("/add/win/:id", async (req, res) => {
 });
 
 
-router.put("/add/loss/:id", async (req, res) => {
+router.put("/add/losses/:id", async (req, res) => {
   try {
     const { losses } = await prisma.player.findUnique({
       select: { losses: true },
@@ -143,7 +143,7 @@ router.put("/add/loss/:id", async (req, res) => {
       where: {
         id: Number(req.params.id),
       },
-      data: { losses: losses + Number(req.body.balance) },
+      data: { losses: losses + Number(req.body.losses) },
     });
     if (player) {
       res.send(player);

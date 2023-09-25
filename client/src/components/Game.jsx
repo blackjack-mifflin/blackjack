@@ -55,10 +55,8 @@ const Game = () => {
     console.log(`CARD FROM SERVER: ${JSON.stringify(card)}`);
   });
 
-  socket.on("win", (score) => {
-    console.log(score)
 
-    const addHandler = async () => {
+    const addWin = async () => {
       const response = await fetch(`/api/players/add/wins/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -67,12 +65,11 @@ const Game = () => {
       const result = await response.json();
       console.log(result);
     };
-    addHandler()
-  });
 
- socket.on("loss", () => {
-    const addHandler = async () => {
-      const response = await fetch(`/api/players/add/loss/${id}`, {
+
+
+    const addLoss = async () => {
+      const response = await fetch(`/api/players/add/losses/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ losses: 0 + 1 }),
@@ -80,9 +77,6 @@ const Game = () => {
       const result = await response.json();
       console.log(result);
     };
-    addHandler()
-  });
-
 
 
   socket.on("player", (playerIdx) => {
@@ -93,12 +87,24 @@ const Game = () => {
     console.log(`CURRENT SCORE OF PLAYER ${score}`);
   });
 
+  useEffect(() => {
+      const callAPI = () => {
+        console.log(`USE: ${JSON.stringify(winLossData)}`)
+        console.log(Object.values(winLossData))
+        if(Object.values(winLossData)[0] === "loss"){
+          addLoss()
+        } else if (Object.values(winLossData)[0] === "win"){
+          addWin()
+        }
+      } 
+      callAPI()
+  }, [winLossData]);
+
+
   socket.on("result", (data) => {
     setWinLossData(data);
     console.log(`RESULT WITH: ${JSON.stringify(data)}`)
-
   })
-
 
   useEffect(() => {
     socket.on("new message", (msg) => {
