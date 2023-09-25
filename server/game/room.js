@@ -73,8 +73,6 @@ class Room {
     }
   };
   startHand = () => {
-    let dealerTotal = 0;
-    let playerTotal = 0;
     this.activePlayer = 1;
     this.activeCard = 0;
     this.shuffle(this.deck);

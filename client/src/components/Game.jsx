@@ -18,6 +18,7 @@ const Game = () => {
   const [cardData, setCardData] = useState({});
   const [winLossData, setWinLossData] = useState({});
   const id = localStorage.getItem('userId');
+  const [playerSeat, setPlayerSeat] = useState(0);
 
   const lastHand = () => {
     console.log("move to home page");
@@ -81,6 +82,7 @@ const Game = () => {
 
   socket.on("player", (playerIdx) => {
     console.log(`Current player at seat ${playerIdx}`);
+    setPlayerSeat(playerIdx);
   });
 
   socket.on("playerScore", (score) => {
@@ -91,9 +93,9 @@ const Game = () => {
       const callAPI = () => {
         console.log(`USE: ${JSON.stringify(winLossData)}`)
         console.log(Object.values(winLossData))
-        if(Object.values(winLossData)[0] === "loss"){
+        if(Object.values(winLossData)[playerSeat-1] === "loss"){
           addLoss()
-        } else if (Object.values(winLossData)[0] === "win"){
+        } else if (Object.values(winLossData)[playerSeat-1] === "win"){
           addWin()
         }
       } 
