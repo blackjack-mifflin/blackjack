@@ -27,12 +27,14 @@ io.on("connection", (socket) => {
       console.log(`${roomName} PLAYER1: ${rooms.roomName.playerCards[1]}`);
       socket.join(roomName);
       io.to(roomName).emit("addedId", roomName);
+      socket.emit("player", rooms.roomName.playerCountNextHand);
       io.emit("card", rooms.roomName.getDataPreDealer());
       console.log(`Added ${socket.id} to ${roomName}`);
       console.log(io.sockets.adapter.rooms.get(roomName).size);
     } else if (io.sockets.adapter.rooms.get(roomName).size < 3) {
       socket.join(roomName);
       rooms.roomName.addPlayer();
+      socket.emit("player", rooms.roomName.playerCountNextHand);
       io.to(roomName).emit("addedId", roomName);
       console.log(`PLAYER COUNT: ${rooms.roomName.playerCountCurrentHand}`);
       console.log(`Added ${socket.id} to ${roomName}`);
@@ -41,6 +43,7 @@ io.on("connection", (socket) => {
       roomNum++;
       roomName = `Room${roomNum}`;
       rooms.roomName = new Room(1);
+      socket.emit("player", rooms.roomName.playerCountNextHand);
       rooms.roomName.startHand();
       console.log(`NEW ROOM: ${roomNum}`);
       console.log(`${roomName} DECK: ${rooms.roomName.deck}`);
@@ -60,7 +63,6 @@ io.on("connection", (socket) => {
     io.emit("new message", { name, message });
   });
 
-
   socket.on("move", (move) => {
     if (move === "hit") {
       const newCard = {};
@@ -70,10 +72,13 @@ io.on("connection", (socket) => {
       if (rooms.roomName.activePlayer > rooms.roomName.playerCountCurrentHand) {
         rooms.roomName.dealerPlay();
         io.emit("card", rooms.roomName.getDataWithDealer());
-        rooms.roomName.winLoss()
-        io.emit("result", rooms.roomName.winLossArr)
-        rooms.roomName.startHand();
-        io.emit("player", 'NEW GAME!!') //DELETE
+        rooms.roomName.winLoss();
+        io.emit("result", rooms.roomName.winLossArr);
+        setTimeout(() => {
+          rooms.roomName.startHand();
+          io.emit("result", {});
+          io.emit("card", rooms.roomName.getDataPreDealer());
+        }, 3000);
         io.emit("card", rooms.roomName.getDataPreDealer());
       }
     } else if (move === "stick") {
@@ -82,16 +87,17 @@ io.on("connection", (socket) => {
       if (rooms.roomName.activePlayer > rooms.roomName.playerCountCurrentHand) {
         rooms.roomName.dealerPlay();
         io.emit("card", rooms.roomName.getDataWithDealer());
-        rooms.roomName.winLoss()
-        io.emit("result", rooms.roomName.winLossArr)
-        rooms.roomName.startHand();
-        io.emit("player", 'NEW GAME!!') //DELETE
-        io.emit("card", rooms.roomName.getDataPreDealer());
+        rooms.roomName.winLoss();
+        io.emit("result", rooms.roomName.winLossArr);
+        setTimeout(() => {
+          rooms.roomName.startHand();
+          io.emit("result", {});
+          io.emit("card", rooms.roomName.getDataPreDealer());
+        }, 3000);
       }
     }
     console.log(`MOVE FROM CLIENT: ${move}`);
   });
-
 });
 
 app.use((req, res, next) => {

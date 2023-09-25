@@ -16,6 +16,9 @@ const Game = () => {
   const [inputMessage, setInputMessage] = useState("");
   const [userName, setUserName] = useState("");
   const [cardData, setCardData] = useState({});
+  const [winLossData, setWinLossData] = useState({});
+  const id = localStorage.getItem('userId');
+  const [playerSeat, setPlayerSeat] = useState(0);
 
   const lastHand = () => {
     console.log("move to home page");
@@ -53,17 +56,57 @@ const Game = () => {
     console.log(`CARD FROM SERVER: ${JSON.stringify(card)}`);
   });
 
+
+  const addWin = async () => {
+    const response = await fetch(`/api/players/add/wins/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ wins: 0 + 1 }),
+    });
+    const result = await response.json();
+    console.log(result);
+  };
+
+
+
+  const addLoss = async () => {
+    const response = await fetch(`/api/players/add/losses/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ losses: 0 + 1 }),
+    });
+    const result = await response.json();
+    console.log(result);
+  };
+
+
   socket.on("player", (playerIdx) => {
     console.log(`Current player at seat ${playerIdx}`);
+    setPlayerSeat(playerIdx);
   });
 
   socket.on("playerScore", (score) => {
     console.log(`CURRENT SCORE OF PLAYER ${score}`);
   });
 
+  useEffect(() => {
+    const callAPI = () => {
+      console.log(`USE: ${JSON.stringify(winLossData)}`)
+      console.log(Object.values(winLossData))
+      if (Object.values(winLossData)[playerSeat - 1] === "loss") {
+        addLoss()
+      } else if (Object.values(winLossData)[playerSeat - 1] === "win") {
+        addWin()
+      }
+    }
+    callAPI()
+  }, [winLossData]);
+
+
   socket.on("result", (data) => {
-    console.log(`RESULT WITH: ${JSON.stringify(data)}`);
-  });
+    setWinLossData(data);
+    console.log(`RESULT WITH: ${JSON.stringify(data)}`)
+  })
 
   useEffect(() => {
     socket.on("new message", (msg) => {
@@ -135,7 +178,7 @@ const Game = () => {
       >
         Stick
       </button>
-      <Cards cardData={cardData} />
+      <Cards cardData={cardData} winLossData={winLossData} />
 
       <Bet
         currentHandBet={currentHandBet}

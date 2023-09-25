@@ -110,4 +110,51 @@ router.put("/add/:id", async (req, res) => {
   }
 });
 
+router.put("/add/wins/:id", async (req, res) => {
+  try {
+    const { wins, balance } = await prisma.player.findUnique({
+      select: { wins: true, balance: true },
+      where: { id: Number(req.params.id) },
+    });
+    const player = await prisma.player.update({
+      where: {
+        id: Number(req.params.id),
+      },
+      data: { wins: wins + 1,
+      balance: balance + 5 },
+    });
+    if (player) {
+      res.send(player);
+    } else {
+      res.send({ error: "Error finding balance" });
+    }
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+
+router.put("/add/losses/:id", async (req, res) => {
+  try {
+    const { losses, balance } = await prisma.player.findUnique({
+      select: { losses: true, balance: true },
+      where: { id: Number(req.params.id) },
+    });
+    const player = await prisma.player.update({
+      where: {
+        id: Number(req.params.id),
+      },
+      data: { losses: losses + 1, balance: balance - 5 },
+    });
+    if (player) {
+      res.send(player);
+    } else {
+      res.send({ error: "Error finding balance" });
+    }
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+
 module.exports = router;
