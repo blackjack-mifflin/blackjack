@@ -34,7 +34,13 @@ function Copyright(props) {
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme({
+  typography: {
+    fontFamily: [
+      '-times-new-roman'
+    ].join(','),
+  },
+});
 
 const LogInPage = ({ setToken }) => {
   const [username, setUsername] = useState("");

@@ -32,7 +32,13 @@ const Copyright = (props) => {
   );
 };
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme({
+  typography: {
+    fontFamily: [
+      '-times-new-roman'
+    ].join(','),
+  },
+});
 
 const SignUpPage = () => {
   const [username, setUsername] = useState("");
