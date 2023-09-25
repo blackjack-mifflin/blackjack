@@ -70,9 +70,7 @@ const Game = () => {
     addHandler()
   });
 
- socket.on("loss", (score) => {
-    console.log(score)
-
+ socket.on("loss", () => {
     const addHandler = async () => {
       const response = await fetch(`/api/players/add/loss/${id}`, {
         method: "PUT",
@@ -95,10 +93,46 @@ const Game = () => {
     console.log(`CURRENT SCORE OF PLAYER ${score}`);
   });
 
+
+  useEffect(() => {
   socket.on("result", (data) => {
     setWinLossData(data);
     console.log(`RESULT WITH: ${JSON.stringify(data)}`)
+    console.log(`RESULT WITH: ${Object.values(data)}`)
+
+    if(Object.values(data) === 'win'){
+      socket.emit("win")
+      console.log('WINNNER')
+      return () => {
+        socket.off("new message");
+      };
+    } else if(Object.values(data) == 'loss'){
+      socket.emit("loss")
+      console.log('LOOSER')
+      return () => {
+        socket.off("new message");
+      };
+    }
+  }, [socket]);
+
+
   })
+  socket.on("resultAPI", (data) => {
+    console.log(`RESULT WITH: ${JSON.stringify(data)}`)
+
+    console.log(`RESULT WITH: ${Object.values(data)}`)
+
+    if(Object.values(data) === 'win'){
+      socket.emit("win")
+      console.log('WINNNER')
+  
+    } else if(Object.values(data) === 'loss'){
+      socket.emit("loss")
+      console.log('LOOSER')
+    }
+
+  })
+
 
   useEffect(() => {
     socket.on("new message", (msg) => {
