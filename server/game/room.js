@@ -61,6 +61,8 @@ class Room {
     this.activePlayer = 1;
     this.activeCard = 0;
     this.playerCards = [];
+    this.winW = 0;
+    this.winL = 0;
   }
   shuffle = (deck) => {
     const newCards = [];
@@ -72,8 +74,6 @@ class Room {
     }
   };
   startHand = () => {
-    let dealerTotal = 0;
-    let playerTotal = 0;
     this.activePlayer = 1;
     this.activeCard = 0;
     this.shuffle(this.deck);
@@ -94,8 +94,6 @@ class Room {
     this.playerCountNextHand--;
   };
   hit = () => {
-    let dealerTotal = 0;
-    let playerTotal = 0;
     this.playerCards[this.activePlayer].push(this.deck[this.activeCard]);
     const newCard =
       this.playerCards[this.activePlayer][
@@ -132,7 +130,9 @@ class Room {
       );
       console.log(`DEALER VALUES FROM HIT: ${JSON.stringify(dealerSum)}`);
     }
+    this.stickWin()
   };
+  
   getDataPreDealer = () => {
         const data = {
       dealer: [this.playerCards[0][0]],
@@ -143,6 +143,7 @@ class Room {
     };
     return data;
   };
+
   getDataWithDealer = () => {
     const data = {
       dealer: this.playerCards[0],
@@ -159,7 +160,6 @@ class Room {
     let playerTotal = 0;
     console.log(`Dealers Cards: ${Object.values(this.playerCards[0])}`)
     console.log(`Players Cards: ${Object.values(this.playerCards[1])}`)
-    console.log()
     let dealer = Object.values(this.playerCards[0])
     let player = Object.values(this.playerCards[1])
     
@@ -173,18 +173,12 @@ class Room {
     console.log(playerTotal)
     if(dealerTotal === 21 && playerTotal === 21){
       console.log('Tie')
-    } else if(dealerTotal > 21 && playerTotal > 21){
-      console.log('tie')
-    }  else if (dealerTotal >= 22){
+    } else if (dealerTotal >= 22){
       console.log('dealer busts')
+      this.winLoss(1)
     } else if( playerTotal >= 22 ){
       console.log('player busts')
-    } else if( playerTotal <= 21 && playerTotal > dealerTotal){
-      console.log('Player wins')
-    } else if( dealerTotal <= 21 && dealerTotal > playerTotal){
-      console.log('Dealer wins')
-    } else if( playerTotal === dealerTotal){
-      console.log('tie')
+      this.winLoss(2)
     }
 }
 
@@ -193,7 +187,6 @@ stickWin = async () => {
   let playerTotal = 0;
   console.log(`Dealers Cards: ${Object.values(this.playerCards[0])}`)
   console.log(`Players Cards: ${Object.values(this.playerCards[1])}`)
-  console.log()
   let dealer = Object.values(this.playerCards[0])
   let player = Object.values(this.playerCards[1])
   
@@ -211,16 +204,41 @@ stickWin = async () => {
     console.log('tie2')
   } else if (dealerTotal >= 22){
     console.log('dealer busts2')
-  } else if( playerTotal >= 22 ){
+    this.winLoss(1)
+  } else if( playerTotal >= 22){
     console.log('player busts2')
+    this.winLoss(2)
   } else if( playerTotal <= 21 && playerTotal > dealerTotal && dealerTotal >= 17){
     console.log('Player wins2')
+    this.winLoss(1)
   } else if( dealerTotal <= 21 && dealerTotal > playerTotal && dealerTotal > 17){
     console.log('Dealer wins2')
+    this.winLoss(2)
   } else if( playerTotal === dealerTotal){
     console.log('tie2')
   }
 }
 
+winLoss =  (score) => {
+  this.winL = 0;
+  this.winW = 0;
+   if(score === 1){
+    console.log('PLAYER WIN+++')
+    this.winW++
+   } else if (score === 2){
+    console.log('Dealer Wins+++')
+    this.winL++
+   } else {
+    console.log('new game?')
+   }
+  }
+
+  winOrLose = () => {
+    const data = {
+      win: this.winW,
+      loss: this.winL
+    }
+    return data
+  }
 };
 module.exports = Room;

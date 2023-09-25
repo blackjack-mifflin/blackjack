@@ -88,10 +88,18 @@ io.on("connection", (socket) => {
     console.log(`MOVE FROM CLIENT: ${move}`);
   });
 
-  socket.on("score", (score) => {
-    console.log("TOMS SCORE")
-    io.emit('winLoss', rooms.roomName.getDataWithDealer())
+  socket.on('checkScore', (test) => {
+    console.log(rooms.roomName.winOrLose())
+    const data = rooms.roomName.winOrLose()
+    if(data.win === 1){
+      console.log('player wins1')
+      io.emit("win", data);
+    } else if (data.loss === 1){
+      console.log('dealer wins')
+      io.emit("loss", data);
+    }
   })
+
 });
 
 
