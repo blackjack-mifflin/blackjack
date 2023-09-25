@@ -16,6 +16,7 @@ const Game = () => {
   const [inputMessage, setInputMessage] = useState("");
   const [userName, setUserName] = useState("");
   const [cardData, setCardData] = useState({});
+  const [winLossData, setWinLossData] = useState({});
 
   const lastHand = () => {
     console.log("move to home page");
@@ -63,6 +64,7 @@ const Game = () => {
   });
 
   socket.on("result", (data) => {
+    setWinLossData(data);
     console.log(`RESULT WITH: ${JSON.stringify(data)}`)
   })
 
@@ -90,7 +92,7 @@ const Game = () => {
       <button onClick={socketHandler} value="stick">
         Stick
       </button>
-      <Cards cardData={cardData} />
+      <Cards cardData={cardData} winLossData={winLossData} />
 
       <Bet
         currentHandBet={currentHandBet}
