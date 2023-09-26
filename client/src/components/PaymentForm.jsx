@@ -26,6 +26,7 @@ const PaymentForm = () => {
     }
     return (
       <>
+      <div style={{backgroundColor: "white"}}>
       <React.Fragment>
         <Typography variant="h6" gutterBottom>
           Payment method
@@ -93,7 +94,7 @@ const PaymentForm = () => {
         </Grid>
               <Button onClick={SubmitPayment}>Submit Payment</Button>
       </React.Fragment>
-
+      </div>
       </>
     );
   }
