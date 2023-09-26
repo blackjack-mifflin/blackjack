@@ -83,7 +83,7 @@ const Profile = () => {
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                {playerInfo ? `Win/Loss Ratio: %${playerInfo.wins / playerInfo.losses}` : 'Sign in for more info'}
+                {playerInfo ? `Win/Loss Ratio: ${playerInfo.wins / playerInfo.losses}` : 'Sign in for more info'}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                 {playerInfo ? `Total Wins: ${playerInfo.wins}` : ''}<br/>
