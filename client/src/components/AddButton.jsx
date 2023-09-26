@@ -18,8 +18,7 @@ const AddButton = ({playerInfo}) => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
 
     const options = [
-        `${!selectedIndex ? 'Increase Balance' : ''}`,
-        5, 10, 20, 25, 50, 100
+        `${!selectedIndex ? 'Increase Balance' : ''}`, 5, 10, 20, 25, 50, 100
     ];
  
     const addHandler = async () => {
@@ -56,7 +55,6 @@ const AddButton = ({playerInfo}) => {
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
-
 
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
@@ -116,10 +114,9 @@ const AddButton = ({playerInfo}) => {
               </ClickAwayListener>
             </Paper>
           </Grow>
-        )};
+        )}
       </Popper>
-      </React.Fragment>
-    );
+    </React.Fragment>
+  );
 }
-
 export default AddButton
