@@ -148,7 +148,8 @@ const LogInPage = ({ setToken }) => {
             </Grid>
           </Box>
         </Box>
-        <h1>Test Username: test </h1> 
+        <h1>Test username: test </h1> 
+        <br/>
         <h1>Test Password: test</h1>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
