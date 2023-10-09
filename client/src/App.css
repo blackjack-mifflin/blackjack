@@ -141,8 +141,7 @@
 }
 
 body {
-    /* background-image: url('https://t4.ftcdn.net/jpg/03/20/86/93/240_F_320869363_2xgd64uUdIrJ9hAJqaHzGCZeK6qgSVdL.jpg'); */
-    background-color: black;
+    background-image: url('https://t4.ftcdn.net/jpg/03/20/86/93/240_F_320869363_2xgd64uUdIrJ9hAJqaHzGCZeK6qgSVdL.jpg');
     background-size: "cover";
     background-repeat: "no-repeat";
     background-attachment: "fixed";
