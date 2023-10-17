@@ -40,7 +40,7 @@ const defaultTheme = createTheme({
   },
 });
 
-const SignUpPage = () => {
+const SignUpPage = ({ setToken }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -63,6 +63,7 @@ const SignUpPage = () => {
       if (data.token) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("userId", data.id);
+        setToken(data.token);
       }
     } catch (err) {
       console.log(err);
@@ -148,7 +149,7 @@ const SignUpPage = () => {
                   control={
                     <Checkbox value="allowExtraEmails" color="primary" />
                   }
-                  label="GIVE ME SPAM"
+                  label="Please sign me up for weekly emails."
                 />
               </Grid>
             </Grid>
