@@ -1,3 +1,5 @@
-# blackjack
 
-https://blackjack-yrjf.onrender.com/
+Online Blackjack Multiplayer Game
+
+https://blackjack-mifflin.onrender.com/Login
+
